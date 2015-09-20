@@ -1,3 +1,12 @@
+%DEFAULT includepath pig/include.pig
+RUN $includepath;
+register lib/datafu.jar
+DEFINE MEDIAN datafu.pig.stats.StreamingMedian();
+
+-- Parameters
+%DEFAULT binsize 1 
+/*%DEFAULT binsize 60 --1min*/
+
 -- =========================================================
 -- Loading the full_traffic
 -- =========================================================
@@ -38,23 +47,32 @@ full_traffic = load '$pcap' using com.packetloop.packetpig.loaders.pcap.packet.P
 );
 
 -- =========================================================
+-- Filter by TCP and UDP
+-- =========================================================
+/*full_traffic_tcp = FILTER full_traffic BY ip_proto == 6;*/
+/*full_traffic_udp = FILTER full_traffic BY ip_proto == 17;*/
+
+-- =========================================================
 -- Using full_traffic generate timeseries [bps]
 -- =========================================================
-%DEFAULT time 60
-full_traffic_grouped = GROUP full_traffic BY (ts / $time * $time);
-full_traffic_bps = FOREACH full_traffic_grouped GENERATE group, SUM(full_traffic.ip_total_length);
--- full_traffic_tcp = FILTER full_traffic BY ip_proto == 6;
--- full_traffic_udp = FILTER full_traffic BY ip_proto == 17;
-
+/*full_traffic_grouped = GROUP full_traffic BY (ts / $binsize * $binsize);*/
+/*full_traffic_bps = FOREACH full_traffic_grouped GENERATE group, SUM(full_traffic.ip_total_length);*/
+/*STORE full_traffic_bps INTO 'out/full_traffic_bps' USING PigStorage(',');*/
 
 -- =========================================================
 -- Using full_traffic generate timeseries [pps]
 -- =========================================================
 
+/*full_traffic_grouped = GROUP full_traffic BY (ts / $binsize * $binsize);*/
+/*full_traffic_pps = FOREACH full_traffic_grouped GENERATE group, COUNT(full_traffic);*/
+/*STORE full_traffic_pps INTO 'out/full_traffic_pps' USING PigStorage(',');*/
+
 -- =========================================================
 -- Using full_traffic, group by dIP and generate the total_pkt
 -- =========================================================
 
+group_ip_dst = GROUP full_traffic BY ip_dst;
+total_ip_dst = FOREACH group_ip_dst GENERATE group as group_ip_dst, COUNT(full_traffic) as pkts;
 
 -- ##########################################################
 -- OVERALL ATTACK TRAFFIC ANALYSIS
@@ -64,17 +82,31 @@ full_traffic_bps = FOREACH full_traffic_grouped GENERATE group, SUM(full_traffic
 -- Filter full_traffic based on the dIP with highest total_pkt (store in attack_traffic)
 -- =========================================================
 
+top1_total_ip_dst = LIMIT (ORDER total_ip_dst BY pkts DESC) 1; --get top 1 from ordered packets per destination IP (maximum value)
+attack_traffic = FILTER full_traffic BY ip_dst == top1_total_ip_dst.group_ip_dst;
+/*DUMP attack_traffic;*/
+
 -- =========================================================
 -- Using on attack_traffic generate Timeserise [bps]
 -- =========================================================
+
+/*attack_traffic_grouped = GROUP attack_traffic BY (ts / $binsize * $binsize);*/
+/*attack_traffic_bps = FOREACH attack_traffic_grouped GENERATE group, SUM(attack_traffic.ip_total_length);*/
+/*STORE attack_traffic_bps INTO 'out/attack_traffic_bps' USING PigStorage(',');*/
 
 -- =========================================================
 -- Using attack_traffic_bps calculate attack_traffic_bps_avg
 -- =========================================================
 
+attack_traffic_bps_avg = FOREACH (GROUP attack_traffic ALL) GENERATE AVG(attack_traffic.ip_total_length);
+/*DUMP attack_traffic_bps_avg;*/
+
 -- =========================================================
 -- Using attack_traffic_bps calculate attack_traffic_bps_median
 -- =========================================================
+
+attack_traffic_bps_median = FOREACH (GROUP attack_traffic ALL) GENERATE MEDIAN(attack_traffic.ip_total_length);
+DUMP attack_traffic_bps_median;
 
 -- =========================================================
 -- Using attack_traffic_bps calculate attack_traffic_bps_std
