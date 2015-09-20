@@ -2,8 +2,10 @@
 RUN $includepath;
 register lib/datafu.jar
 DEFINE MEDIAN datafu.pig.stats.StreamingMedian();
+DEFINE VARIANCE datafu.pig.stats.VAR();
 
 -- Parameters
+-- NOTE: all values are per bin size, not per second
 %DEFAULT binsize 1 
 /*%DEFAULT binsize 60 --1min*/
 
@@ -84,57 +86,86 @@ total_ip_dst = FOREACH group_ip_dst GENERATE group as group_ip_dst, COUNT(full_t
 
 top1_total_ip_dst = LIMIT (ORDER total_ip_dst BY pkts DESC) 1; --get top 1 from ordered packets per destination IP (maximum value)
 attack_traffic = FILTER full_traffic BY ip_dst == top1_total_ip_dst.group_ip_dst;
+
+-- =========================================================
+-- Generate independent tcp and upd subsets
+-- =========================================================
+
+attack_traffic_tcp = FILTER full_traffic BY ip_proto == 6;
+attack_traffic_udp = FILTER full_traffic BY ip_proto == 17;
+
 /*DUMP attack_traffic;*/
 
 -- =========================================================
 -- Using on attack_traffic generate Timeserise [bps]
 -- =========================================================
 
-/*attack_traffic_grouped = GROUP attack_traffic BY (ts / $binsize * $binsize);*/
-/*attack_traffic_bps = FOREACH attack_traffic_grouped GENERATE group, SUM(attack_traffic.ip_total_length);*/
-/*STORE attack_traffic_bps INTO 'out/attack_traffic_bps' USING PigStorage(',');*/
+attack_traffic_grouped = GROUP attack_traffic BY (ts / $binsize * $binsize);
+attack_traffic_bps = FOREACH attack_traffic_grouped GENERATE group, SUM(attack_traffic.ip_total_length);
+/*STORE attack_traffic_bps INTO 'out/attack_traffic_bps.json' USING JsonStorage();*/
 
 -- =========================================================
 -- Using attack_traffic_bps calculate attack_traffic_bps_avg
 -- =========================================================
 
-attack_traffic_bps_avg = FOREACH (GROUP attack_traffic ALL) GENERATE AVG(attack_traffic.ip_total_length);
+attack_traffic_bps_avg = FOREACH attack_traffic_grouped GENERATE AVG(attack_traffic.ip_total_length);
 /*DUMP attack_traffic_bps_avg;*/
 
 -- =========================================================
 -- Using attack_traffic_bps calculate attack_traffic_bps_median
 -- =========================================================
 
-attack_traffic_bps_median = FOREACH (GROUP attack_traffic ALL) GENERATE MEDIAN(attack_traffic.ip_total_length);
-DUMP attack_traffic_bps_median;
+attack_traffic_bps_median = FOREACH attack_traffic_grouped GENERATE MEDIAN(attack_traffic.ip_total_length);
+/*DUMP attack_traffic_bps_median;*/
 
 -- =========================================================
 -- Using attack_traffic_bps calculate attack_traffic_bps_std
 -- =========================================================
 
+attack_traffic_bps_std = FOREACH attack_traffic_grouped GENERATE SQRT(VARIANCE(attack_traffic.ip_total_length));
+/*DUMP attack_traffic_bps_std;*/
+
 -- =========================================================
 -- Using on attack_traffic generate Timeserise [pps]
 -- =========================================================
+
+attack_traffic_pps = FOREACH attack_traffic_grouped GENERATE COUNT(attack_traffic) as bin_count;
 
 -- =========================================================
 -- Using attack_traffic_pps calculate attack_traffic_pps_avg
 -- =========================================================
 
+attack_traffic_pps_avg = FOREACH (GROUP attack_traffic_pps ALL) GENERATE AVG(attack_traffic_pps.bin_count);
+/*DUMP attack_traffic_pps_avg;*/
+
 -- =========================================================
 -- Using attack_traffic_pps calculate attack_traffic_pps_median
 -- =========================================================
+
+attack_traffic_pps_median = FOREACH (GROUP attack_traffic_pps ALL) GENERATE MEDIAN(attack_traffic_pps.bin_count);
+/*DUMP attack_traffic_pps_median;*/
 
 -- =========================================================
 -- Using attack_traffic_ps calculate attack_traffic_pps_std
 -- =========================================================
 
+attack_traffic_pps_avg = FOREACH (GROUP attack_traffic_pps ALL) GENERATE SQRT(VARIANCE(attack_traffic_pps.bin_count));
+/*DUMP attack_traffic_pps_avg;*/
+
 
 -- ##########################################################
 -- ATTACK TRAFFIC PORT ANALYSIS
 -- ##########################################################
+
+-- ========================================================= 
+-- Based on attack_traffic group by sport and generate the total_pkt_sport (this can define the type of attack part1, plot hist sport) 
 -- =========================================================
--- Based on attack_traffic group by sport and generate the total_pkt_sport (this can define the type of attack part1, plot hist sport)
--- =========================================================
+/*attack_by_tcp_sport = GROUP attack_traffic BY tcp_sport;*/
+
+/*attack_by_udp_sport = ;*/
+total_pkt_udp_sport = FOREACH (GROUP attack_traffic_udp BY udp_sport) GENERATE group, COUNT(attack_traffic_udp) as packet_count;
+sorted_total_pkt_udp_sport = ORDER total_pkt_udp_sport BY packet_count;
+DUMP sorted_total_pkt_udp_sport;
 
 -- =========================================================
 -- Based on attack_traffic group by dport and generate the total_pkt_dPort (this can define the type of attack part2, plot hist dport)
