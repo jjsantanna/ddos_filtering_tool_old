@@ -94,8 +94,6 @@ attack_traffic = FILTER full_traffic BY ip_dst == top1_total_ip_dst.group_ip_dst
 attack_traffic_tcp = FILTER full_traffic BY ip_proto == 6;
 attack_traffic_udp = FILTER full_traffic BY ip_proto == 17;
 
-/*DUMP attack_traffic;*/
-
 -- =========================================================
 -- Using on attack_traffic generate Timeserise [bps]
 -- =========================================================
@@ -197,14 +195,16 @@ total_pkt_udp_dport_uniq = FOREACH (GROUP total_pkt_udp_dport ALL) GENERATE COUN
 -- =========================================================
 
 total_pkt_sip = FOREACH (GROUP attack_traffic BY ip_src) 
-				GENERATE group as sip, 
-						 COUNT(attack_traffic) as pkt_per_ip,
-						 FILTER attack_traffic.ip_frag_offset > 0;
-DUMP total_pkt_sip;
+				GENERATE group as sip, COUNT(attack_traffic) as pkt_per_ip;
+/*DUMP total_pkt_sip;*/
 
 -- =========================================================
 -- sip_pkt_ipfragmented
 -- =========================================================
+attack_frag = FILTER attack_traffic BY ip_frag_offset>0;
+total_pkt_frag = FOREACH (GROUP attack_frag BY ip_src) 
+				 GENERATE group, COUNT(attack_frag) as pkt_per_ip;
+DUMP total_pkt_frag;
 
 -- =========================================================
 -- sip_pkt_sport_uniq_values
