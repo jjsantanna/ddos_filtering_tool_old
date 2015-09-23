@@ -163,36 +163,44 @@ attack_traffic_pps_avg = FOREACH (GROUP attack_traffic_pps ALL) GENERATE SQRT(VA
 /*attack_by_tcp_sport = GROUP attack_traffic BY tcp_sport;*/
 
 /*attack_by_udp_sport = ;*/
-total_pkt_udp_sport = FOREACH (GROUP attack_traffic_udp BY udp_sport) GENERATE group, COUNT(attack_traffic_udp) as packet_count;
+total_pkt_udp_sport = FOREACH (GROUP attack_traffic_udp BY udp_sport) GENERATE group as sport, COUNT(attack_traffic_udp) as packet_count;
+/*DUMP total_pkt_udp_sport;*/
 sorted_total_pkt_udp_sport = ORDER total_pkt_udp_sport BY packet_count;
-DUMP sorted_total_pkt_udp_sport;
 
 -- =========================================================
 -- Based on attack_traffic group by dport and generate the total_pkt_dPort (this can define the type of attack part2, plot hist dport)
 -- =========================================================
 
+total_pkt_udp_dport = FOREACH (GROUP attack_traffic_udp BY udp_dport) GENERATE group as dport, COUNT(attack_traffic_udp) as packet_count;
+/*DUMP total_pkt_udp_dport;*/
+
 -- =========================================================
 -- Based on total_pkt_sport count how many unique values exist (store in uniq_sport)
 -- =========================================================
+
+total_pkt_udp_sport_uniq = FOREACH (GROUP total_pkt_udp_sport ALL) GENERATE COUNT(total_pkt_udp_sport.sport);
+/*DUMP total_pkt_udp_sport_uniq;*/
 
 -- =========================================================
 -- Based on total_pkt_dport count how many unique values exist (store in uniq_dport)
 -- =========================================================
 
+total_pkt_udp_dport_uniq = FOREACH (GROUP total_pkt_udp_dport ALL) GENERATE COUNT(total_pkt_udp_dport.dport);
+/*DUMP total_pkt_udp_dport_uniq;*/
+
 -- ##########################################################
 -- ATTACK TRAFFIC IP ANALYSIS
 -- ##########################################################
+
 -- =========================================================
 -- Using attack_traffic group by sIP (store in group_sip)
 -- =========================================================
 
--- =========================================================
--- For each sIP generate the 
--- =========================================================
-
--- =========================================================
--- sip_pkt_total
--- =========================================================
+total_pkt_sip = FOREACH (GROUP attack_traffic BY ip_src) 
+				GENERATE group as sip, 
+						 COUNT(attack_traffic) as pkt_per_ip,
+						 FILTER attack_traffic.ip_frag_offset > 0;
+DUMP total_pkt_sip;
 
 -- =========================================================
 -- sip_pkt_ipfragmented
