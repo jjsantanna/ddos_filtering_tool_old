@@ -196,7 +196,7 @@ total_pkt_udp_dport_uniq = FOREACH (GROUP total_pkt_udp_dport ALL) GENERATE COUN
 
 total_pkt_sip = FOREACH (GROUP attack_traffic BY ip_src) 
 				GENERATE group as sip, COUNT(attack_traffic) as pkt_per_ip;
-/*DUMP total_pkt_sip;*/
+-- DUMP total_pkt_sip;
 
 -- =========================================================
 -- sip_pkt_ipfragmented
@@ -204,17 +204,48 @@ total_pkt_sip = FOREACH (GROUP attack_traffic BY ip_src)
 attack_frag = FILTER attack_traffic BY ip_frag_offset>0;
 total_pkt_frag = FOREACH (GROUP attack_frag BY ip_src) 
 				 GENERATE group, COUNT(attack_frag) as pkt_per_ip;
-DUMP total_pkt_frag;
+/*DUMP total_pkt_frag;*/
 
 -- =========================================================
 -- sip_pkt_sport_uniq_values
+-- ========================================================= 
+
+-- There must be a simpler way!!!
+
+sip_sport_attack = FOREACH (GROUP attack_traffic BY (ip_src, udp_sport))
+				   GENERATE FLATTEN(group) as (sip, sport), COUNT(attack_traffic) as count;
+
+group_sip_sport_attack = FOREACH (GROUP sip_sport_attack BY sip){
+						 sport_count = FOREACH sip_sport_attack GENERATE sport, count;
+						 GENERATE group as sip, sport_count;
+}
+-- DUMP group_sip_sport_attack;
+
 -- =========================================================
+-- sip_pkt_top1_sport - method 1
 -- =========================================================
--- sip_pkt_top1_sport
--- =========================================================
+
+-- There must be a simpler way!!!
+
+sip_top_sport = FOREACH group_sip_sport_attack{
+	   ordered_sport_count = ORDER sport_count BY count DESC;
+	   top_sport_count = LIMIT ordered_sport_count 1;		
+	   GENERATE sip, FLATTEN(top_sport_count) as (sport, count);
+}
+/*DUMP sip_top_sport;*/
+
 -- =========================================================
 -- sip_pkt_top1_sport_percentage
 -- =========================================================
+
+sip_total_count_sport = FOREACH group_sip_sport_attack GENERATE sip, SUM(sport_count.count) as total;
+/*X = JOIN A BY a1, B BY b1;*/
+joined_top_count = JOIN sip_top_sport BY sip, sip_total_count_sport BY sip;
+/*DESCRIBE joined_top_count;*/
+sip_top_sport_percentage = FOREACH joined_top_count GENERATE sip_top_sport::sip, sport, ((float)count/(float)total * 100);
+/*DUMP sip_top_sport_percentage;*/
+
+
 -- =========================================================
 -- sip_pkt_sport_uniq_values
 -- =========================================================
