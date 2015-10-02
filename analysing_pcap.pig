@@ -141,14 +141,6 @@ total_pkt_udp_sport = FOREACH (GROUP attack_traffic BY udp_sport) GENERATE
         group as udp_src_port, 
         COUNT(attack_traffic) as packets;
 
--- total_pkt_tcp_sport = FOREACH (GROUP attack_traffic BY tcp_sport) GENERATE 
---         group as tcp_src_port, 
---         COUNT(attack_traffic) as tcp_packets;
-
--- joined_pkt_attack_traffic = FOREACH( JOIN total_pkt_udp_sport BY udp_src_port, total_pkt_tcp_sport BY tcp_src_port) GENERATE
---         udp_src_port as port_number, 
---         (udp_packets+tcp_packets) as packets; 
-
 -- STORE total_pkt_udp_sport INTO '$out/attack_traffic_pkts_per_udp_port' USING PigStorage(',', '-schema');
 
 -- ========================================================= 
@@ -158,48 +150,38 @@ total_pkt_udp_dport = FOREACH (GROUP attack_traffic BY udp_dport) GENERATE
         group as udp_dst_port, 
         COUNT(attack_traffic) as packets;
 
--- total_pkt_tcp_sport = FOREACH (GROUP attack_traffic BY tcp_sport) GENERATE 
---         group as tcp_src_port, 
---         COUNT(attack_traffic) as tcp_packets;
-
--- joined_pkt_attack_traffic = FOREACH( JOIN total_pkt_udp_sport BY udp_src_port, total_pkt_tcp_sport BY tcp_src_port) GENERATE
---         udp_src_port as port_number, 
---         (udp_packets+tcp_packets) as packets; 
-
 -- STORE total_pkt_udp_dport INTO '$out/attack_traffic_pkts_per_udp_dport' USING PigStorage(',', '-schema');
 
 -- ##########################################################
--- ATTACK TRAFFIC: ATTACK TRAFFIC IP ANALYSIS
+-- ATTACK TRAFFIC: SOURCE IP ANALYSIS
 -- ##########################################################
 
 -- =========================================================
--- GENERATE (1) SOURCE IP ADDRESS (2) NUMBER OF SENT PACKETS (3) NUMBER OF FRAGMENTED PACKETS
+-- GENERATE (1) SOURCE IP ADDRESS (2) NUMBER OF SENT PACKETS (3) NUMBER OF PACKETS MARQUED WITH FOLLOW-UP FRAGMENT (4) DISTINCT UDP SOURCE PORTS (5,6,7) AVERAGE, MEDIAN AND STD_DEV OF PACKET LENGTH (8,9) AVERAGE AND STD_DEV TTL
 -- =========================================================
-attack_traffic_pkt_per_sip = FOREACH (GROUP attack_traffic BY ip_src) {
-    only_fragmented = FILTER attack_traffic BY (ip_frag_offset > 0);
-    TT = FOREACH only_fragmented GENERATE COUNT(*);
+attack_traffic_sip_statistics = FOREACH (GROUP attack_traffic BY ip_src) {
+    fragmented_packets = FILTER attack_traffic BY (ip_frag_offset > 0);
+    distinct_udp_sport = DISTINCT attack_traffic.udp_sport;
+
     GENERATE 
-        group as src_ip, 
-        COUNT(attack_traffic) as packets,
-        only_fragmented as fragmented;
-    }
-STORE attack_traffic_pkt_per_sip INTO '$out/attack_traffic_pkt_per_sip' USING PigStorage(',', '-schema');
+        group AS src_ip, 
+        --
+        COUNT(attack_traffic) AS packets,
+        COUNT(fragmented_packets) AS packets_fraqment_marked,
+        --
+        distinct_udp_sport AS distinct_udp_sport,
+        COUNT(distinct_udp_sport) AS num_distinct_udp_sport,
+        --
+        AVG(attack_traffic.ip_total_length) AS pkt_length_avg,
+        MEDIAN(attack_traffic.ip_total_length) AS pkt_length_median,
+        SQRT(VARIANCE(attack_traffic.ip_total_length)) AS pkt_length_std_dev,
+        --
+        AVG(attack_traffic.ip_ttl) AS ttl_avg,
+        SQRT(VARIANCE(attack_traffic.ip_ttl)) AS ttl_std_dev;
+}
+STORE attack_traffic_sip_statistics INTO '$out/attack_traffic_sip_statistics' USING PigStorage(',', '-schema');
 
 
--- -- =========================================================
--- -- sip_pkt_sport_uniq_values
--- -- ========================================================= 
-
--- -- There must be a simpler way!!!
-
--- sip_sport_attack = FOREACH (GROUP attack_traffic BY (ip_src, udp_sport))
--- 				   GENERATE FLATTEN(group) as (sip, sport), COUNT(attack_traffic) as count;
-
--- group_sip_sport_attack = FOREACH (GROUP sip_sport_attack BY sip){
--- 						 sport_count = FOREACH sip_sport_attack GENERATE sport, count;
--- 						 GENERATE group as sip, sport_count;
--- }
--- -- DUMP group_sip_sport_attack;
 
 -- -- =========================================================
 -- -- sip_pkt_top1_sport - method 1
@@ -225,34 +207,15 @@ STORE attack_traffic_pkt_per_sip INTO '$out/attack_traffic_pkt_per_sip' USING Pi
 -- sip_top_sport_percentage = FOREACH joined_top_count GENERATE sip_top_sport::sip, sport, ((float)count/(float)total * 100);
 -- /*DUMP sip_top_sport_percentage;*/
 
-
--- -- =========================================================
--- -- sip_pkt_sport_uniq_values
--- -- =========================================================
 -- -- =========================================================
 -- -- sip_pkt_top1_dport
 -- -- =========================================================
 -- -- =========================================================
 -- -- sip_pkt_top1_dport_percentage
 -- -- =========================================================
--- -- =========================================================
--- -- sip_pkt_length_avg, 
--- -- =========================================================
--- -- =========================================================
--- -- sip_pkt_length_uniq_values,
--- -- =========================================================
--- -- =========================================================
--- -- sip_pkt_length_std, 
--- -- =========================================================
--- -- =========================================================
--- -- sip_pkt_ttl_avg
--- -- =========================================================
--- -- =========================================================
--- -- sip_pkt_ttl_uniq_values,
--- -- =========================================================
--- -- =========================================================
--- -- sip_pkt_ttl_std
--- -- =========================================================
+
+
+
 -- -- =========================================================
 -- -- sip_pps [timeseries]		
 -- -- =========================================================
