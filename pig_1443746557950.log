@@ -1,0 +1,45 @@
+Pig Stack Trace
+---------------
+ERROR 1052: 
+<file analysing_pcap.pig, line 125, column 9> Cannot cast tuple with schema :tuple(quantile_0_5:double) to float
+
+org.apache.pig.impl.logicalLayer.FrontendException: ERROR 1066: Unable to open iterator for alias attack_traffic_pps_avg
+	at org.apache.pig.PigServer.openIterator(PigServer.java:935)
+	at org.apache.pig.tools.grunt.GruntParser.processDump(GruntParser.java:754)
+	at org.apache.pig.tools.pigscript.parser.PigScriptParser.parse(PigScriptParser.java:376)
+	at org.apache.pig.tools.grunt.GruntParser.parseStopOnError(GruntParser.java:230)
+	at org.apache.pig.tools.grunt.GruntParser.parseStopOnError(GruntParser.java:205)
+	at org.apache.pig.tools.grunt.Grunt.exec(Grunt.java:81)
+	at org.apache.pig.Main.run(Main.java:502)
+	at org.apache.pig.Main.main(Main.java:177)
+Caused by: org.apache.pig.PigException: ERROR 1002: Unable to store alias attack_traffic_pps_avg
+	at org.apache.pig.PigServer.storeEx(PigServer.java:1038)
+	at org.apache.pig.PigServer.store(PigServer.java:997)
+	at org.apache.pig.PigServer.openIterator(PigServer.java:910)
+	... 7 more
+Caused by: org.apache.pig.impl.logicalLayer.validators.TypeCheckerException: ERROR 1059: 
+<file analysing_pcap.pig, line 123, column 25> Problem while reconciling output schema of ForEach
+	at org.apache.pig.newplan.logical.visitor.TypeCheckingRelVisitor.throwTypeCheckerException(TypeCheckingRelVisitor.java:142)
+	at org.apache.pig.newplan.logical.visitor.TypeCheckingRelVisitor.visit(TypeCheckingRelVisitor.java:182)
+	at org.apache.pig.newplan.logical.relational.LOForEach.accept(LOForEach.java:87)
+	at org.apache.pig.newplan.DependencyOrderWalker.walk(DependencyOrderWalker.java:75)
+	at org.apache.pig.newplan.PlanVisitor.visit(PlanVisitor.java:52)
+	at org.apache.pig.newplan.logical.relational.LogicalPlan.validate(LogicalPlan.java:190)
+	at org.apache.pig.PigServer$Graph.compile(PigServer.java:1767)
+	at org.apache.pig.PigServer$Graph.access$300(PigServer.java:1443)
+	at org.apache.pig.PigServer.storeEx(PigServer.java:1033)
+	... 9 more
+Caused by: org.apache.pig.impl.logicalLayer.validators.TypeCheckerException: ERROR 1052: 
+<file analysing_pcap.pig, line 125, column 9> Cannot cast tuple with schema :tuple(quantile_0_5:double) to float
+	at org.apache.pig.newplan.logical.visitor.TypeCheckingExpVisitor.visit(TypeCheckingExpVisitor.java:517)
+	at org.apache.pig.newplan.logical.expression.CastExpression.accept(CastExpression.java:44)
+	at org.apache.pig.newplan.ReverseDependencyOrderWalker.walk(ReverseDependencyOrderWalker.java:70)
+	at org.apache.pig.newplan.PlanVisitor.visit(PlanVisitor.java:52)
+	at org.apache.pig.newplan.logical.visitor.TypeCheckingRelVisitor.visitExpressionPlan(TypeCheckingRelVisitor.java:191)
+	at org.apache.pig.newplan.logical.visitor.TypeCheckingRelVisitor.visit(TypeCheckingRelVisitor.java:157)
+	at org.apache.pig.newplan.logical.relational.LOGenerate.accept(LOGenerate.java:245)
+	at org.apache.pig.newplan.DependencyOrderWalker.walk(DependencyOrderWalker.java:75)
+	at org.apache.pig.newplan.PlanVisitor.visit(PlanVisitor.java:52)
+	at org.apache.pig.newplan.logical.visitor.TypeCheckingRelVisitor.visit(TypeCheckingRelVisitor.java:174)
+	... 16 more
+================================================================================

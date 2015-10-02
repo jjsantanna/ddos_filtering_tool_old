@@ -1,0 +1,39 @@
+Pig Stack Trace
+---------------
+ERROR 1200: Pig script failed to parse: 
+<file analysing_pcap.pig, line 104, column 33> Undefined alias: total_ip_dst
+
+org.apache.pig.impl.logicalLayer.FrontendException: ERROR 1000: Error during parsing. Pig script failed to parse: 
+<file analysing_pcap.pig, line 104, column 33> Undefined alias: total_ip_dst
+	at org.apache.pig.PigServer$Graph.parseQuery(PigServer.java:1748)
+	at org.apache.pig.PigServer$Graph.access$000(PigServer.java:1443)
+	at org.apache.pig.PigServer.parseAndBuild(PigServer.java:387)
+	at org.apache.pig.PigServer.executeBatch(PigServer.java:412)
+	at org.apache.pig.PigServer.executeBatch(PigServer.java:398)
+	at org.apache.pig.tools.grunt.GruntParser.executeBatch(GruntParser.java:171)
+	at org.apache.pig.tools.grunt.GruntParser.parseStopOnError(GruntParser.java:234)
+	at org.apache.pig.tools.grunt.GruntParser.parseStopOnError(GruntParser.java:205)
+	at org.apache.pig.tools.grunt.Grunt.exec(Grunt.java:81)
+	at org.apache.pig.Main.run(Main.java:502)
+	at org.apache.pig.Main.main(Main.java:177)
+Caused by: Failed to parse: Pig script failed to parse: 
+<file analysing_pcap.pig, line 104, column 33> Undefined alias: total_ip_dst
+	at org.apache.pig.parser.QueryParserDriver.parse(QueryParserDriver.java:199)
+	at org.apache.pig.PigServer$Graph.parseQuery(PigServer.java:1735)
+	... 10 more
+Caused by: 
+<file analysing_pcap.pig, line 104, column 33> Undefined alias: total_ip_dst
+	at org.apache.pig.parser.AstValidator.validateAliasRef(AstValidator.java:278)
+	at org.apache.pig.parser.AstValidator.rel(AstValidator.java:6557)
+	at org.apache.pig.parser.AstValidator.order_clause(AstValidator.java:12075)
+	at org.apache.pig.parser.AstValidator.op_clause(AstValidator.java:1763)
+	at org.apache.pig.parser.AstValidator.rel(AstValidator.java:6593)
+	at org.apache.pig.parser.AstValidator.limit_clause(AstValidator.java:11084)
+	at org.apache.pig.parser.AstValidator.op_clause(AstValidator.java:1723)
+	at org.apache.pig.parser.AstValidator.general_statement(AstValidator.java:1035)
+	at org.apache.pig.parser.AstValidator.statement(AstValidator.java:499)
+	at org.apache.pig.parser.AstValidator.query(AstValidator.java:373)
+	at org.apache.pig.parser.QueryParserDriver.validateAst(QueryParserDriver.java:258)
+	at org.apache.pig.parser.QueryParserDriver.parse(QueryParserDriver.java:186)
+	... 11 more
+================================================================================
