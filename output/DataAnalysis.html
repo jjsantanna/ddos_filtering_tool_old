@@ -3,7 +3,7 @@
 	<title>PCAP Data Analysis</title> 
 	<script src="https://www.google.com/jsapi"></script> 
 	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script> 
-	<script src="../jquery.csv-0.71.js"></script> 
+	<script src="jquery.csv-0.71.js"></script> 
 
 	<script> 
 		var file2 = "output_pig/full_traffic_bps_pps/part-r-00000.csv";
@@ -202,10 +202,10 @@
 			});
 		}
 
-		var file5 = "output_pig/attack_traffic_pkts_per_udp_port/part-r-00000.csv";
+		var file5 = "output_pig/attack_traffic_pkts_per_udp_sport/part-r-00000.csv";
 		google.load("visualization", "1", {packages:["corechart"]}); 
-		google.setOnLoadCallback(attack_traffic_pkts_per_udp_port);
-		function attack_traffic_pkts_per_udp_port() { 
+		google.setOnLoadCallback(attack_traffic_pkts_per_udp_sport);
+		function attack_traffic_pkts_per_udp_sport() { 
 			// grab the CSV 
 			$.get(file5, function(csvString) {
 				// transform the CSV string into a 2-dimensional array 
@@ -229,7 +229,7 @@
 					legend: {position: 'none'}
 				};
 
-				var chart = new google.visualization.ColumnChart(document.getElementById('attack_traffic_pkts_per_udp_port')); 
+				var chart = new google.visualization.ColumnChart(document.getElementById('attack_traffic_pkts_per_udp_sport')); 
 				chart.draw(view, options);
 	
 			});
@@ -281,7 +281,7 @@
 				var data = new google.visualization.arrayToDataTable(arrayData);
 				// this view can select a subset of the data at a time 
 				var view = new google.visualization.DataView(data); 
-				view.setColumns([0,1,2]);
+				view.setColumns([0,3,2]);
 				
 				var options = { 
 					title: "Total Packets Per (SRC) IP Address", 
@@ -318,7 +318,7 @@
 		<h2>Attack Traffic </h2>
 	    <div id="attack_traffic_bps"   style="display:inline-block; width: 500px; height: 300px;"> </div>
 	    <div id="attack_traffic_pps"  style="display:inline-block; width: 500px; height: 300px;"> </div>
-	    <div id="attack_traffic_pkts_per_udp_port"  style="display:inline-block; width: 500px; height: 300px;"> </div>
+	    <div id="attack_traffic_pkts_per_udp_sport"  style="display:inline-block; width: 500px; height: 300px;"> </div>
 	    <div id="attack_traffic_pkts_per_udp_dport"  style="display:inline-block; width: 500px; height: 300px;"> </div>
 
 		<div id="attack_traffic_sip_statistics"  style="display:inline-block; width: 500px; height: 300px;"> </div>

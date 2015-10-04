@@ -85,7 +85,7 @@ full_traffic_bps_pps = FOREACH (GROUP full_traffic BY (ts / $binsize * $binsize)
         COUNT(full_traffic) as pkts_per_bin;
 
 -- STORING THE OUTPUT
--- STORE full_traffic_bps_pps INTO '$outputFolder/output_pig/full_traffic_bps_pps' USING PigStorage(',', '-schema');
+STORE full_traffic_bps_pps INTO '$outputFolder/output_pig/full_traffic_bps_pps' USING PigStorage(',', '-schema');
 
 -- =========================================================
 -- GENERATING (1) DESTINATION IP, (2) OCCURRENCES
@@ -95,7 +95,7 @@ pkts_per_ip_dst = FOREACH (GROUP full_traffic BY ip_dst) GENERATE
         COUNT(full_traffic) as packets;
 
 -- STORING THE OUTPUT
--- STORE pkts_per_ip_dst INTO '$outputFolder/output_pig/pkts_per_ip_dst' USING PigStorage(',', '-schema');
+STORE pkts_per_ip_dst INTO '$outputFolder/output_pig/pkts_per_ip_dst' USING PigStorage(',', '-schema');
 
 -- ##########################################################
 -- PART II: ATTACK TRAFFIC ANALYSIS
@@ -120,7 +120,7 @@ attack_traffic_bps_pps = FOREACH (GROUP attack_traffic BY (ts / $binsize * $bins
         -- (float)(SQRT(VARIANCE(attack_traffic.ip_total_length))) AS std_mbits_per_bin,
 
 -- STORING THE OUTPUT
--- STORE attack_traffic_bps_pps INTO '$outputFolder/output_pig/attack_traffic_bps_pps' USING PigStorage(',', '-schema');
+STORE attack_traffic_bps_pps INTO '$outputFolder/output_pig/attack_traffic_bps_pps' USING PigStorage(',', '-schema');
 
 -- =========================================================
 -- STATISTICS ATTACK TRAFFIC: (1) AVG MBPS (2) MEDIAN MBPS (3) STD_DEV MBPS (4) AVG PPS (5) MEDIAN PPS (6) STD_DEV PPS
@@ -133,7 +133,7 @@ attack_traffic_stats = FOREACH (GROUP attack_traffic_bps_pps ALL) GENERATE
         MEDIAN(attack_traffic_bps_pps.pkts_per_bin) AS median_pps_attack_traffic,
         SQRT(VARIANCE(attack_traffic_bps_pps.pkts_per_bin)) AS std_pps_dev_attack_traffic;
 
--- STORE attack_traffic_stats INTO '$outputFolder/output_pig/attack_traffic_stats' USING PigStorage(',', '-schema');
+STORE attack_traffic_stats INTO '$outputFolder/output_pig/attack_traffic_stats' USING PigStorage(',', '-schema');
 
 -- ##########################################################
 -- ATTACK TRAFFIC: PORT ANALYSIS
@@ -146,7 +146,7 @@ total_pkt_udp_sport = FOREACH (GROUP attack_traffic BY udp_sport) GENERATE
         group as udp_src_port, 
         COUNT(attack_traffic) as packets;
 
--- STORE total_pkt_udp_sport INTO '$outputFolder/output_pig/attack_traffic_pkts_per_udp_sport' USING PigStorage(',', '-schema');
+STORE total_pkt_udp_sport INTO '$outputFolder/output_pig/attack_traffic_pkts_per_udp_sport' USING PigStorage(',', '-schema');
 
 -- ========================================================= 
 -- GENERATE (1) DESTINATION PORT (TCP and UDP) (2) PACKETS !!!! *******ATT WE NEED TO JOIN WITH TCP!!!! 
@@ -155,7 +155,7 @@ total_pkt_udp_dport = FOREACH (GROUP attack_traffic BY udp_dport) GENERATE
         group as udp_dst_port, 
         COUNT(attack_traffic) as packets;
 
--- STORE total_pkt_udp_dport INTO '$outputFolder/output_pig/attack_traffic_pkts_per_udp_dport' USING PigStorage(',', '-schema');
+STORE total_pkt_udp_dport INTO '$outputFolder/output_pig/attack_traffic_pkts_per_udp_dport' USING PigStorage(',', '-schema');
 
 -- ##########################################################
 -- ATTACK TRAFFIC: SOURCE IP ANALYSIS
@@ -168,11 +168,14 @@ attack_traffic_sip_statistics = FOREACH (GROUP attack_traffic BY ip_src) {
     fragmented_packets = FILTER attack_traffic BY (ip_frag_offset > 0);
     distinct_udp_sport = DISTINCT attack_traffic.udp_sport;
 
+    total_packets = COUNT(attack_traffic);
+    packets_fragment_marked = COUNT(fragmented_packets);
+
     GENERATE 
         group AS src_ip, 
         --
-        COUNT(attack_traffic) AS total_packets,
-        COUNT(fragmented_packets) AS packets_fragment_marked,
+        total_packets as total_packets,
+        packets_fragment_marked as packets_fragment_marked,
         (total_packets - packets_fragment_marked) AS packets_non_fragment_marked,
         --
         -- distinct_udp_sport AS distinct_udp_sport,
@@ -186,7 +189,7 @@ attack_traffic_sip_statistics = FOREACH (GROUP attack_traffic BY ip_src) {
         SQRT(VARIANCE(attack_traffic.ip_ttl)) AS ttl_std_dev;
 }
 
--- STORE (ORDER attack_traffic_sip_statistics BY total_packets DESC) INTO '$outputFolder/output_pig/attack_traffic_sip_statistics' USING PigStorage(',', '-schema');
+STORE (ORDER attack_traffic_sip_statistics BY total_packets DESC) INTO '$outputFolder/output_pig/attack_traffic_sip_statistics' USING PigStorage(',', '-schema');
 
 
 
@@ -317,4 +320,4 @@ sh cp output/jquery.csv-0.71.js $outputFolder/
 -- TRANSFERING THE RESULTS TO A APACHE SERVER
 -- =========================================================
 sh mv $outputFolder /Applications/MAMP/htdocs/
---sh open http://localhost:8888/TrafficAnalysis_$filePcap
+sh open http://localhost:8888/TrafficAnalysis_$filePcap
