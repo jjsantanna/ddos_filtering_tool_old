@@ -317,4 +317,4 @@ sh cp output/jquery.csv-0.71.js $outputFolder/
 -- TRANSFERING THE RESULTS TO A APACHE SERVER
 -- =========================================================
 sh mv $outputFolder /Applications/MAMP/htdocs/
-sh open http://localhost:8888/TrafficAnalysis_$filePcap
+--sh open http://localhost:8888/TrafficAnalysis_$filePcap
