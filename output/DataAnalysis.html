@@ -1,0 +1,333 @@
+<!DOCTYPE html> <html>
+<head> 
+	<title>PCAP Data Analysis</title> 
+	<script src="https://www.google.com/jsapi"></script> 
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script> 
+	<script src="../jquery.csv-0.71.js"></script> 
+
+	<script> 
+		var file2 = "output_pig/full_traffic_bps_pps/part-r-00000.csv";
+		google.load("visualization", "1", {packages:["corechart"]}); 
+		google.setOnLoadCallback(full_traffic_bps);
+		function full_traffic_bps() { 
+			// grab the CSV 
+			$.get(file2, function(csvString) {
+				// transform the CSV string into a 2-dimensional array 
+				var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
+
+				// this new DataTable object holds all the data 
+				var data = new google.visualization.arrayToDataTable(arrayData);
+				// this view can select a subset of the data at a time 
+				var view = new google.visualization.DataView(data); 
+				view.setColumns([0,1]);
+				
+				var options = { 
+					title: "Full Traffic (Mbps)", 
+					hAxis: {title: data.getColumnLabel(0), 
+							minValue: data.getColumnRange(0).min, 
+							maxValue: data.getColumnRange(0).max}, 
+					vAxis: {title: data.getColumnLabel(1), 
+							minValue: data.getColumnRange(1).min, 
+							maxValue: data.getColumnRange(1).max}, 
+					bar: {groupWidth: "20%"},
+					legend: {position: 'none'}
+				};
+
+				var chart = new google.visualization.ColumnChart(document.getElementById('full_traffic_bps')); 
+				chart.draw(view, options);
+	
+			});
+		}
+		google.load("visualization", "1", {packages:["corechart"]}); 
+		google.setOnLoadCallback(full_traffic_pps);
+		function full_traffic_pps() { 
+			// grab the CSV 
+			$.get(file2, function(csvString) {
+				// transform the CSV string into a 2-dimensional array 
+				var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
+
+				// this new DataTable object holds all the data 
+				var data = new google.visualization.arrayToDataTable(arrayData);
+				// this view can select a subset of the data at a time 
+				var view = new google.visualization.DataView(data); 
+				view.setColumns([0,2]);
+				
+				var options = { 
+					title: "Full Traffic (pps)", 
+					hAxis: {title: data.getColumnLabel(0), 
+							minValue: data.getColumnRange(0).min, 
+							maxValue: data.getColumnRange(0).max}, 
+					vAxis: {title: data.getColumnLabel(2), 
+							minValue: data.getColumnRange(2).min, 
+							maxValue: data.getColumnRange(2).max}, 
+					bar: {groupWidth: "20%"},
+					legend: {position: 'none'}
+				};
+
+				var chart = new google.visualization.ColumnChart(document.getElementById('full_traffic_pps')); 
+				chart.draw(view, options);
+	
+			});
+		}
+
+		var file = "output_pig/full_traffic_ip_proto/part-r-00000.csv";
+		google.load("visualization", "1", {packages:["corechart"]}); 
+		google.setOnLoadCallback(full_traffic_ip_proto);
+		function full_traffic_ip_proto() { 
+			// grab the CSV 
+			$.get(file, function(csvString) {
+				// transform the CSV string into a 2-dimensional array 
+				var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
+
+				// this new DataTable object holds all the data 
+				var data = new google.visualization.arrayToDataTable(arrayData);
+				// this view can select a subset of the data at a time 
+				var view = new google.visualization.DataView(data); 
+				view.setColumns([0,1]);
+				
+				var options = { 
+					title: "Overall IP protocol", 
+					hAxis: {title: data.getColumnLabel(0), 
+							minValue: data.getColumnRange(0).min, 
+							maxValue: data.getColumnRange(0).max}, 
+					vAxis: {title: data.getColumnLabel(1), 
+							minValue: data.getColumnRange(1).min, 
+							maxValue: data.getColumnRange(1).max}, 
+					bar: {groupWidth: "20%"},
+					legend: {position: 'none'}
+				};
+
+				var chart = new google.visualization.ColumnChart(document.getElementById('full_traffic_ip_proto')); 
+				chart.draw(view, options);
+
+	
+			});
+		}
+
+		var file3 = "output_pig/pkts_per_ip_dst/part-r-00000.csv";
+		google.load("visualization", "1", {packages:["corechart"]}); 
+		google.setOnLoadCallback(pkts_per_ip_dst);
+		function pkts_per_ip_dst() { 
+			// grab the CSV 
+			$.get(file3, function(csvString) {
+				// transform the CSV string into a 2-dimensional array 
+				var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
+
+				// this new DataTable object holds all the data 
+				var data = new google.visualization.arrayToDataTable(arrayData);
+				// this view can select a subset of the data at a time 
+				var view = new google.visualization.DataView(data); 
+				view.setColumns([0,1]);
+				
+				var options = { 
+					title: "Total Packets per Destination IP Address ", 
+					hAxis: {title: data.getColumnLabel(0), 
+							minValue: data.getColumnRange(0).min, 
+							maxValue: data.getColumnRange(0).max}, 
+					vAxis: {title: data.getColumnLabel(1), 
+							minValue: data.getColumnRange(1).min, 
+							maxValue: data.getColumnRange(1).max}, 
+					bar: {groupWidth: "20%"},
+					legend: {position: 'none'}
+				};
+
+				var chart = new google.visualization.ColumnChart(document.getElementById('pkts_per_ip_dst')); 
+				chart.draw(view, options);
+
+	
+			});
+		}
+
+		var file4 = "output_pig/attack_traffic_bps_pps/part-r-00000.csv";
+		google.load("visualization", "1", {packages:["corechart"]}); 
+		google.setOnLoadCallback(attack_traffic_bps);
+		function attack_traffic_bps() { 
+			// grab the CSV 
+			$.get(file4, function(csvString) {
+				// transform the CSV string into a 2-dimensional array 
+				var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
+
+				// this new DataTable object holds all the data 
+				var data = new google.visualization.arrayToDataTable(arrayData);
+				// this view can select a subset of the data at a time 
+				var view = new google.visualization.DataView(data); 
+				view.setColumns([0,1]);
+				
+				var options = { 
+					title: "Attack Traffic (Mbps)", 
+					hAxis: {title: data.getColumnLabel(0), 
+							minValue: data.getColumnRange(0).min, 
+							maxValue: data.getColumnRange(0).max}, 
+					vAxis: {title: data.getColumnLabel(1), 
+							minValue: data.getColumnRange(1).min, 
+							maxValue: data.getColumnRange(1).max}, 
+					bar: {groupWidth: "20%"},
+					legend: {position: 'none'}
+				};
+
+				var chart = new google.visualization.ColumnChart(document.getElementById('attack_traffic_bps')); 
+				chart.draw(view, options);
+	
+			});
+		}
+		google.load("visualization", "1", {packages:["corechart"]}); 
+		google.setOnLoadCallback(attack_traffic_pps);
+		function attack_traffic_pps() { 
+			// grab the CSV 
+			$.get(file4, function(csvString) {
+				// transform the CSV string into a 2-dimensional array 
+				var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
+
+				// this new DataTable object holds all the data 
+				var data = new google.visualization.arrayToDataTable(arrayData);
+				// this view can select a subset of the data at a time 
+				var view = new google.visualization.DataView(data); 
+				view.setColumns([0,2]);
+				
+				var options = { 
+					title: "Attack Traffic (pps)", 
+					hAxis: {title: data.getColumnLabel(0), 
+							minValue: data.getColumnRange(0).min, 
+							maxValue: data.getColumnRange(0).max}, 
+					vAxis: {title: data.getColumnLabel(2), 
+							minValue: data.getColumnRange(2).min, 
+							maxValue: data.getColumnRange(2).max}, 
+					bar: {groupWidth: "20%"},
+					legend: {position: 'none'}
+				};
+
+				var chart = new google.visualization.ColumnChart(document.getElementById('attack_traffic_pps')); 
+				chart.draw(view, options);
+	
+			});
+		}
+
+		var file5 = "output_pig/attack_traffic_pkts_per_udp_port/part-r-00000.csv";
+		google.load("visualization", "1", {packages:["corechart"]}); 
+		google.setOnLoadCallback(attack_traffic_pkts_per_udp_port);
+		function attack_traffic_pkts_per_udp_port() { 
+			// grab the CSV 
+			$.get(file5, function(csvString) {
+				// transform the CSV string into a 2-dimensional array 
+				var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
+
+				// this new DataTable object holds all the data 
+				var data = new google.visualization.arrayToDataTable(arrayData);
+				// this view can select a subset of the data at a time 
+				var view = new google.visualization.DataView(data); 
+				view.setColumns([0,1]);
+				
+				var options = { 
+					title: "Packets Per Source (UDP)Port Number", 
+					hAxis: {title: data.getColumnLabel(0), 
+							minValue: data.getColumnRange(0).min, 
+							maxValue: data.getColumnRange(0).max}, 
+					vAxis: {title: data.getColumnLabel(1), 
+							minValue: data.getColumnRange(1).min, 
+							maxValue: data.getColumnRange(1).max}, 
+					bar: {groupWidth: "20%"},
+					legend: {position: 'none'}
+				};
+
+				var chart = new google.visualization.ColumnChart(document.getElementById('attack_traffic_pkts_per_udp_port')); 
+				chart.draw(view, options);
+	
+			});
+		}
+
+		var file6 = "output_pig/attack_traffic_pkts_per_udp_dport/part-r-00000.csv";
+		google.load("visualization", "1", {packages:["corechart"]}); 
+		google.setOnLoadCallback(attack_traffic_pkts_per_udp_dport);
+		function attack_traffic_pkts_per_udp_dport() { 
+			// grab the CSV 
+			$.get(file6, function(csvString) {
+				// transform the CSV string into a 2-dimensional array 
+				var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
+
+				// this new DataTable object holds all the data 
+				var data = new google.visualization.arrayToDataTable(arrayData);
+				// this view can select a subset of the data at a time 
+				var view = new google.visualization.DataView(data); 
+				view.setColumns([0,1]);
+				
+				var options = { 
+					title: "Packets Per Destination (UDP)Port Number", 
+					hAxis: {title: data.getColumnLabel(0), 
+							minValue: data.getColumnRange(0).min, 
+							maxValue: data.getColumnRange(0).max}, 
+					vAxis: {title: data.getColumnLabel(1), 
+							minValue: data.getColumnRange(1).min, 
+							maxValue: data.getColumnRange(1).max}, 
+					bar: {groupWidth: "20%"},
+					legend: {position: 'none'}
+				};
+
+				var chart = new google.visualization.ColumnChart(document.getElementById('attack_traffic_pkts_per_udp_dport')); 
+				chart.draw(view, options);
+	
+			});
+		}
+
+		var file7 = "output_pig/attack_traffic_sip_statistics/part-r-00000.csv";
+		google.load("visualization", "1", {packages:["corechart"]}); 
+		google.setOnLoadCallback(attack_traffic_sip_statistics);
+		function attack_traffic_sip_statistics() { 
+			// grab the CSV 
+			$.get(file7, function(csvString) {
+				// transform the CSV string into a 2-dimensional array 
+				var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
+
+				// this new DataTable object holds all the data 
+				var data = new google.visualization.arrayToDataTable(arrayData);
+				// this view can select a subset of the data at a time 
+				var view = new google.visualization.DataView(data); 
+				view.setColumns([0,1,2]);
+				
+				var options = { 
+					title: "Total Packets Per (SRC) IP Address", 
+					hAxis: {title: data.getColumnLabel(0), 
+							minValue: data.getColumnRange(0).min, 
+							maxValue: data.getColumnRange(0).max}, 
+					vAxis: {title: data.getColumnLabel(1), 
+							minValue: data.getColumnRange(1).min, 
+							maxValue: data.getColumnRange(1).max}, 
+					bar: {groupWidth: "20%"},
+					legend: { position: 'top', maxLines: 3 },
+					isStacked: true
+				};
+
+				var chart = new google.visualization.ColumnChart(document.getElementById('attack_traffic_sip_statistics')); 
+				chart.draw(view, options);
+	
+			});
+		}
+
+
+	</script> 
+</head> 
+
+<body> 
+	<div>
+		<h2>Raw Traffic without filter (aka Full Traffic)</h2>
+	    <div id="full_traffic_bps"   style="display:inline-block; width: 500px; height: 300px;"> </div>
+	    <div id="full_traffic_pps"  style="display:inline-block; width: 500px; height: 300px;"> </div>
+	    <div id="full_traffic_ip_proto"  style="display:inline-block; width: 500px; height: 300px;"> </div>
+	    <div id="pkts_per_ip_dst"  style="display:inline-block; width: 500px; height: 300px;"> </div>
+	</div>
+	<div>
+		<h2>Attack Traffic </h2>
+	    <div id="attack_traffic_bps"   style="display:inline-block; width: 500px; height: 300px;"> </div>
+	    <div id="attack_traffic_pps"  style="display:inline-block; width: 500px; height: 300px;"> </div>
+	    <div id="attack_traffic_pkts_per_udp_port"  style="display:inline-block; width: 500px; height: 300px;"> </div>
+	    <div id="attack_traffic_pkts_per_udp_dport"  style="display:inline-block; width: 500px; height: 300px;"> </div>
+
+		<div id="attack_traffic_sip_statistics"  style="display:inline-block; width: 500px; height: 300px;"> </div>
+
+	    
+	</div>
+
+	
+    	    
+</body> 
+
+</html>
