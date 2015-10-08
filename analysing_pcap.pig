@@ -54,28 +54,9 @@ full_traffic = load '$pcap' using com.packetloop.packetpig.loaders.pcap.packet.P
     udp_checksum:chararray
 );
 
--- =========================================================
--- GENERATE (1) IP PROTOCOL, (2) OCCURRENCES
--- =========================================================
--- GENERATING: IP_PROTO_NUMBER, OCCURRENCES
-full_traffic_group_ipproto = FOREACH (GROUP full_traffic BY ip_proto)GENERATE 
-        group as ip_proto, 
-        COUNT(full_traffic) as occurrences;
-
--- LOADING THE DESCRIPTION OF EACH PROTOCOL NUMBER
-ip_proto_num_desc = LOAD 'data/list_ipprotocol_number_desc.txt' USING PigStorage(',') AS (
-        ip_proto_number:int, 
-        ip_proto_dst:chararray);
-
--- JOING THE IP PROTOCOL ANALYSIS WITH THE IP PROTOCOL DESCRIPTION LIST
-joined_full_traffic_ip_proto_desc = FOREACH( JOIN full_traffic_group_ipproto BY ip_proto, ip_proto_num_desc BY ip_proto_number) GENERATE 
-        ip_proto_dst as ip_proto, 
-        occurrences as occurrences; 
-
--- STORING THE OUTPUT
-STORE joined_full_traffic_ip_proto_desc INTO '$outputFolder/output_pig/full_traffic_ip_proto' USING PigStorage(',', '-schema');
-
-
+-- ##########################################################
+-- GENERATING FULL TRAFFIC TIME SERIES
+-- ##########################################################
 -- =========================================================
 -- TIMESERIES FULL TRAFFIC: (1) TIMESTAMP, (2) MB/S, (3)PP/S
 -- =========================================================
@@ -84,9 +65,11 @@ full_traffic_bps_pps = FOREACH (GROUP full_traffic BY (ts / $binsize * $binsize)
         (float)(SUM(full_traffic.ip_total_length))*8/1000000 as mbits_per_bin,
         COUNT(full_traffic) as pkts_per_bin;
 
--- STORING THE OUTPUT
 STORE full_traffic_bps_pps INTO '$outputFolder/output_pig/full_traffic_bps_pps' USING PigStorage(',', '-schema');
 
+-- ##########################################################
+-- FILTER I: BASED ON THE TOP1 DESTINATION IP ADDRESS
+-- ##########################################################
 -- =========================================================
 -- GENERATING (1) DESTINATION IP, (2) OCCURRENCES
 -- =========================================================
@@ -94,82 +77,156 @@ pkts_per_ip_dst = FOREACH (GROUP full_traffic BY ip_dst) GENERATE
         group as ip_dst, 
         COUNT(full_traffic) as packets;
 
--- STORING THE OUTPUT
-STORE pkts_per_ip_dst INTO '$outputFolder/output_pig/pkts_per_ip_dst' USING PigStorage(',', '-schema');
-
--- ##########################################################
--- PART II: ATTACK TRAFFIC ANALYSIS
--- ##########################################################
+STORE (ORDER pkts_per_ip_dst BY packets DESC) INTO '$outputFolder/output_pig/full_traffic_pkts_per_ip_dst' USING PigStorage(',', '-schema');
 
 -- =========================================================
--- FILTER THE ATTACK TRAFFIC FROM THE FULL TRAFFIC (BASED ON TOP IP PROTOCOL AND DESTINATION IP ADDRESS)
+-- GENERATE (1) IP PROTOCOL, (2) OCCURRENCES
+-- =========================================================
+-- GENERATING: IP_PROTO_NUMBER, OCCURRENCES
+top1_ip_dst = LIMIT (ORDER pkts_per_ip_dst BY packets DESC) 1;
+full_traffic_filter1 = FILTER full_traffic BY (ip_dst == top1_ip_dst.ip_dst);
+
+full_traffic_group_ipproto = FOREACH (GROUP full_traffic_filter1 BY ip_proto)GENERATE 
+        group as ip_proto, 
+        COUNT(full_traffic_filter1) as occurrences;
+
+-- LOADING THE DESCRIPTION OF EACH PROTOCOL NUMBER
+ip_proto_num_desc = LOAD 'data/list_ipprotocol_number_desc.txt' USING PigStorage(',') AS (
+        ip_proto_number:int, 
+        ip_proto_dst:chararray);
+
+-- JOING THE IP PROTOCOL ANALYSIS WITH THE IP PROTOCOL DESCRIPTION LIST
+joined_full_traffic_ip_proto_desc = FOREACH( JOIN full_traffic_group_ipproto BY ip_proto LEFT, ip_proto_num_desc BY ip_proto_number) GENERATE 
+        ip_proto_dst as ip_proto, 
+        occurrences as occurrences; 
+
+STORE (ORDER joined_full_traffic_ip_proto_desc BY occurrences DESC) INTO '$outputFolder/output_pig/full_traffic_ip_proto' USING PigStorage(',', '-schema');
+
+-- ##########################################################
+-- FILTER II: BASED ON IP PROTOCOL
+-- ##########################################################
+-- =========================================================
+-- FILTER THE ATTACK TRAFFIC ON TOP IP PROTOCOL 
 -- =========================================================
 top1_ip_proto = LIMIT (ORDER full_traffic_group_ipproto BY occurrences DESC) 1;
-top1_ip_dst = LIMIT (ORDER pkts_per_ip_dst BY packets DESC) 1; 
-attack_traffic = FILTER full_traffic BY (ip_proto == top1_ip_proto.ip_proto) AND (ip_dst == top1_ip_dst.ip_dst);
+full_traffic_filter2 = FILTER full_traffic_filter1 BY (ip_proto == top1_ip_proto.ip_proto);
 
+-- ##########################################################
+-- PORT NUMBER ANALYSIS
+-- ##########################################################
+-- ========================================================= 
+-- GENERATE (1) SOURCE PORT (2) PORT Description (3) COUNT TCP PACKETS (4) COUNT UDP PACKETS (5) TOTAL PACKETS
+-- =========================================================
+pkt_udp_port= FILTER full_traffic_filter2 BY udp_sport > 0;
+total_pkt_udp_sport = FOREACH (GROUP pkt_udp_port BY udp_sport) GENERATE 
+        group as udp_src_port, 
+        COUNT(pkt_udp_port) as udp_packets;
+
+pkt_tcp_port= FILTER full_traffic_filter2 BY tcp_sport > 0;
+total_pkt_tcp_sport = FOREACH (GROUP pkt_tcp_port BY tcp_sport) GENERATE 
+        group as tcp_src_port, 
+        COUNT(pkt_tcp_port) as tcp_packets;
+
+group_sport= FOREACH (JOIN total_pkt_udp_sport by udp_src_port FULL, total_pkt_tcp_sport BY tcp_src_port) GENERATE 
+    udp_src_port as src_port,
+    (udp_packets is null ? 0 : udp_packets) as udp_packets,
+    (tcp_packets is null ? 0 : tcp_packets) as tcp_packets,
+    ((udp_packets is null ? 0 : udp_packets) + (tcp_packets is null ? 0 : tcp_packets)) as packets;
+
+port_names = LOAD 'data/port_names.txt' USING PigStorage(',') AS (
+        port_number:int, 
+        port_desc:chararray);
+
+joined_sport_statistics = FOREACH( JOIN group_sport BY src_port LEFT, port_names BY port_number) GENERATE 
+        src_port as src_port, 
+        (port_desc is null ? 'unknown' : port_desc) as port_desc,
+        udp_packets as udp_packets,
+        tcp_packets as tcp_packets,
+        packets as packets;
+
+STORE (ORDER joined_sport_statistics BY packets DESC) INTO '$outputFolder/output_pig/full_traffic_filter2_sport' USING PigStorage(',', '-schema');
+
+-- ========================================================= 
+-- GENERATE (1) DESTINATION PORT (2) PORT DESCRIPTION (3) COUNT TCP PACKETS (4) COUNT UDP PACKETS (5) TOTAL PACKETS
+-- =========================================================
+pkt_udp_port= FILTER full_traffic_filter2 BY udp_dport > 0;
+total_pkt_udp_dport = FOREACH (GROUP pkt_udp_port BY udp_dport) GENERATE 
+        group as udp_dst_port, 
+        COUNT(pkt_udp_port) as udp_packets;
+
+pkt_tcp_port= FILTER full_traffic_filter2 BY tcp_dport > 0;
+total_pkt_tcp_dport = FOREACH (GROUP pkt_tcp_port BY tcp_dport) GENERATE 
+        group as tcp_dst_port, 
+        COUNT(pkt_tcp_port) as tcp_packets;
+
+group_dport= FOREACH (JOIN total_pkt_udp_dport by udp_dst_port FULL, total_pkt_tcp_dport BY tcp_dst_port) GENERATE 
+    udp_dst_port as dst_port,
+    (udp_packets is null ? 0 : udp_packets) as udp_packets,
+    (tcp_packets is null ? 0 : tcp_packets) as tcp_packets,
+    ((udp_packets is null ? 0 : udp_packets) + (tcp_packets is null ? 0 : tcp_packets)) as packets;
+
+joined_dport_statistics = FOREACH( JOIN group_dport BY dst_port LEFT, port_names BY port_number) GENERATE 
+        dst_port as dst_port, 
+        (port_desc is null ? 'unknown' : port_desc) as port_desc,        
+        udp_packets as udp_packets,
+        tcp_packets as tcp_packets,
+        packets as packets;
+
+STORE (ORDER joined_dport_statistics BY packets DESC) INTO '$outputFolder/output_pig/full_traffic_filter2_dport' USING PigStorage(',', '-schema');
+
+
+-- ##########################################################
+-- FILTER III: PAYLOAD SIMILARITY
+-- ##########################################################
+-- ##########################################################
+--      TO-DO SOON .... =D
+-- ##########################################################
+-- ##########################################################
+
+-- ##########################################################
+-- ATTACK TRAFFIC TIME SERIES
+-- ##########################################################
 -- =========================================================
 -- TIMESERIES FULL TRAFFIC: (1) TIMESTAMP, (2) MB/S, (3)PP/S, (4) AVG PCKT SIZE PER SECOND, (5) MEDIAN PCKT SIZE PER SECOND
 -- =========================================================
-attack_traffic_bps_pps = FOREACH (GROUP attack_traffic BY (ts / $binsize * $binsize)) GENERATE 
+full_traffic_filter2_bps_pps = FOREACH (GROUP full_traffic_filter2 BY (ts / $binsize * $binsize)) GENERATE 
         group AS timestamp, 
-        (float)(SUM(attack_traffic.ip_total_length))*8/1000000 AS mbits_per_bin,
-        COUNT(attack_traffic) AS pkts_per_bin;
-        -- (float)(AVG(attack_traffic.ip_total_length))*8/1000000 AS avg_mbits_per_bin,
-        -- (float)(MEDIAN(attack_traffic.ip_total_length)) AS median_mbits_per_bin,
-        -- (float)(SQRT(VARIANCE(attack_traffic.ip_total_length))) AS std_mbits_per_bin,
+        (float)(SUM(full_traffic_filter2.ip_total_length))*8/1000000 AS mbits_per_bin,
+        COUNT(full_traffic_filter2) AS pkts_per_bin;
 
--- STORING THE OUTPUT
-STORE attack_traffic_bps_pps INTO '$outputFolder/output_pig/attack_traffic_bps_pps' USING PigStorage(',', '-schema');
+STORE full_traffic_filter2_bps_pps INTO '$outputFolder/output_pig/full_traffic_filter2_bps_pps' USING PigStorage(',', '-schema');
 
 -- =========================================================
 -- STATISTICS ATTACK TRAFFIC: (1) AVG MBPS (2) MEDIAN MBPS (3) STD_DEV MBPS (4) AVG PPS (5) MEDIAN PPS (6) STD_DEV PPS
 -- =========================================================
-attack_traffic_stats = FOREACH (GROUP attack_traffic_bps_pps ALL) GENERATE 
-        AVG(attack_traffic_bps_pps.mbits_per_bin) AS avg_mbps_attack_traffic,
-        MEDIAN(attack_traffic_bps_pps.mbits_per_bin) AS median_mbps_attack_traffic,
-        SQRT(VARIANCE(attack_traffic_bps_pps.mbits_per_bin)) AS std_dev_mbps_attack_traffic,
-        AVG(attack_traffic_bps_pps.pkts_per_bin) AS avg_pps_attack_traffic,
-        MEDIAN(attack_traffic_bps_pps.pkts_per_bin) AS median_pps_attack_traffic,
-        SQRT(VARIANCE(attack_traffic_bps_pps.pkts_per_bin)) AS std_pps_dev_attack_traffic;
+full_traffic_filter2_stats = FOREACH (GROUP full_traffic_filter2_bps_pps ALL) GENERATE 
+        AVG(full_traffic_filter2_bps_pps.mbits_per_bin) AS avg_mbps_full_traffic_filter2,
+        FLATTEN(MEDIAN(full_traffic_filter2_bps_pps.mbits_per_bin)) AS median_mbps_full_traffic_filter2,
+        SQRT(VARIANCE(full_traffic_filter2_bps_pps.mbits_per_bin)) AS std_dev_mbps_full_traffic_filter2,
+        AVG(full_traffic_filter2_bps_pps.pkts_per_bin) AS avg_pps_full_traffic_filter2,
+        FLATTEN(MEDIAN(full_traffic_filter2_bps_pps.pkts_per_bin)) AS median_pps_full_traffic_filter2,
+        SQRT(VARIANCE(full_traffic_filter2_bps_pps.pkts_per_bin)) AS std_pps_dev_full_traffic_filter2;
 
-STORE attack_traffic_stats INTO '$outputFolder/output_pig/attack_traffic_stats' USING PigStorage(',', '-schema');
-
--- ##########################################################
--- ATTACK TRAFFIC: PORT ANALYSIS
--- ##########################################################
-
--- ========================================================= 
--- GENERATE (1) SOURCE PORT (TCP and UDP) (2) PACKETS !!!! *******ATT WE NEED TO JOIN WITH TCP!!!! 
--- =========================================================
-total_pkt_udp_sport = FOREACH (GROUP attack_traffic BY udp_sport) GENERATE 
-        group as udp_src_port, 
-        COUNT(attack_traffic) as packets;
-
-STORE total_pkt_udp_sport INTO '$outputFolder/output_pig/attack_traffic_pkts_per_udp_sport' USING PigStorage(',', '-schema');
-
--- ========================================================= 
--- GENERATE (1) DESTINATION PORT (TCP and UDP) (2) PACKETS !!!! *******ATT WE NEED TO JOIN WITH TCP!!!! 
--- =========================================================
-total_pkt_udp_dport = FOREACH (GROUP attack_traffic BY udp_dport) GENERATE 
-        group as udp_dst_port, 
-        COUNT(attack_traffic) as packets;
-
-STORE total_pkt_udp_dport INTO '$outputFolder/output_pig/attack_traffic_pkts_per_udp_dport' USING PigStorage(',', '-schema');
+STORE full_traffic_filter2_stats INTO '$outputFolder/output_pig/full_traffic_filter2_stats' USING PigStorage(',', '-schema');
 
 -- ##########################################################
--- ATTACK TRAFFIC: SOURCE IP ANALYSIS
+-- SOURCE IP ANALYSIS
 -- ##########################################################
-
 -- =========================================================
 -- GENERATE (1) SOURCE IP ADDRESS (2) TOTAL NUMBER OF SENT PACKETS (3) NUMBER OF PACKETS MARQUED WITH FOLLOW-UP FRAGMENT (4) NUMBER OF PACKETS NON MARQUED WITH FOLLOW-UP FRAGMENT (5) DISTINCT UDP SOURCE PORTS (6,7,8) AVERAGE, MEDIAN AND STD_DEV OF PACKET LENGTH (9,10) AVERAGE AND STD_DEV TTL ***SORTED BY NUMBER OF PACKETS.
 -- =========================================================
-attack_traffic_sip_statistics = FOREACH (GROUP attack_traffic BY ip_src) {
-    fragmented_packets = FILTER attack_traffic BY (ip_frag_offset > 0);
-    distinct_udp_sport = DISTINCT attack_traffic.udp_sport;
+uniq_src_ips = FOREACH (GROUP full_traffic_filter2 ALL){ 
+        uniq_ips = DISTINCT full_traffic_filter2.ip_src; 
+        GENERATE COUNT(uniq_ips);
+};
 
-    total_packets = COUNT(attack_traffic);
+full_traffic_filter2_sip_statistics = FOREACH (GROUP full_traffic_filter2 BY ip_src) {
+    total_packets = COUNT(full_traffic_filter2);
+
+    fragmented_packets = FILTER full_traffic_filter2 BY (ip_frag_offset > 0);
     packets_fragment_marked = COUNT(fragmented_packets);
+
+    distinct_udp_sport = DISTINCT full_traffic_filter2.udp_sport;
 
     GENERATE 
         group AS src_ip, 
@@ -181,84 +238,35 @@ attack_traffic_sip_statistics = FOREACH (GROUP attack_traffic BY ip_src) {
         -- distinct_udp_sport AS distinct_udp_sport,
         COUNT(distinct_udp_sport) AS num_distinct_udp_sport,
         --
-        AVG(attack_traffic.ip_total_length) AS pkt_length_avg,
-        FLATTEN(MEDIAN(attack_traffic.ip_total_length)) AS pkt_length_median,
-        SQRT(VARIANCE(attack_traffic.ip_total_length)) AS pkt_length_std_dev,
+        AVG(full_traffic_filter2.ip_total_length) AS pkt_length_avg,
+        FLATTEN(MEDIAN(full_traffic_filter2.ip_total_length)) AS pkt_length_median,
+        MIN(full_traffic_filter2.ip_total_length) AS pkt_length_min,
+        MAX(full_traffic_filter2.ip_total_length) AS pkt_length_max,
+        SQRT(VARIANCE(full_traffic_filter2.ip_total_length)) AS pkt_length_std_dev,
         --
-        AVG(attack_traffic.ip_ttl) AS ttl_avg,
-        SQRT(VARIANCE(attack_traffic.ip_ttl)) AS ttl_std_dev;
+        AVG(full_traffic_filter2.ip_ttl) AS ttl_avg,
+        MIN(full_traffic_filter2.ip_ttl) AS ttl_min,
+        MAX(full_traffic_filter2.ip_ttl) AS ttl_max,
+        SQRT(VARIANCE(full_traffic_filter2.ip_ttl)) AS ttl_std_dev;
 }
 
-STORE (ORDER attack_traffic_sip_statistics BY total_packets DESC) INTO '$outputFolder/output_pig/attack_traffic_sip_statistics' USING PigStorage(',', '-schema');
+STORE (ORDER full_traffic_filter2_sip_statistics BY total_packets DESC) INTO '$outputFolder/output_pig/full_traffic_filter2_sip_statistics' USING PigStorage(',', '-schema');
 
+-- =========================================================
+-- GENERATE (1) SOURCE IP (2) MBPS AVG (3) PPS AVG
+-- =========================================================
+full_traffic_filter2_sip_group = FOREACH (GROUP full_traffic_filter2 BY (ip_src, (ts / $binsize * $binsize))) GENERATE 
+        FLATTEN(group) AS (src_ip,bin),
+        (float)(SUM(full_traffic_filter2.ip_total_length))*8/1000000 AS mbits_per_bin,
+        COUNT(full_traffic_filter2) AS pkts_per_bin;
 
+full_traffic_filter2_sip_bps_pps_avg = FOREACH (GROUP full_traffic_filter2_sip_group BY src_ip) GENERATE 
+        group AS src_ip,
+        AVG(full_traffic_filter2_sip_group.mbits_per_bin) AS mbits_per_bin_avg,
+        AVG(full_traffic_filter2_sip_group.pkts_per_bin) AS pkts_per_bin_avg;
 
--- -- =========================================================
--- -- sip_pkt_top1_sport - method 1
--- -- =========================================================
+STORE (ORDER full_traffic_filter2_sip_bps_pps_avg BY pkts_per_bin_avg DESC) INTO '$outputFolder/output_pig/full_traffic_filter2_sip_bps_pps_avg' USING PigStorage(',', '-schema');
 
--- -- There must be a simpler way!!!
-
--- sip_top_sport = FOREACH group_sip_sport_attack{
---     ordered_sport_count = ORDER sport_count BY count DESC;
---     top_sport_count = LIMIT ordered_sport_count 1;       
---     GENERATE sip, FLATTEN(top_sport_count) as (sport, count);
--- }
--- /*DUMP sip_top_sport;*/
-
--- -- =========================================================
--- -- sip_pkt_top1_sport_percentage
--- -- =========================================================
-
--- sip_total_count_sport = FOREACH group_sip_sport_attack GENERATE sip, SUM(sport_count.count) as total;
--- /*X = JOIN A BY a1, B BY b1;*/
--- joined_top_count = JOIN sip_top_sport BY sip, sip_total_count_sport BY sip;
--- /*DESCRIBE joined_top_count;*/
--- sip_top_sport_percentage = FOREACH joined_top_count GENERATE sip_top_sport::sip, sport, ((float)count/(float)total * 100);
--- /*DUMP sip_top_sport_percentage;*/
-
--- -- =========================================================
--- -- sip_pkt_top1_dport
--- -- =========================================================
--- -- =========================================================
--- -- sip_pkt_top1_dport_percentage
--- -- =========================================================
-
-
-
--- -- =========================================================
--- -- sip_pps [timeseries]      
--- -- =========================================================
--- -- =========================================================
--- -- sip_pps_avg
--- -- =========================================================
--- -- =========================================================
--- -- sip_pps_median
--- -- =========================================================
--- -- =========================================================
--- -- sip_pps_uniq_values
--- -- =========================================================
--- -- =========================================================
--- -- sip_pps_std
--- -- =========================================================
--- -- =========================================================
--- -- sip_bps [timeseries]
--- -- =========================================================
--- -- =========================================================
--- -- sip_bps_avg
--- -- =========================================================
--- -- =========================================================
--- -- sip_bps_median
--- -- =========================================================
--- -- =========================================================
--- -- sip_bps_uniq_values
--- -- =========================================================
--- -- =========================================================
--- -- sip_bps_std
--- -- =========================================================
--- -- =========================================================
--- -- sip_payload_similarity*** (size? value?)
--- -- =========================================================
 
 -- -- ##########################################################
 -- -- IF REFLECTION ATTACK
@@ -266,21 +274,12 @@ STORE (ORDER attack_traffic_sip_statistics BY total_packets DESC) INTO '$outputF
 -- -- =========================================================
 -- -- Calculate the spoofers_total_pps
 -- -- =========================================================
-
-
-
 -- -- =========================================================
 -- -- spoofer_total_pps = amplifiers_total_resps
 -- -- =========================================================
-
 -- -- =========================================================
 -- -- Calculate the spoofer_total_bps
 -- -- =========================================================
-
--- -- =========================================================
--- -- REMEMBER that req_pkt_length is constant (k)
--- -- =========================================================
-
 -- -- =========================================================
 -- -- spoofer_total_bps = amplifiers_total_resps * K
 -- -- =========================================================
@@ -288,26 +287,14 @@ STORE (ORDER attack_traffic_sip_statistics BY total_packets DESC) INTO '$outputF
 -- -- ##########################################################
 -- -- NOTES:
 -- -- ##########################################################
--- -- In the end of everything store 1 attack_summary and 1 attack_sip_summary (table) and move the pcap file out of hdfs
+-- -- In the end of everything -- STORE 1 attack_summary and 1 attack_sip_summary (table) and move the pcap file out of hdfs
 
 -- -- ##########################################################
 -- -- CHALLENGE:
 -- -- ##########################################################
--- -- Store in AVRO!!!! AND PARQET
-
--- -- -- =========================================================
--- -- -- FILTERING BY TCP and UDP
--- -- -- =========================================================
--- -- full_traffic_tcp = FILTER full_traffic BY ip_proto == 6;
--- -- full_traffic_udp = FILTER full_traffic BY ip_proto == 17;
+-- -- -- STORE in AVRO!!!! AND PARQET
 
 
--- -- =========================================================
--- -- Generate independent tcp and upd subsets
--- -- =========================================================
-
--- -- attack_traffic_tcp = FILTER full_traffic BY ip_proto == 6;
--- -- attack_traffic_udp = FILTER full_traffic BY ip_proto == 17;
 
 -- =========================================================
 -- GENERATING CSVs FROM THE PIG OUTPUT
@@ -316,8 +303,12 @@ sh output/preparing_csv.sh;
 sh cp output/DataAnalysis.html $outputFolder/index.html
 sh cp output/jquery.csv-0.71.js $outputFolder/
 
--- =========================================================
--- TRANSFERING THE RESULTS TO A APACHE SERVER
--- =========================================================
+-- -- =========================================================
+-- -- TRANSFERING THE RESULTS TO A APACHE SERVER
+-- -- =========================================================
 sh mv $outputFolder /Applications/MAMP/htdocs/
 sh open http://localhost:8888/TrafficAnalysis_$filePcap
+
+-- -- sh cd $outputFolder
+-- -- sh python -m SimpleHTTPServer
+-- -- sh open http://localhost:8000/TrafficAnalysis_$filePcap
