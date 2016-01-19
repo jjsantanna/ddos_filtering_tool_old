@@ -1,0 +1,1521 @@
+
+0,Reserved,Official
+1,TCPMUX,Official
+2,CompressNET,Official
+3,CompressNET,Official
+4,Unassigned,Official
+5,RemoteJob,Official
+6,Unassigned,Official
+7,Echo,Official
+8,Unassigned,Official
+9,Discard,Official
+9,Wake-on-LAN,Unofficial
+10,Unassigned,Official
+11,Systat,Official
+12,Unassigned,Official
+13,Daytime,Official
+14,Unassigned,Official
+15,Netstat,Unofficial
+16,Unassigned,Official
+17,Quote,Official
+18,Messagel,Unofficial
+20,FTP,Official
+21,FTP,Official
+22,SSH,Official
+23,Telnet,Official
+24,Priv-mail,Official
+25,SMTP,Official
+26,Unassigned,Official
+27,NSW,Official
+29,ICP,Official
+33,Display,Official
+35,Printer,Official
+37,TIME,Official
+39,RLP,Official
+40,Unassigned,Official
+42,ARPA,Official
+42,WINS,Unofficial
+43,WHOIS,Official
+47,FTP,Official
+49,TACACS+,Official
+50,ESP,Official
+51,IMP,Official
+52,XNS,Official
+53,DNS,Official
+54,XNS,Official
+55,ISI-GL,Official
+56,XNS,Official
+56,RAP,Unofficial
+57,Terminal,Official
+58,XNS,Official
+64,Comms,Official
+67,DHCP,Official
+68,DHCP,Official
+69,TFTP,Official
+70,Gopher,Official
+71,NETRJS,Official
+72,NETRJS,Official
+73,NETRJS,Official
+74,NETRJS,Official
+77,RemoteJob,Official
+79,Finger,Official
+80,HTTP,Official
+80,QUIC,Unofficial
+81,Torpark,Unofficial
+82,Torpark,Unofficial
+88,Kerberos,Official
+90,DNSIX,Official
+90,Dotcom,Unofficial
+99,WIP,Unofficial
+100,CyberGateRAT,Unofficial
+101,NIC,Official
+102,TSAP,Official
+104,DICOM,Official
+105,CCSO,Official
+107,TELNET,Official
+108,SNA,Official
+109,POP2,Official
+110,POP3,Official
+111,RPC,Official
+113,Auth,Official
+113,Auth,Official
+115,SFTP,Official
+117,UUCP,Official
+118,SQL,Official
+119,NNTP,Official
+123,NTP,Official
+126,NXEdit,Official
+135,DCE,Official
+135,EPMAP,Unofficial
+137,NetBIOS,Official
+138,NetBIOS,Official
+139,NetBIOS,Official
+143,IMAP,Official
+152,BFTP,Official
+153,SGMP,Official
+156,SQL,Official
+158,DMSP,Unofficial
+161,SNMP,Official
+162,SNMPTRAP,Official
+170,Print-srv,,Official
+175,VMNET,Official
+177,XDMCP,Official
+179,BGP,Official
+194,IRC,Official
+199,SMUX,Official
+201,AppleTalk,Official
+209,QMTP,Official
+210,Z39.50,Official
+213,IPX,Official
+218,MPP,Official
+220,IMAP, version 3,Official
+259,ESRO,Official
+262,Arcisdms,Official
+264,BGMP,Official
+280,http-mgmt,Official
+300,ThinLinc,Unofficial
+308,Novastor,Official
+311,MacServer,Official
+318,TSP,Official
+319,PTP,Official
+320,PTP,Official
+350,MATIP,Official
+351,MATIP,Official
+356,cloanto-net-1,Official
+366,ODMR,Official
+369,Rpc2portmap,Official
+370,codaauth2,Official
+370,codaauth2,Official
+370,securecast1,Unofficial
+371,ClearCase,Official
+383,HPAlarm,Official
+384,RemoteServer,Official
+387,AURP,Official
+389,LDAP,Official
+399,PhaseV+,Official
+401,UPS,Official
+427,SLP,Official
+433,NNSP,Official
+434,MobileIP,Official
+443,HTTPS,Official
+443,QUIC,Unofficial
+444,SNPP,Official
+445,Microsoft-DS,Official
+445,Microsoft-DS,Official
+464,KerberosPassword,Official
+465,RendezvousDirectory,Official
+465,SMTPS,Unofficial
+475,tcpnethaspsrv,Official
+491,GO-Global,Unofficial
+497,DantzRetrospect,Official
+500,ISAKMP,Official
+502,Modbus,Official
+504,Citadel,Official
+510,FCP,Official
+512,Rexec,Official
+512,COMSAT,Official
+513,Rlogin,Official
+513,Who,Official
+514,RemoteShell,Official
+514,Syslog,Official
+515,LPD,Official
+517,Talk,Official
+518,NTalk,Official
+520,efs,Official
+520,RIP,Official
+521,RIPng,Official
+524,NCP,Official
+525,Timeserver,Official
+530,RPC,Official
+531,AOLMessenger,Unofficial
+532,netnews,Official
+533,netwall,Official
+540,UUCP,Official
+542,Commerce Applications,Official
+543,klogin,Official
+544,kshell,Official
+545,OSIsoft,Unofficial
+546,DHCPv6,Official
+547,DHCPv6,Official
+548,AFP over Official
+550,new-rwho,Official
+554,RTSP,Official
+556,RFS_server,Official
+560,Rmonitor,Official
+561,Monitor,Official
+563,NNTPS,Official
+564,9P,Unofficial
+587,SMTP,Official
+591,FileMaker,Official
+593,RPC,Official
+601,RSS,Official
+604,TUNNEL,Official
+623,ASF-RMCP,Official
+625,ODProxy,Unofficial
+631,IPP,Official
+631,CUPS,Unofficial
+635,RLZ,Official
+636,LDAPS,Official
+639,MSDP,Official
+641,NexusRemote,Official
+643,SANity,Official
+646,LDP,Official
+647,DHCP,Official
+648,RRP,Official
+651,IEEE-MMS,Official
+653,Nexus,Official
+654,MMP,Official
+655,TincDaemon,Unofficial
+657,IBM RMC,Official
+660,MacServerOfficial
+666,Doom, Official
+666,airserv-ng,Unofficial
+674,ACAP,Official
+688,REALM-RUSD,Official
+690,VATP,Official
+691,MSExchangeRouting,Official
+694,Linux-HA,Official
+695,IEEE-MMS-SSL,Official
+698,OLSR,Official
+700,EPP,Official
+701,LMP,Official
+702,IRIS,Official
+706,SILC,Official
+711,CiscoTag,Official
+712,TBRPF,Official
+749,Kerberos,Official
+750,kerberos-iv,Official
+751,kerberos_master,Unofficial
+752,Kpasswd,Unofficial
+753,RRH,Official
+753,RRH,Official
+753,userreg_server,Unofficial
+754,tell send,Official
+754,krb5_prop,Unofficial
+754,tell send,Official
+760,krbupdate,Unofficial
+782,Conserver,Unofficial
+783,SpamAssassin,Unofficial
+800,mdbe,Official
+808,PortSharing,Unofficial
+829,CertificateManagement,Unofficial
+843,AdobeFlash,Unofficial
+847,DHCP,Official
+848,GDOI,Official
+860,iSCSI,Official
+861,OWAMP,Official
+862,TWAMP,Official
+873,rsync,Official
+888,cddbp,Unofficial
+888,IBMRemote,Unofficial
+897,BrocadeSMI-S,Unofficial
+898,BrocadeSMI-S,Unofficial
+901,SWAT,Unofficial
+901,VMware,Unofficial
+902,ideafarm-door,Official
+902,VMware,Unofficial
+903,ideafarm-panic,Official
+903,VMware,Unofficial
+904,VMware,Unofficial
+911,NCA,Unofficial
+944,NFS,Unofficial
+953,DNS,Unofficial
+973,NFS,Unofficial
+981,SofaWare,Unofficial
+987,MicrosoftSBS,Unofficial
+989,FTPS,Official
+990,FTPS,Official
+991,NAS,Official
+992,TELNET,Official
+993,IMAPS,Official
+994,IRCS,Official
+995,POP3S,Official
+999,ScimoreDB,Unofficial
+1002,Opsware,Unofficial
+1010,ThinLinc,Unofficial
+1023,Reserved,Official
+
+The range of port numbers from 1024 to 49151 are the registered ports. They are assigned by IANA for specific service upon application by a requesting entity.[1] On most systems, registered ports can be used by ordinary users.
+
+This is an incomplete list of notable ports. See the Service Name and Transport Protocol Port Number Registry of IANA for the complete list of assigned ports.
+Port,Description,Status
+1025,NFS,Unofficial
+1025,IIS,Unofficial
+1025,Teradata,Unofficial
+1026,Often used by Microsoft DCOM services,Unofficial
+1027,Task scheduler,Unofficial
+1027,Native IPv6 behind IPv4-to-IPv4 NAT Customer Premises Equipment (6a44)[44],Official
+1029,Microsoft DCOM services,Unofficial
+1030,services.exe,Unofficial
+1058,nim, IBM AIX Network Installation Manager (NIM),Official
+1059,nimreg, IBM AIX Network Installation Manager (NIM),Official
+1064,lsass.exe,Unofficial
+1080,SOCKS proxy,Official
+1085,WebObjects,Official
+1098,rmiactivation, Java remote method invocation (RMI) activation,Official
+1099,rmiregistry, Java remote method invocation (RMI) registry,Official
+1109,Kerberos Post Office Protocol (KPOP),Unofficial
+1110,EasyBits School network discovery protocol (for Intel's CMPC platform),Unofficial
+1119,Used by some Blizzard games[45],Unofficial
+1140,AutoNOC protocol,Official
+1167,Phone, conference calling,Unofficial
+1169,Tripwire,Official
+1176,Perceptive Automation[dead link] Indigo[dead link] Home automation server—configuration and control access,Official
+1182,AcceleNet Intelligent Transfer Protocol,Official
+1194,OpenVPN,Official
+1198,The cajo project Free dynamic transparent distributed computing in Java,Official
+1200,scol, protocol used by SCOL 3D virtual worlds server to answer world name resolution client request[46],Official
+1200,scol, protocol used by SCOL 3D virtual worlds server to answer world name resolution client request,Official
+1200,Steam Friends Applet,Unofficial
+1214,Kazaa,Official
+1217,Uvora Online,Unofficial
+1220,QuickTime Streaming Server administration,Official
+1223,TrulyGlobal Protocol (TGP, also known as The Gur Protocol (named for Gur Kimchi of TrulyGlobal),Official
+1232,first-defense, Remote systems monitoring service from Nexum, Inc,Official
+1234,VLC media player default port for UDP/RTP stream,Unofficial
+1234,Mercurial and git default ports for serving Hyper Text,Unofficial
+1236,Symantec BindView Control UNIX Default port for TCP management server connections,Unofficial
+1241,Nessus Security Scanner,Official
+1270,Microsoft System Center Operations Manager (SCOM) (formerly Microsoft Operations Manager (MOM)) agent,Official
+1293,Internet Protocol Security (IPSec),Official
+1301,Palmer Performance OBDNet,Unofficial
+1306,Boomerang,Official
+1309,Altera Quartus jtagd,Official
+1311,Dell OpenManage HTTPS,Official
+1313,Xbiim (Canvii server)[citation needed],Unofficial
+1314,Festival Speech Synthesis System,Unofficial
+1319,AMX ICSP,Official
+1319,AMX ICSP,Official
+1323,brcd (Todd Picquelle - multi-purpose application port),Official
+1337,neo4j-shell,Unofficial
+1337,Men and Mice DNS,Official
+1337,WASTE Encrypted File Sharing Program,Unofficial
+1341,Qubes (Manufacturing Execution System),Official
+1344,Internet Content Adaptation Protocol,Official
+1352,IBM Lotus Notes/Domino (RPC) protocol,Official
+1364,IBM Connect:Direct/FTP+ FTPS Protocol: FTP over TLS/SSL,Unofficial
+1387,cadsi-lm, LMS International (formerly Computer Aided Design Software, Inc. (CADSI)) LM,Official
+1414,IBM WebSphere MQ (formerly known as MQSeries),Official
+1417,Timbuktu Service 1 Port,Official
+1418,Timbuktu Service 2 Port,Official
+1419,Timbuktu Service 3 Port,Official
+1420,Timbuktu Service 4 Port,Official
+1431,Reverse Gossip Transport Protocol (RGTP), used to access a General-purpose Reverse-Ordered Gossip Gathering System (GROGGS) bulletin board, such as that implemented on the Cambridge University's Phoenix system,Official
+1433,Microsoft SQL Server database management system (MSSQL) server,Official
+1434,Microsoft SQL Server database management system (MSSQL) monitor,Official
+1470,Solarwinds Kiwi Log Server,Official
+1481,AIRS,Official
+1494,Citrix XenApp Independent Computing Architecture (ICA) thin client protocol[47],Official
+1500,IBM Tivoli Storage Manager server,Unofficial
+1500,NetGuard GuardianPro firewall (NT4-based) Remote Management,Unofficial
+1501,IBM Tivoli Storage Manager client scheduler,Unofficial
+1501,NetGuard GuardianPro firewall (NT4-based) Authentication Client,Unofficial
+1503,Windows Live Messenger (Whiteboard and Application Sharing),Unofficial
+1512,Microsoft Windows Internet Name Service (WINS),Official
+1513,Garena Garena Gaming Client,Official
+1521,nCube License Manager, SQLnet,Official
+1521,Oracle database default listener, in future releases[when?] official port 2483,Unofficial
+1524,ingreslock, ingres,Official
+1527,Apache Derby Network Server default port,Unofficial
+1528,Oracle database common alternative for listener,Unofficial
+1533,IBM Sametime IM—Virtual Places Chat Microsoft SQL Server,Official
+1534,Eclipse Target Communication Framework (TCF) agent discovery[48],Unofficial
+1547,Laplink,Official
+1550,3m-image-lm Image Storage license manager 3M Company,Official
+1550,Gadu-Gadu (direct client-to-client),Unofficial
+1580,IBM Tivoli Storage Manager server web interface,Unofficial
+1581,IBM Tivoli Storage Manager web client,Unofficial
+1581,MIL STD 2045-47001 VMF,Official
+1583,Pervasive PSQL,Unofficial
+1589,Cisco VLAN Query Protocol (VQP) / VLAN Management Policy Server (VMPS),Unofficial
+1590,GE Smallworld Datastore Server (SWMFS/Smallworld Master Filesystem)[citation needed],Unofficial
+1604,Darkcomet RAT server (remote administration tool/trojan),Unofficial
+1627,	iSketch[citation needed],Unofficial
+1628,LonWorks Remote Network Interface (RNI),Official
+1628,LonWorks IP tunneling (ANSI EIA/CEA-852, EN 14908-4),Official
+1629,Alternate LonWorks Remote Network Interface (RNI),Official
+1629,LonWorks IP tunneling configuration server (ANSI EIA/CEA-852, EN 14908-4),Official
+1645,Old radius port,[when?] RADIUS authentication protocol. Enabled for compatibility reasons by default on Cisco and Juniper Networks RADIUS servers.[49] Official port is 1812. TCP port 1645 MUST NOT be used.[50],Unofficial
+1646,Old radacct port, RADIUS accounting protocol. Enabled for compatibility reasons by default on Cisco and Juniper Networks RADIUS servers. Official port is 1813. TCP port 1646 MUST NOT be used.[50],Unofficial
+1666,Perforce,Unofficial
+1677,Novell GroupWise clients in client/server access mode,Official
+1688,Microsoft Key Management Service for KMS Windows Activation,Unofficial
+1700,Cisco RADIUS Change of Authorization for TrustSec[citation needed],Unofficial
+1701,Layer 2 Forwarding Protocol (L2F) & Layer 2 Tunneling Protocol (L2TP),Official
+1707,Windward Studios,Official
+1707,Romtoc Interactive Modular Multiplayer Client-Server Online Application Interface & Layer 2 Tunneling Protocol (L2TP),Unofficial
+1716,America's Army Massively multiplayer online game (MMO),Unofficial
+1719,H.323 registration and alternate communication,Official
+1720,H.323 call signaling,Official
+1723,Microsoft Point-to-Point Tunneling Protocol (PPTP),Official
+1725,Valve Steam Client,Unofficial
+1755,Microsoft Media Services (MMS, ms-streaming),Official
+1761,cft-0,Official
+1761,Novell Zenworks Remote Control utility,Unofficial
+1762–1768,cft-1 to cft-7,Official
+1776,Federal Emergency Management Information System,Official
+1792,Moby[citation needed],Unofficial
+1801,Microsoft Message Queuing,Official
+1812,RADIUS authentication protocol, radius,Official
+1813,RADIUS accounting protocol, radacct,Official
+1863,Microsoft Notification Protocol (MSNP), used by the Microsoft Messenger service and a number of Instant Messaging clients,Official
+1883,MQ Telemetry Transport (MQTT), formerly known as MQIsdp (MQSeries SCADA protocol),Official
+1886,Leonardo over IP Pro2col Ltd,Unofficial
+1900,Microsoft Simple Service Discovery Protocol (SSDP), discovery of UPnP devices,Official
+1920,IBM Tivoli monitoring console,Unofficial
+1935,Adobe Systems Macromedia Flash Real Time Messaging Protocol (RTMP) "plain" protocol,Official
+1947,SentinelSRM (hasplm), Aladdin HASP License Manager,Official
+1967,Cisco IOS IP Service Level Agreements (IP SLAs) Control Protocol[citation needed],Unofficial
+1970,Netop Remote Control,Official
+1971,Netop School,Official
+1972,InterSystems Caché,Official
+1975–1977,Cisco TCO (Documentation),Official
+1978,The Remote Mouse Server Port,Official
+1984,Big Brother and related Xymon (formerly Hobbit) System and Network Monitor,Official
+1985,Cisco Hot Standby Router Protocol (HSRP),Official
+1997,Chizmo Networks Transfer Tool[citation needed],Unofficial
+1998,Cisco X.25 over TCP (XOT) service,Official
+2000,Cisco SCCP (Skinny),Official
+2001,CAPTAN Test Stand System,Unofficial
+2002,Secure Access Control Server (ACS) for Windows[citation needed],Unofficial
+2008,Stylex Secured server,Unofficial
+2010,Artemis: Spaceship Bridge Simulator default,Unofficial
+2014,Remoticus,Unofficial
+2030,	Oracle services for Microsoft Transaction Server,Unofficial
+2031,mobrien-chat (http://chat.mobrien.com:2031),Official
+2041,Mail.Ru Agent communication protocol[citation needed],Unofficial
+2049,Network File System,Official
+2050,Snell RollCall,Official
+2051,Snell IQ,Official
+2053,knetd Kerberos de-multiplexor,Unofficial
+2055,Iliad-Odyssey Protocol,Official
+2056,Civilization 4 multiplayer,Unofficial
+2071,Axon Control Protocol (ACP),Official
+2074,Vertel VMF SA (e.g., App. SpeakFreely),Official
+2077,TrelliSoft Agent,Official
+2080,Autodesk NLM (FLEXlm),Official
+2082,Infowave Mobility Server,Official
+2082,CPanel default,Unofficial
+2083,Secure Radius Service (radsec),Official
+2083,CPanel default SSL,Unofficial
+2086,GNUnet,Official
+2086,WebHost Manager default,Unofficial
+2087,WebHost Manager default SSL,Unofficial
+2095,CPanel default web mail,Unofficial
+2096,CPanel default SSL web mail,Unofficial
+2100,Warzone 2100 multiplayer,Unofficial
+2102,zephyr-srv Project Athena Zephyr Notification Service server,Official
+2103,zephyr-clt Project Athena Zephyr Notification Service serv-hm connection,Official
+2104,zephyr-hm Project Athena Zephyr Notification Service hostmanager,Official
+2105,IBM MiniPay,Official
+2105,eklogin Kerberos encrypted remote login (rlogin),Unofficial
+2105,zephyr-hm-srv Project Athena Zephyr Notification Service hm-serv connection (should use port 2102),Unofficial
+2115,MIS Department,Unofficial
+2121,FTP proxy[citation needed],Unofficial
+2142,TDMoIP (RFC 5087),Official
+2144,Iron Mountain LiveVault Agent[citation needed],Unofficial
+2145,Iron Mountain LiveVault Agent[citation needed],Unofficial
+2156,Talari Reliable Protocol,Official
+2159,GDB remote debug port,Official
+2160,APC Agent,Official
+2161,APC Agent,Official
+2179,VMConnect to Hyper-V hosts,Official
+2181,EForward-document transport system,Official
+2181,Apache ZooKeeper default client port,Unofficial
+2190,TiVoConnect Beacon[citation needed],Unofficial
+2195,Apple Push Notification Service Link,Unofficial
+2196,Apple Push Notification, Feedback Link,Unofficial
+2200,Tuxanci game server[51],Unofficial
+2210,NOAAPORT Broadcast Network,Official
+2210,MikroTik Remote management for "The Dude",Unofficial
+2211,EMWIN,Official
+2211,EMWIN,Official
+2211,MikroTik Secure management for "The Dude",Unofficial
+2212,LeeCO POS Server Service,Official
+2212,Port-A-Pour Remote WinBatch,Unofficial
+2219,NetIQ NCAP Protocol,Official
+2220,NetIQ End2End,Official
+2221,ESET anti-virus updates[52],Unofficial
+2222,ESET remote administrator[52],Unofficial
+2222,DirectAdmin default,Unofficial
+2223,ESET Remote administrator [52],Unofficial
+2223,Microsoft Office OS X antipiracy network monitor[citation needed],Unofficial
+2224–2226,ESET Remote administrator [52],Unofficial
+2261,CoMotion master,Official
+2262,CoMotion backup,Official
+2266,M-Files,Official
+2301,HP System Management Redirect to port 2381[citation needed],Unofficial
+2302,ArmA multiplayer (default for game),Unofficial
+2302,Halo: Combat Evolved multiplayer,Unofficial
+2303,ArmA multiplayer (default for server reporting) (default port for game +1),Unofficial
+2305,ArmA multiplayer (default for VoN) (default port for game +3),Unofficial
+2323,Philips TVs based on jointSPACE[53],Unofficial
+2345,Default Used by Symon Communications - Symon2KpipeServer -can be changed by administrator to anything,Unofficial
+2351,AIM game LAN network port,Unofficial
+2368,Ghost Blogging Platform,Unofficial
+2369,Default for BMC Software Control-M/Server Configuration Agent, though often changed during installation,Unofficial
+2370,Default for BMC Software Control-M/Server, to allow the Control-M/Enterprise Manager to connect to the Control-M/Server,Unofficial
+2375,Docker REST API (plain),Official
+2376,Docker REST API (SSL),Official
+2379,KGS Go Server,Unofficial
+2381,HP Insight Manager default for Web server[citation needed],Unofficial
+2399,FileMaker Data Access Layer (ODBC/JDBC),Official
+2401,CVS version control system password-based server,Official
+2404,IEC 60870-5 -104, used to send electric power telecontrol messages between two systems via directly connected data circuits,Official
+2420,Westell Remote Access,Official
+2424,OrientDB database listening for Binary client connections,Official
+2427,Cisco Media Gateway Control Protocol (MGCP),Official
+2447,ovwdb—OpenView Network Node Manager (NNM) daemon,Official
+2463,LSI RAID Management formerly Symbios Logic,Official
+2480,OrientDB database listening for HTTP client connections,Official
+2483,Oracle database listening for insecure client connections to the listener, replaces port 1521[when?],Official
+2484,Oracle database listening for SSL client connections to the listener,Official
+2500,THEÒSMESSENGER listening for TheòsMessenger client connections,Official
+2501,TheosNet-Admin listening for TheòsMessenger client connections,Official
+2518,Willy,Official
+2525,SMTP alternate[citation needed],Unofficial
+2535,Multicast Address Dynamic Client Allocation Protocol (MADCAP),Official
+2540,LNS/OpenLns Remote Server,Official
+2541,LNS/OpenLns Remote Server,Official
+2541,LonTalk/IP,Official
+2546–2548,EVault data protection services (Vytal Vault),Official
+2593,RunUO, Ultima Online server,Unofficial
+2598,ICA (Citrix) with Session Reliability; port 1494 without session reliability[47],Unofficial
+2599,SonicWALL anti-spam traffic between Remote Analyzer (RA) and Control Center (CC),Unofficial
+2610,TrackiT mobile device monitoring,Unofficial
+2612,QPasa from MQSoftware,Official
+2636,Solve Service,Official
+2638,SQL Anywhere database server[54][55],Official
+2641,HDL Server from CNRI,Official
+2642,Tragic,Official
+2643,NetApp SANTricity Storage Manager Jview process,Official
+2698,Citel/MCK IVPIP,Official
+2703,Vipul's Razor distributed, collaborative, spam-detection-and-filtering network,Unofficial
+2710,XBT Tracker experimental UDP tracker extension,Unofficial
+2710,XBT Tracker,Unofficial
+2710,Knuddels.de[citation needed],Unofficial
+2735,NetIQ Monitor Console,Official
+2809,corbaloc:iiop URL, per the CORBA 3.0.3 specification,Official
+2809,IBM WebSphere Application Server (WAS) rmi default (based on CORBA),Unofficial
+2811,gsi ftp, per the GridFTP specification,Official
+2827,I2P Basic Open Bridge API,Unofficial
+2226,ESET Remote administrator [52],Unofficial
+2868,Norman Proprietary Event Protocol (NPEP),Official
+2944,Megaco text H.248,Unofficial
+2945,Megaco binary (ASN.1) H.248,Unofficial
+2947,gpsd, GPS daemon,Official
+2948,WAP push Multimedia Messaging Service (MMS),Official
+2949,WAP pushsecure Multimedia Messaging Service (MMS),Official
+2967,Symantec AntiVirus Corporate Edition,Unofficial
+3000,Miralix License server[citation needed],Unofficial
+3000,Cloud9 Integrated Development Environment server,Unofficial
+3000,Ruby on Rails development default[56],Unofficial
+3000,Meteor development default[57],Unofficial
+3000,BitTorrent Sync,Unofficial
+3000,Distributed Interactive Simulation (DIS), modifiable default,Unofficial
+3001,Miralix Phone Monitor[citation needed],Unofficial
+3001,Opsware server (Satellite),Unofficial
+3002,Miralix CSTA[citation needed],Unofficial
+3003,Miralix GreenBox API[citation needed],Unofficial
+3004,Miralix InfoLink[citation needed],Unofficial
+3005,Miralix TimeOut[citation needed],Unofficial
+3006,Miralix SMS Client Connector[citation needed],Unofficial
+3007,Miralix OM Server[citation needed],Unofficial
+3008,Miralix Proxy[citation needed],Unofficial
+3017,Miralix IVR and Voicemail[citation needed],Unofficial
+3020,CIFS / SMB,Official
+3025,netpd.org[citation needed],Unofficial
+3030,NetPanzer,Unofficial
+3040,GoLabs Update Port / Project Open Cannibal Update Port,Official
+3050,gds_db (Interbase/Firebird),Official
+3051,Galaxy Server (Gateway Ticketing Systems),Official
+3052,APC PowerChute Network[1],Official
+3071,Call of duty Black ops,Official
+3074,Xbox LIVE and/or Games for Windows – Live,Official
+3100,SMAUSA OpCon Scheduler as the default listen port[citation needed],Official
+3101,BlackBerry Enterprise Server communication to cloud,Unofficial
+3119,D2000 Entis/Actis Application server,Official
+3128,Web caches and the default for the Squid (software),Unofficial
+3128,Tatsoft default client connection[citation needed],Unofficial
+3141,devpi Python package server[58],Unofficial
+3162,Standard Floating License Manager (SFLM),Official
+3180,Human Inference Suite6 HTML,Unofficial
+3181,Human Inference Suite6 HTTPS,Unofficial
+3182,Human Inference Suite6 AJP,Unofficial
+3225,Fiber Channel over Internet Protocol (FCIP),Official
+3233,WhiskerControl research control protocol,Official
+3235,Galaxy Network Service (Gateway Ticketing Systems),Official
+3260,iSCSI target,Official
+3268,msft-gc, Microsoft Global Catalog (LDAP service which contains data from Active Directory forests),Official
+3269,msft-gc-ssl, Microsoft Global Catalog over SSL (similar to port 3268, LDAP over SSL),Official
+3283,Apple Remote Desktop reporting (officially Net Assistant, referring to an earlier product),Official
+3290,Virtual Air Traffic Simulation network voice communication.,Unofficial
+3299,SAP-Router (routing application proxy for SAP R/3),Unofficial
+3300,Debate Gopher backend database system[citation needed],Unofficial
+3305,odette-ftp, Odette File Transfer Protocol (OFTP),Official
+3306,MySQL database system,Official
+3313,Verisys file integrity monitoring software,Unofficial
+3316,AzimuthVMS database port for the CCTV recording software AzimuthVMS,Unofficial
+3323,DECE GEODI Server,Unofficial
+3333,Eggdrop, an IRC bot default port[59],Unofficial
+3333,Network Caller ID server,Unofficial
+3333,CruiseControl.rb[60],Unofficial
+3386,GTP' 3GPP GSM/UMTS CDR logging protocol,Official
+3389,Microsoft Terminal Server (RDP) officially registered as Windows Based Terminal (WBT)[61],Official
+3396,Novell NDPS Printer Agent,Official
+3412,xmlBlaster,Official
+3455,Reservation Protocol (RSVP),Official
+3423,Xware xTrm Communication Protocol,Official
+3424,Xware xTrm Communication Protocol over SSL,Official
+3478,STUN, a protocol for NAT traversal[62],Official
+3478,TURN, a protocol for NAT traversal[63] (extension to STUN),Official
+3483,Slim Devices discovery protocol,Official
+3483,Slim Devices SlimProto protocol,Official
+3493,Network UPS Tools (NUT),Official
+3516,Smartcard Port,Official
+3527,Microsoft Message Queuing,Official
+3535,SMTP alternate[64],Unofficial
+3544,Teredo tunneling,Official
+3562,SDBProxy Simple DataBase middle-ware and proxy,Official
+3605,ComCam IO Port,Official
+3606,Splitlock Server,Official
+3632,Distcc, distributed compiler,Official
+3645,Cyc,Official
+3659,Battlefield 4,Unofficial
+3667,Information Exchange,Official
+3689,Digital Audio Access Protocol (DAAP), used by Apple's iTunes and AirPort Express,Official
+3690,Subversion (SVN) version control system,Official
+3702,Web Services Dynamic Discovery (WS-Discovery), used by various components of Windows Vista and later,Official
+3724,Some Blizzard games[45],Official
+3724,Club Penguin Disney online game for kids,Unofficial
+3725,Netia NA-ER Port,Official
+3768,RBLcheckd server daemon,Official
+3784,Bidirectional Forwarding Detection (BFD)for IPv4 and IPv6 (Single Hop) (RFC 5881),Official
+3785,VoIP program used by Ventrilo,Unofficial
+3799,RADIUS change of authorization,Official
+3800,HGG programs[citation needed],Unofficial
+3804,Harman Professional HiQnet protocol,Official
+3825,RedSeal Networks client/server connection[citation needed],Unofficial
+3826,WarMUX game server,Official
+3826,RedSeal Networks client/server connection[citation needed],Unofficial
+3835,RedSeal Networks client/server connection[citation needed],Unofficial
+3841,ShipRush client/server communication,Official
+3830,System Management Agent, developed and used by Cerner to monitor and manage solutions,Official
+3856,ERP Server Application used by F10 Software,Unofficial
+3880,IGRS,Official
+3868,Diameter base protocol (RFC 3588),Official
+3872,Oracle Enterprise Manager Remote Agent,Official
+3899,Remote Administrator,Unofficial
+3900,udt_os, IBM UniData UDT OS[65],Official
+3945,EMCADS service, a Giritech product used by G/On,Official
+3960,Warframe Online,Unofficial
+3962,Warframe Online,Unofficial
+3978,OpenTTD game (masterserver and content service),Unofficial
+3979,OpenTTD game,Unofficial
+3999,Norman distributed scanning service,Official
+4000,Diablo II game,Unofficial
+4001,Microsoft Ants game,Unofficial
+4007,PrintBuzzer printer monitoring socket server[citation needed],Unofficial
+4018,Protocol information and warnings[clarification needed],Official
+4035,IBM Rational Developer for System z Remote System Explorer Daemon,Unofficial
+4045,Solaris lockd NFS lock daemon/manager,Unofficial
+4050,Mud Master Chat protocol (MMCP) - Peer-to-peer communications between MUD clients.[66],Unofficial
+4069,Minger Email Address Verification Protocol[67],Official
+4089,OpenCORE Remote Control Service,Official
+4090,Kerio,Official
+4093,PxPlus Client server interface ProvideX,Official
+4096,Ascom Timeplex Bridge Relay Element (BRE),Official
+4100,	WatchGuard authentication applet default,Unofficial
+4105,Shofar (ShofarNexus),Official
+4111,Xgrid,Official
+4116,Smartcard-TLS,Official
+4117,WatchGuard System Manager,Unofficial
+4125,Microsoft Remote Web Workplace administration,Unofficial
+4172,Teradici PCoIP,Official
+4190,ManageSieve[68],Official
+4201,TinyMUD and various derivatives,Unofficial
+4226,Aleph One, a computer game,Unofficial
+4224,Cisco Audio Session Tunneling[citation needed],Unofficial
+4242,Reverse Battle Tetris,Unofficial
+4242,Orthanc DICOM default,Unofficial
+4242,Quassel distributed IRC client,Unofficial
+4243,Docker implementations, redistributions, and setups default[69][70][71],Unofficial
+4243,CrashPlan,Unofficial
+4303,Simple Railroad Command Protocol (SRCP),Official
+4321,Referral Whois (RWhois) Protocol[72],Official
+4323,Lincoln Electric's ArcLink/XT[citation needed],Unofficial
+4443,Individual Zone Solutions P/L Remote Mail Checking Protocol,Official
+4444,Oracle WebCenter Content: Content Server—Intradoc Socket port. (formerly known as Oracle Universal Content Management). Port though often changed during installation Metasploit: Default listener port,Unofficial
+4444–4445,I2P HTTP/S proxy,Unofficial
+4486,Integrated Client Message Service (ICMS),Official
+4500,IPSec NAT Traversal (RFC 3947),Official
+4502–4534,Microsoft Silverlight connectable ports under non-elevated trust,Official
+4505–4506,Salt master,Unofficial
+4534,Armagetron Advanced server default,Unofficial
+4554,Default Wesk[73] Self-Hosting Port,Unofficial
+4560,default Log4j socketappender port,Unofficial
+4567,Sinatra default server port in development mode (HTTP),Unofficial
+4569,Inter-Asterisk eXchange (IAX2),Official
+4604,Identity Registration Protocol,Official
+4605,Direct End to End Secure Chat Protocol,Official
+4610–4640,QualiSystems TestShell Suite Services,Unofficial
+4662,OrbitNet Message Service,Official
+4662,Default for older versions of eMule[74],Unofficial
+4664,Google Desktop Search,Unofficial
+4672,Default for older versions of eMule[74],Unofficial
+4711,eMule optional web interface[74],Unofficial
+4711,McAfee Web Gateway 7 GUI HTTP default[citation needed],Unofficial
+4712,McAfee Web Gateway 7 GUI HTTPS default[citation needed],Unofficial
+4713,PulseAudio sound server,Unofficial
+4728,Computer Associates Desktop and Server Management (DMP)/Port Multiplexer[75],Official
+4729,GSMTAP[1][76],Official
+4730,Gearman' job server,Official
+4732,Digital Airways' OHM server's commands to mobile devices (used mainly for binary SMS),Official
+4747,Apprentice,Unofficial
+4750,BladeLogic Agent,Unofficial
+4753,SIMON (service and discovery),Official
+4840,OPC UA TCP Protocol for OPC Unified Architecture from OPC Foundation,Official
+4843,OPC UA TCP Protocol over TLS/SSL for OPC Unified Architecture from OPC Foundation,Official
+4847,Web Fresh Communication, Quadrion Software & Odorless Entertainment,Official
+4848,Java, Glassfish Application Server administration default,Unofficial
+4894,LysKOM Protocol A,Official
+4899,Radmin remote administration tool,Official
+4949,Munin Resource Monitoring Tool,Official
+4950,Cylon Controls UC32 Communications Port,Official
+4982,Solar Data Log (JK client app for PV solar inverters)[citation needed],Unofficial
+4993,Home FTP Server web Interface Default Port[citation needed],Unofficial
+5000,commplex-main,Official
+5000,UPnP—Windows network device interoperability,Unofficial
+5000,VTun, VPN Software,Unofficial
+5000,FlightGear multiplayer[77],Unofficial
+5000,Synology Inc. Management Console, File Station, Audio Station,Unofficial
+5000,Flask Development Webserver,Unofficial
+5000,Heroku console access,Official
+5001,commplex-link,Official
+5001,Slingbox and Slingplayer,Unofficial
+5001,Iperf (Tool for measuring TCP and UDP bandwidth performance),Unofficial
+5001,Synology Inc. Secured Management Console, File Station, Audio Station,Unofficial
+5002,ASSA ARX access control system[78],Unofficial
+5002,Drobo Dashboard[79],Unofficial
+5003,FileMaker,Official
+5004,
+
+    TCP
+    DCCP
+
+	Real-time Transport Protocol media data (RTP) (RFC 3551, RFC 4571),Official
+5005,
+
+    TCP
+    DCCP
+
+	Real-time Transport Protocol control protocol (RTCP) (RFC 3551, RFC 4571),Official
+5010,Registered to: TelePath (the IBM FlowMark workflow-management system messaging platform)[80]
+The TCP port is now used for: IBM WebSphere MQ Workflow,Official
+5011,TelePath (the IBM FlowMark workflow-management system messaging platform)[80],Official
+5029,Sonic Robo Blast 2 : Multiplayer[81],Unofficial
+5031,AVM CAPI-over-TCP (ISDN over Ethernet tunneling)[citation needed],Unofficial
+5037,Android ADB server,Unofficial
+5048,Texai Message Service,Official
+5050,Yahoo! Messenger,Unofficial
+5051,ita-agent Symantec Intruder Alert[82],Official
+5060,Session Initiation Protocol (SIP),Official
+5061,Session Initiation Protocol (SIP) over TLS,Official
+5062,Localisation access,Official
+5064,EPICS Channel Access Server[83],Official
+5065,EPICS Channel Access Repeater Beacon[84],Official
+5070,Binary Floor Control Protocol (BFCP)[85],Unofficial
+5082,Qpur Communication Protocol,Official
+5083,Qpur File Protocol,Official
+5084,EPCglobal Low Level Reader Protocol (LLRP),Official
+5085,EPCglobal Low Level Reader Protocol (LLRP) over TLS,Official
+5093,SafeNet, Inc Sentinel LM, Sentinel RMS, License Manager, client-to-server,Official
+5099,SafeNet, Inc Sentinel LM, Sentinel RMS, License Manager, server-to-server,Official
+5104,IBM Tivoli Framework NetCOOL/Impact[86] HTTP Service,Unofficial
+5106,A-Talk Common connection[citation needed],Unofficial
+5107,A-Talk Remote server connection[citation needed],Unofficial
+5108,VPOP3 Mail Server Webmail[citation needed],Unofficial
+5109,VPOP3 Mail Server Status[citation needed],Unofficial
+5110,ProRat Server,Unofficial
+5121,Neverwinter Nights,Unofficial
+5124,TorgaNET (Micronational Darknet),Unofficial
+5125,TorgaNET (Micronational Intelligence Darknet),Unofficial
+5150,ATMP Ascend Tunnel Management Protocol[87],Official
+5150,Malware Cerberus RAT[citation needed],Unofficial
+5151,ESRI SDE Instance,Official
+5151,ESRI SDE Remote Start,Official
+5154,BZFlag,Official
+5176,ConsoleWorks default UI interface[citation needed],Unofficial
+5190,ICQ and AOL Instant Messenger,Official
+5222,Extensible Messaging and Presence Protocol (XMPP) client connection[88][89],Official
+5223,Extensible Messaging and Presence Protocol (XMPP) client connection over SSL,Unofficial
+5228,HP Virtual Room Service,Official
+5228,Google Play, Android Cloud to Device Messaging Service, Google Cloud Messaging,Unofficial
+5246,Control And Provisioning of Wireless Access Points (CAPWAP) CAPWAP control[90],Official
+5247,Control And Provisioning of Wireless Access Points (CAPWAP) CAPWAP data[90],Official
+5269,Extensible Messaging and Presence Protocol (XMPP) server-to-server connection[88][89],Official
+5280,Extensible Messaging and Presence Protocol (XMPP) XEP-0124: Bidirectional-streams Over Synchronous HTTP (BOSH),Official
+5281,Undo License Manager,Official
+5281,Extensible Messaging and Presence Protocol (XMPP)[91],Unofficial
+5298,Extensible Messaging and Presence Protocol (XMPP)[92],Official
+5310,Outlaws (1997 video game). Both UDP and TCP are reserved, but only UDP is used,Official
+5349,STUN (TLS over TCP), a protocol for NAT traversal[62],Official
+5349,TURN (TLS over TCP), a protocol for NAT traversal[63],Official
+5351,NAT Port Mapping Protocol—client-requested configuration for inbound connections through network address translators,Official
+5353,Multicast DNS (mDNS),Official
+5355,Link-Local Multicast Name Resolution (LLMNR), allows hosts to perform name resolution for hosts on the same local link (only provided by Windows Vista and Server 2008),Official
+5357,Web Services for Devices (WSDAPI) (only provided by Windows Vista, Windows 7 and Server 2008),Unofficial
+5358,WSDAPI Applications to Use a Secure Channel (only provided by Windows Vista, Windows 7 and Server 2008),Unofficial
+5394,Kega Fusion, a Sega multi-console emulator[93][94],Unofficial
+5402,mftp, Stratacache[95] OmniCast[dead link] content delivery system MFTP file sharing protocol,Official
+5405,NetSupport Manager,Official
+5412,IBM Rational Synergy (Telelogic Synergy) (Continuus CM) Message Router,Official
+5413,Wonderware SuiteLink service,Official
+5417,SNS Agent,Official
+5421,NetSupport Manager,Official
+5432,PostgreSQL database system,Official
+5433,Bouwsoft file/webserver[96],Unofficial
+5445,Cisco Unified Video Advantage[citation needed],Unofficial
+5450,OSIsoft PI Server Client Access,Unofficial
+5454,OSIsoft PI Asset Framework 1.x Client Access,Unofficial
+5455,OSIsoft PI Asset Framework 1.x Client Access,Unofficial
+5457,OSIsoft PI Asset Framework 2.x Client Access,Unofficial
+5458,OSIsoft PI Notifications Client Access,Unofficial
+5459,OSIsoft PI Asset Framework 2.x Client Access,Unofficial
+5463,OSIsoft PI Asset Based Analytics,Unofficial
+5468,OSIsoft PI Event Driven Notifications Client Access,Unofficial
+5480,VMware VAMI (Virtual Appliance Management Infrastructure)—used for initial setup of various administration settings on Virtual Appliances designed using the VAMI architecture.,Unofficial
+5495,IBM Cognos TM1 Admin server,Unofficial
+5498,Hotline tracker server connection,Unofficial
+5499,Hotline tracker server discovery,Unofficial
+5500,VNC remote desktop protocol—for incoming listening viewer, Hotline control connection,Unofficial
+5501,Hotline file transfer connection,Unofficial
+5517,Setiqueue Proxy server client for SETI@Home project,Unofficial
+5550,Hewlett-Packard Data Protector[citation needed],Unofficial
+5555,Oracle WebCenter Content: Inbound Refinery—Intradoc Socket port. (formerly known as Oracle Universal Content Management). Port though often changed during installation,Unofficial
+5555,Freeciv versions up to 2.0, Hewlett-Packard Data Protector, McAfee EndPoint Encryption Database Server, SAP, Default for Microsoft Dynamics CRM 4.0,Unofficial
+5556,Freeciv, Oracle WebLogic Server Node Manager[97],Official
+5591,Default for Tidal Enterprise Scheduler master-Socket used for communication between Agent-to-Master, though can be changed[citation needed],Unofficial
+5631,pcANYWHEREdata, Symantec pcAnywhere (version 7.52 and later[98])[99] data,Official
+5632,pcANYWHEREstat, Symantec pcAnywhere (version 7.52 and later) status,Official
+6541,MirrorOp2 (default),Unofficial
+6542,MirrorOp2 (fallback),Unofficial
+5656,IBM Lotus Sametime p2p file transfer,Unofficial
+5666,NRPE (Nagios),Unofficial
+5667,NSCA (Nagios),Unofficial
+5672,AMQP[100],Official
+5678,Mikrotik RouterOS Neighbor Discovery Protocol (MNDP),Unofficial
+5683,Constrained Application Protocol (CoAP),Official
+5718,Microsoft DPM Data Channel (with the agent coordinator),Unofficial
+5719,Microsoft DPM Data Channel (with the protection agent),Unofficial
+5721,Kaseya[citation needed],Unofficial
+5723,System Center Operations Manager[101],Unofficial
+5724,Operations Manager Console,Unofficial
+5741,IDA Discover Port 1,Official
+5742,IDA Discover Port 2,Official
+5800,VNC remote desktop protocol over HTTP,Unofficial
+5814,Hewlett-Packard Support Automation (HP OpenView Self-Healing Services)[citation needed],Official
+5850,COMIT SE (PCR)[citation needed],Unofficial
+5852,Adeona client: communications to OpenDHT[citation needed],Unofficial
+5900,Remote Frame Buffer protocol (RFB), Virtual Network Computing (VNC) remote desktop protocol[102],Official
+5912,Tidal Enterprise Scheduler agent default, for Master-to-Agent[citation needed],Unofficial
+5931,AMMYY admin Remote Control,Official
+5938,TeamViewer remote desktop protocol[103],Unofficial
+5984,CouchDB database server,Official
+5985,Windows PowerShell Default psSession Port[104],Official
+5986,Windows PowerShell Default psSession Port[104],Official
+5988–5989,CIM XML transactions over HTTP/S—VMware vCenter ESXi management[105],Unofficial
+5999,CVSup file update tool[106],Official
+6000,X11—used between an X client and server over the network,Official
+6001,X11—used between an X client and server over the network,Official
+6005,Default for BMC Software Control-M/Server—Socket used for communication between Control-M processes—though often changed during installation,Official
+6005,Default for Camfrog chat & cam client,Unofficial
+6009,JD Edwards EnterpriseOne ERP system JDENet messaging client listener,Unofficial
+6050,Arcserve backup,Unofficial
+6050,Nortel software[citation needed],Unofficial
+6051,Arcserve backup,Unofficial
+6072,iOperator Protocol Signal Port[citation needed],Unofficial
+6086,Peer Distributed Transfer Protocol (PDTP), FTP like file server in a P2P network,Official
+6100,Vizrt System,Unofficial
+6100,Ventrilo authentication for version 3,Official
+6101,Backup Exec Agent Browser[citation needed],Unofficial
+6110,softcm, HP Softbench CM,Official
+6111,spc, HP Softbench Sub-Process Control,Official
+6112,dtspcd, execute commands and launch applications remotely,Official
+6112,Blizzard's Battle.net gaming service and some games,[45] ArenaNet gaming service, Relic gaming service,Unofficial
+6112,Club Penguin Disney online game for kids,Unofficial
+6113,Club Penguin Disney online game for kids, Used by some Blizzard games[45],Unofficial
+6129,DameWare Remote Control,Official
+6159,ARINC 840 EFB Application Control Interface,Official
+6200,Oracle WebCenter Content Portable: Content Server (With Native UI) and Inbound Refinery,Unofficial
+6201,Oracle WebCenter Content Portable: Admin,Unofficial
+6225,Oracle WebCenter Content Portable: Content Server Web UI,Unofficial
+6227,Oracle WebCenter Content Portable: JavaDB,Unofficial
+6230,Codenger Dev Server,Unofficial
+6240,Oracle WebCenter Content Portable: Capture,Unofficial
+6244,Oracle WebCenter Content Portable: Content Server—Intradoc Socket port,Unofficial
+6255,Oracle WebCenter Content Portable: Inbound Refinery—Intradoc Socket port,Unofficial
+6257,WinMX (see also 6699),Unofficial
+6260,planet M.U.L.E.,Unofficial
+6262,Sybase Advantage Database Server,Unofficial
+6324,Hall Research Device discovery and configuration,Official
+6343,SFlow, sFlow traffic monitoring,Official
+6346,gnutella-svc, gnutella (FrostWire, Limewire, Shareaza, etc.),Official
+6347,gnutella-rtr, Gnutella alternate,Official
+6350,App Discovery and Access Protocol,Official
+6379,Redis key-value data store,Official
+6389,EMC CLARiiON,Unofficial
+6432,PgBouncer—A connection pooler for PostgreSQL,Official
+6436,Leap Motion Websocket Server TLS,Unofficial
+6437,Leap Motion Websocket Server,Unofficial
+6444,Sun Grid Engine Qmaster Service,Official
+6445,Sun Grid Engine Execution Service,Official
+6514,Syslog over TLS[107],Official
+6502,Netop Remote Control,Unofficial
+6515,Elipse RPC Protocol (REC),Official
+6522,Gobby (and other libobby-based software),Unofficial
+6523,Gobby 0.5 (and other libinfinity-based software),Unofficial
+6543,Pylons project#Pyramid Default Pylons Pyramid web service port,Unofficial
+6543,Paradigm Research & Development[dead link] Jetnet[108] default,Unofficial
+6556,Check MK Agent,Unofficial
+6566,SANE (Scanner Access Now Easy)—SANE network scanner daemon[109],Official
+6560–6561,Speech-Dispatcher daemon,Unofficial
+6571,	Windows Live FolderShare client,Unofficial
+6600,Microsoft Hyper-V Live,Official
+6600,Music Player Daemon (MPD),Unofficial
+6601,Microsoft Forefront Threat Management Gateway,Official
+6602,Microsoft Windows WSS Communication,Official
+6619,odette-ftps, Odette File Transfer Protocol (OFTP) over TLS/SSL,Official
+6622,Multicast FTP,Official
+6646,McAfee Network Agent[citation needed],Unofficial
+6653,Openflow 1.3,Official
+6660–6664,Internet Relay Chat (IRC),Unofficial
+6665–6669,Internet Relay Chat (IRC),Official
+6679,Osorno Automation Protocol (OSAUT),Official
+6679,IRC SSL (Secure Internet Relay Chat)—often used,Unofficial
+6690,Synology Cloud station,Unofficial
+6697,IRC SSL (Secure Internet Relay Chat)—often used,Official
+6699,WinMX (see also 6257),Unofficial
+6702,Default for Tidal Enterprise Scheduler client-Socket used for communication between Client-to-Master, though can be changed[citation needed],Unofficial
+6715,AberMUD and derivatives default port,Unofficial
+6771,Polycom server broadcast[citation needed],Unofficial
+6783–6785,Splashtop Remote server broadcast,Unofficial
+6789,Campbell Scientific Loggernet Software[110],Unofficial
+6789,Bucky's Instant Messaging Program,Unofficial
+6869,Derandom default server,Unofficial
+6881–6887,BitTorrent part of full range of ports used most often,Unofficial
+6888,MUSE,Official
+6888,BitTorrent part of full range of ports used most often,Unofficial
+6889–6890,BitTorrent part of full range of ports used most often,Unofficial
+6891–6900,BitTorrent part of full range of ports used most often,Unofficial
+6891–6900,Windows Live Messenger (File transfer),Unofficial
+6901,Windows Live Messenger (Voice),Unofficial
+6901,BitTorrent part of full range of ports used most often,Unofficial
+6902–6968,BitTorrent part of full range of ports used most often,Unofficial
+6969,acmsoda,Official
+6969,BitTorrent tracker,Unofficial
+6970–6999,BitTorrent part of full range of ports used most often,Unofficial
+7000,Default for Vuze's built in HTTPS Bittorrent Tracker,Unofficial
+7000,Avira Server Management Console,Unofficial
+7001,Avira Server Management Console,Unofficial
+7001,Default for BEA WebLogic Server's HTTP server, though often changed during installation,Unofficial
+7002,Default for BEA WebLogic Server's HTTPS server, though often changed during installation,Unofficial
+7005,Default for BMC Software Control-M/Server and Control-M/Agent for Agent-to-Server, though often changed during installation,Unofficial
+7006,Default for BMC Software Control-M/Server and Control-M/Agent for Server-to-Agent, though often changed during installation,Unofficial
+7010,Default for Cisco AON AMC (AON Management Console)[111],Unofficial
+7022,Database mirroring endpoints[112],Unofficial
+7023,Bryan Wilcutt T2-NMCS Protocol for SatCom Modems,Official
+7025,Zimbra LMTP [mailbox]—local mail delivery,Unofficial
+7047,Zimbra conversion server,Unofficial
+7080,	Sepialine Argos Communications port,Unofficial
+7133,Enemy Territory: Quake Wars,Unofficial
+7144,Peercast[citation needed],Unofficial
+7145,Peercast[citation needed],Unofficial
+7171,Tibia,Unofficial
+7262,CNAP (Calypso Network Access Protocol),Official
+7272,WatchMe - WatchMe Monitoring,UNKNOWN
+7306,Zimbra mysql [mailbox][citation needed],Unofficial
+7307,Zimbra mysql [logger][citation needed],Unofficial
+7312,Sibelius License Server,Unofficial
+7396,Web control interface for Folding@home v7.3.6 and later[113],Unofficial
+7400,RTPS (Real Time Publish Subscribe) DDS Discovery,Official
+7401,RTPS (Real Time Publish Subscribe) DDS User-Traffic,Official
+7402,RTPS (Real Time Publish Subscribe) DDS Meta-Traffic,Official
+7471,Stateless Transport Tunneling (STT),Unofficial
+7473,Rise: The Vieneo Province,Official
+7474,Neo4J Server webadmin[114],Official
+7509,ACPLT - process automation service,Official
+7547,CPE WAN Management Protocol (CWMP) Technical Report 069,Official
+7575,Populous: The Beginning server,Unofficial
+7624,Instrument Neutral Distributed Interface,Official
+7631,ERLPhase,Official
+7634,hddtemp—Utility to monitor hard drive temperature,Unofficial
+7652–7654,I2P anonymizing overlay network,Unofficial
+7655,I2P SAM Bridge Socket API,Unofficial
+7656–7660,I2P anonymizing overlay network,Unofficial
+7670,BrettspielWelt BSW Boardgame Portal,Unofficial
+7676,Aqumin AlphaVision Remote Command Interface[citation needed],Unofficial
+7700,P2P DC (RedHub)[citation needed],Unofficial
+7707–7708,Killing Floor,Unofficial
+7717,Killing Floor,Unofficial
+7777,iChat server file transfer proxy,Unofficial
+7777,Oracle Cluster File System 2[citation needed],Unofficial
+7777,Windows backdoor program tini.exe default[citation needed],Unofficial
+7777,Just Cause 2: Multiplayer Mod Server[citation needed],Unofficial
+7777,Xivio default Chat Server[citation needed],Unofficial
+7777,Terraria default server,Unofficial
+7777,San Andreas Multiplayer (SA-MP) default port server,Unofficial
+7778,Bad Trip MUD[citation needed],Unofficial
+7777–7788,Unreal Tournament series default server[citation needed],Unofficial
+7787–7788,GFI EventsManager 7 & 8[citation needed],Official
+7831,Default used by Smartlaunch Internet Cafe Administration[115] software,Unofficial
+7880,PowerSchool Gradebook Server[citation needed],Unofficial
+7890,Default that will be used by the iControl Internet Cafe Suite Administration software,Unofficial
+7915,Default for YSFlight server[116],Unofficial
+7935,Fixed port used for Adobe Flash Debug Player to communicate with a debugger (Flash IDE, Flex Builder or fdb).[117],Unofficial
+7937–9936,EMC2 (Legato) Networker or Sun Solstice Backup,Official
+8000,iRDMI (Intel Remote Desktop Management Interface)[118]—sometimes erroneously used instead of port 8080,Official
+8000,Commonly used for Internet radio streams such as SHOUTcast,Unofficial
+8000,Splunk web-interface,Unofficial
+8000,FreemakeVideoCapture service (part of Freemake Video Downloader)[119],Unofficial
+8000,DynamoDB Local[120],Unofficial
+8000,Nortel Contivity Router Firewall User Authentication (FWUA) default port number,Unofficial
+8000,frePPLe - open source production planning default port number,Unofficial
+8001,Commonly used for Internet radio streams such as SHOUTcast,Unofficial
+8002,Cisco Systems Unified Call Manager Intercluster[citation needed],Unofficial
+8005,Apache Tomcat's Shutdown port,Unofficial
+8006,Dell AppAssure 5 API and Replication[121],Official
+8007,Dell AppAssure 5 Engine[121],Official
+8008,HTTP Alternate,Official
+8008,IBM HTTP Server administration default,Unofficial
+8009,ajp13—Apache JServ Protocol AJP Connector,Unofficial
+8010,XMPP File transfers,Unofficial
+8011–8013,HTTP/TCP Symon Communications Event and Query Engine[citation needed],Unofficial
+8014,HTTP/TCP Symon Communications Event and Query Engine[citation needed],Unofficial
+8014,Perseus SDR Receiver default remote connection port[citation needed],Unofficial
+8020,360Works SuperContainer[122],Unofficial
+8042,Orthanc—Default HTTP Port for GUI,Unofficial
+8069,OpenERP Default HTTP port (web interface and xmlrpc calls),Unofficial
+8070,OpenERP Legacy netrpc protocol,Unofficial
+8074,Gadu-Gadu,Unofficial
+8075,Killing Floor,Unofficial
+8078,Default port for most Endless Online-based servers[citation needed],Unofficial
+8080,HTTP alternate (http_alt)—commonly used for Web proxy and caching server, or for running a Web server as a non-root user,Official
+8080,Apache Tomcat,Unofficial
+8080,M2MLogger WebFRONT Cloud connector,Unofficial
+8080,Syncthing web GUI,Unofficial
+8080,FilePhile Master/Relay,Unofficial
+8080,Vermont Systems / RecTrac Vermont Systems RecTrac (WebTrac) network installer,Unofficial
+8081,HTTP alternate, VibeStreamer, e.g. McAfee ePolicy Orchestrator (ePO),Unofficial
+8083,Transporter Connected Data, Inc.,Unofficial
+8085,TCP/Wiki Service uses TCP (Mac OS X Server v10.5 and later) / inSpeak Communicator uses both TCP/UDP.,Unofficial
+8086,HELM Web Host Automation Windows Control Panel,Unofficial
+8086,Kaspersky AV Control Center,Unofficial
+8087,Hosting Accelerator Control Panel,Unofficial
+8087,Parallels Plesk Control Panel,Unofficial
+8087,Kaspersky AV Control Center,Unofficial
+8088,Asterisk (PBX) Web Configuration utility (GUI Addon),Unofficial
+8089,Splunk REST API endpoint. This port is NOT used for any forwarding or indexing. It is used only for command and control functions.,Unofficial
+8089,AVM Fritzbox for automatic tr069 configuration.,Unofficial
+8090,Atlassian Confluence (default port) [123],Unofficial
+8090,Coral Content Distribution Network (deprecated; 80 and 8080 now supported)[124],Unofficial
+8091,CouchBase Web Administration,Unofficial
+8092,CouchBase API,Unofficial
+8100,Console Gateway License Verification,Unofficial
+8111,JOSM Remote Control,Unofficial
+8112,PAC Pacifica Coin,Unofficial
+8116,Check Point Cluster Control Protocol,Unofficial
+8118,Privoxy—advertisement-filtering Web proxy,Official
+8123,Polipo Web proxy,Official
+8123,Bukkit DynMap Default Webserver Bind Address,Unofficial
+8139,Puppet (software) Client agent,Unofficial
+8140,Puppet (software) Master server,Unofficial
+8172,Microsoft Remote Administration for IIS Manager[125],Unofficial
+8176,Perceptive Automation[dead link] Indigo[dead link] Home automation server—control access,Unofficial
+8184,NCSA Brown Dog Data Access Proxy,Unofficial
+8192–8194,Sophos Remote Management System,Unofficial
+8194,Bloomberg Application[1],Official
+8195,Bloomberg Application[citation needed],Unofficial
+8200,GoToMyPC,Unofficial
+8222,VMware Server Management User Interface[126] (insecure Web interface).[127] See also port 8333,Unofficial
+8243,HTTPS listener for Apache Synapse[128],Official
+8245,Dynamic DNS for at least No-IP and DyDNS[129],Unofficial
+8280,HTTP listener for Apache Synapse[128],Official
+8281,HTTP Listener for Gatecraft Plugin,Unofficial
+8291,Winbox—Default on a MikroTik RouterOS for a Windows application used to administer MikroTik RouterOS[130],Unofficial
+8303,Teeworlds Server,Unofficial
+8330,MultiBit HD, [1],Unofficial
+8331,MultiBit, [2],Unofficial
+8332,Bitcoin JSON-RPC server[131],Unofficial
+8333,Bitcoin[132],Unofficial
+8333,VMware Server Management User Interface[126] (secure Web interface).[127] See also port 8222,Unofficial
+8337,VisualSVN Distributed File System Service (VDFS)[133],Unofficial
+8400,cvp, CommVault Unified Data Management,Official
+8442,CyBro A-bus, Cybrotech Ltd.,Official
+8443,SW Soft Plesk Control Panel, Apache Tomcat SSL, Promise WebPAM SSL, McAfee ePolicy Orchestrator (ePO),Unofficial
+8444,Bitmessage,Unofficial
+8484,MapleStory Login Server,Unofficial
+8500,ColdFusion Macromedia/Adobe ColdFusion default and Duke Nukem 3D—default,Unofficial
+8501,[3] DukesterX —default[citation needed],Unofficial
+8530,Windows Server Update Services,Official
+8531,Windows Server Update Services over TLS/SSL (HTTPS),Official
+8580,Freegate,Unofficial
+8585–8589,MapleStory Game Server,Unofficial
+8601,Wavestore CCTV protocol[134],Unofficial
+8602,Wavestore Notification protocol[134],Unofficial
+8629,Tibero database default port,Unofficial
+8642,Lotus Traveller[citation needed],Unofficial
+8691,Ultra Fractal default server port for distributing calculations over network computers,Unofficial
+8701–8702,SoftPerfect Bandwidth Manager,Unofficial
+8742,avast! WebShield,Unofficial
+8767,TeamSpeak default,Unofficial
+8768,TeamSpeak alternate,Unofficial
+8778,EPOS Speech Synthesis System,Unofficial
+8787–8788,MapleStory CashShop Game Server,Unofficial
+8834,	Nessus web,Unofficial
+8835,	Passive Vulnerability Scanner web,Unofficial
+8836,	Log Correlation Engine web,Unofficial
+8840,Opera Unite server,Unofficial
+8845,Sage Group Sage AutoUpdate Manager Service,Unofficial
+8880,cddbp-alt, CD DataBase (CDDB) protocol (CDDBP) alternate,Official
+8880,WebSphere Application Server SOAP connector default,Unofficial
+8880,Win Media Streamer to Server SOAP connector default,Unofficial
+8881,Atlasz Informatics Research Ltd Secure Application Server[citation needed],Unofficial
+8881,Netflexity Inc QFlex—IBM WebSphere MQ monitoring software,Unofficial
+8882,Atlasz Informatics Research Ltd Secure Application Server[citation needed],Unofficial
+8883,Secure MQ Telemetry Transport (MQTT over SSL),Official
+8886,PPM3 (Padtec Management Protocol version 3),Unofficial
+8887,HyperVM HTTP,Official
+8888,HyperVM HTTPS,Official
+8888,Freenet HTTP,Unofficial
+8888,NewsEDGE server,Official
+8888,Sun Answerbook dwhttpd server (deprecated by docs.sun.com[dead link]),Unofficial
+8888,GNUmp3d HTTP music streaming and Web interface,Unofficial
+8888,LoLo Catcher HTTP Web interface (www.optiform.com),Unofficial
+8888,D2GS Admin Console Telnet administration console for D2GS servers (Diablo 2),Unofficial
+8888,Earthland Relams 2 Server (AU1_2)[citation needed],Unofficial
+8888–8889,MAMP Server,Unofficial
+8889,Earthland Relams 2 Server (AU1_1)[citation needed],Unofficial
+8937,Transaction Warehouse Data Service (TWDS),Official
+8983,Default for Apache Solr[135],Unofficial
+8998,I2P Monotone Repository,Unofficial
+8989,STEP Bible,Unofficial
+9000,SonarQube Web Server[136],Unofficial
+9000,Buffalo LinkSystem Web access[citation needed],Unofficial
+9000,DBGp,Unofficial
+9000,SqueezeCenter web server & streaming,Unofficial
+9000,UDPCast,Unofficial
+9000,Play! Framework web server[137],Unofficial
+9000,Hadoop NameNode default port,Unofficial
+9000,PHP-FPM default port,Unofficial
+9000,QBittorrent's embedded torrent tracker default port[138],Unofficial
+9001,ETL Service Manager[139],Official
+9001,	Microsoft SharePoint authoring environment,Unofficial
+9001,	cisco-xremote router configuration[citation needed],Unofficial
+9001,	Tor network default,Unofficial
+9001,DBGp Proxy,Unofficial
+9001,HSQLDB default port,Unofficial
+9002,	Newforma Server comms,Unofficial
+9009,Pichat Server—Peer to peer chat software,Official
+9010,TISERVICEMANAGEMENT Numara Track-It!,Unofficial
+9020,WiT WiT Services,Official
+9025,WiT WiT Services,Official
+9030,Tor often used,Unofficial
+9042,Apache Cassandra native protocol clients,Unofficial
+9043,WebSphere Application Server Administration Console secure,Unofficial
+9050–9051,Tor,Unofficial
+9060,WebSphere Application Server Administration Console,Unofficial
+9080,glrpc, Groove Collaboration software GLRPC,Official
+9080,WebSphere Application Server HTTP Transport (port 1) default,Unofficial
+9080,Remote Potato by FatAttitude, Windows Media Center addon,Unofficial
+9080,ServerWMC, Windows Media Center addon,Unofficial
+9090,WebSM,Unofficial
+9090,Webwasher, Secure Web, McAfee Web Gateway—Default Proxy Port[citation needed],Unofficial
+9090,Openfire Administration Console,Unofficial
+9090,SqueezeCenter control (CLI),Unofficial
+9090,Cherokee Admin Panel,Unofficial
+9091,Openfire Administration Console (SSL Secured),Unofficial
+9091,Transmission (BitTorrent client) Web Interface,Unofficial
+9092,H2 (DBMS) Database Server,Unofficial
+9100,PDL Data Stream,Official
+9100,LPR - RAW Printing,Official
+9101,Bacula Director,Official
+9102,Bacula File Daemon,Official
+9103,Bacula Storage Daemon,Official
+9105,Xadmin Control Daemon,Official
+9106,Astergate Control Daemon,Official
+9107,Astergate-FAX Control Daemon,Official
+9110,SSMP Message protocol,Unofficial
+9119,MXit Instant Messenger,Official
+9150,Tor,Unofficial
+9191,Catamount Software—PocketMoney Sync[citation needed],Unofficial
+9191,Sierra Wireless Airlink,Unofficial
+9199,Avtex LLC—qStats,Unofficial
+9200,Elasticsearch[140]—default Elasticsearch port,Unofficial
+9217,iPass Platform Service,Unofficial
+9293,Sony PlayStation RemotePlay[141],Unofficial
+9300,IBM Cognos 8 SOAP Business Intelligence and Performance Management,Unofficial
+9303,D-Link Shareport Share storage and MFP printers,Unofficial
+9306,Sphinx Native API,Official
+9309,Sony PlayStation Vita Host Collaboration WiFi Data Transfer[142],Unofficial
+9312,Sphinx SphinxQL,Official
+9332,Litecoin JSON-RPC server,Unofficial
+9333,Litecoin,Unofficial
+9339,Clash of Clans, a mobile freemium strategy video game,Unofficial
+9389,adws, Microsoft AD DS Web Services, Powershell uses this port,Official
+9418,git, Git pack transfer service,Official
+9420,MooseFS distributed file system—master server to chunk servers,Unofficial
+9421,MooseFS distributed file system—master server to clients,Unofficial
+9422,MooseFS distributed file system—chunk servers to clients,Unofficial
+9443,VMware Websense Triton console (HTTPS port used for accessing and administrating a vCenter Server via the Web Management Interface),Unofficial
+9443,NCSA Brown Dog Data Tilling Service,Unofficial
+9535,mngsuite, LANDesk Management Suite Remote Control,Official
+9536,laes-bf, IP Fabrics Surveillance buffering function,Official
+9600,Omron FINS, OMRON FINS PLC communication,Official
+9675,Spiceworks Desktop, IT Helpdesk Software,Unofficial
+9676,Spiceworks Desktop, IT Helpdesk Software,Unofficial
+9695,CCNx,Official
+9800,WebDAV Source,Official
+9800,	WebCT e-learning portal,Unofficial
+9875,Club Penguin Disney online game for kids,Unofficial
+9898,MonkeyCom[citation needed],Official
+9898,Tripwire—File Integrity Monitoring Software[143],Unofficial
+9899,SCTP tunneling (port number used in SCTP packets encapsulated in  RFC6951),Official
+9987,TeamSpeak 3 server default (voice) port (for the conflicting service see the IANA list),Unofficial
+9993,ZeroTier Default port for ZeroTier,Unofficial
+9996,AdRem Software, Inc.'s NetCrunch NetFlow collector port. This port can be changed [144],Unofficial
+9997,Splunk port for communication between the forwarders and indexers,Unofficial
+9998,Sage Group Sage API Communication Service,Unofficial
+9999,	Hydranode edonkey2000 TELNET control,Unofficial
+9999,Lantronix UDS-10/UDS100[145] RS-485 to Ethernet Converter TELNET control,Unofficial
+9999,	Urchin Web Analytics[citation needed],Unofficial
+10000,Network Data Management Protocol,Official
+10000,	BackupExec,Unofficial
+10000,	Ericsson Account Manager (avim)[citation needed],Unofficial
+10001,Ubiquiti UniFi access points broadcast to 255.255.255.255:10001 (UDP) to locate the controller(s),Unofficial
+10001,Lantronix UDS-10/UDS100[146] RS-485 to Ethernet Converter default,Unofficial
+10003,ForeScout SecureConnector[citation needed],Unofficial
+10008,Octopus Multiplexer, primary port for the CROMP protocol[dead link], which provides a platform-independent means for communication of objects across a network,Official
+10009,Cross Fire, a multiplayer online First Person Shooter[citation needed],Unofficial
+10010,Open Object Rexx (ooRexx) rxapi daemon,Official
+10017,	AIX,NeXT, HPUX—rexd daemon control[citation needed],Unofficial
+10024,Zimbra smtp [mta]—to amavis from postfix[citation needed],Unofficial
+10025,Zimbra smtp [mta]—back to postfix from amavis[citation needed],Unofficial
+10042,Mathoid server[citation needed],Unofficial
+10050,Zabbix agent,Official
+10051,Zabbix trapper,Official
+10110,NMEA 0183 Navigational Data. Transport of NMEA 0183 sentences over TCP or Official
+10113,NetIQ Endpoint,Official
+10114,NetIQ Qcheck,Official
+10115,NetIQ Endpoint,Official
+10116,NetIQ VoIP Assessor,Official
+10172,Intuit Quickbooks client,Unofficial
+10200,FRISK Software International's fpscand virus scanning daemon for Unix platforms[147],Unofficial
+10200,FRISK Software International's f-protd virus scanning daemon for Unix platforms[148],Unofficial
+10201–10204,FRISK Software International's f-protd virus scanning daemon for Unix platforms[148],Unofficial
+10212,GE Intelligent Platforms Proficy HMI/SCADA – CIMPLICITY WebView[149],Official
+10301,VoiceIP-ACS UMP default device provisioning endpoint[citation needed],Unofficial
+10302,VoiceIP-ACS UMP default device provisioning endpoint (SSL)[citation needed],Unofficial
+10308,	Lock-on: Modern Air Combat[citation needed],Unofficial
+10480,	SWAT 4 Dedicated Server[citation needed],Unofficial
+10505,BlueStacks (android simulator) broadcast[150],Unofficial
+10514,TLS-enabled Rsyslog (default by convention),Unofficial
+10823,Farming Simulator 2011 Default Server[citation needed],Unofficial
+10891,Jungle Disk (this port is opened by the Jungle Disk Monitor service on the localhost)[citation needed],Unofficial
+11001,metasys ( Johnson Controls Metasys java AC control environment )[citation needed],Unofficial
+11111,RiCcI, Remote Configuration Interface (Redhat Linux),Unofficial
+11112,ACR/NEMA Digital Imaging and Communications in Medicine (DICOM),Official
+11155,Tunngle,Unofficial
+11211,memcached,Unofficial
+11214,memcached incoming SSL proxy,Unofficial
+11215,memcached internal outgoing SSL proxy,Unofficial
+11235,	Savage:Battle for Newerth Server Hosting[citation needed],Unofficial
+11294,	Blood Quest Online Server[citation needed],Unofficial
+11311,Robot Operating System master,Unofficial
+11371,OpenPGP HTTP key server,Official
+11576,	IPStor Server management communication,Unofficial
+11950,Murraycoin JSON-RPC server[151],Unofficial
+11951,Murraycoin[151],Unofficial
+12007,NetCrunch 7 port for connection between NetCrunch 7 Server and Administration Console. This port can be changed [144],Unofficial
+12008,NetCrunch default connection broker port [144],Unofficial
+12009,NetCrunch 8 port for connection between NetCrunch 8 Server and Administration Console. This port can be changed [144],Unofficial
+12010,ElevateDB default database port[152],Unofficial
+12011,Axence nVision[153],Unofficial
+12012,Axence nVision[153],Unofficial
+12012,Audition Online Dance Battle, Korea Server—Status/Version Check,Unofficial
+12012,Audition Online Dance Battle, Korea Server—Status/Version Check,Unofficial
+12013,Audition Online Dance Battle, Korea Server,Unofficial
+12030,NetCrunch - port for connection between NetCrunch Server and NetCrunch Guard [144],Unofficial
+12031,Axence nVision[153],Unofficial
+12032,Axence nVision[153],Unofficial
+12035,Linden Lab viewer to sim on SecondLife[citation needed],Unofficial
+12201,GELF Protocol,Unofficial
+12222,Light Weight Access Point Protocol (LWAPP) LWAPP data (RFC 5412),Official
+12223,Light Weight Access Point Protocol (LWAPP) LWAPP control (RFC 5412),Official
+12345,	NetBus remote administration tool (often Trojan horse). Also used by NetBuster. Little Fighter 2 (TCP), Cubeworld[154] (TCP and UDP), and (TCP) GVG (Grass Valley Group) SMS7000 and RCL video router control,Unofficial
+12443,IBM HMC web browser management access over HTTPS instead of default port 443[155],Unofficial
+12489,NSClient/NSClient++/NC_Net (Nagios),Unofficial
+12975,LogMeIn Hamachi (VPN tunnel software; also port 32976)—used to connect to Mediation Server (bibi.hamachi.cc); will attempt to use SSL (TCP port 443) if both 12975 & 32976 fail to connect,Unofficial
+12998–12999,Takenaka RDI Mirror World on SecondLife[citation needed],Unofficial
+13001,ForeScout CounterACT[citation needed],Unofficial
+13000–13050,Linden Lab viewer to sim on SecondLife[citation needed],Unofficial
+13008,Cross Fire, a multiplayer online First Person Shooter[citation needed],Unofficial
+13075,Default[156] for BMC Software Control-M/Enterprise Manager Corba communication, though often changed during installation,Official
+13195–13196,Ontolux Ontolux 2D,Unofficial
+13337–13340,ÆtherNet peer-to-peer networking[citation needed],Unofficial
+13720,Symantec NetBackup—bprd (formerly VERITAS),Official
+13721,Symantec NetBackup—bpdbm (formerly VERITAS),Official
+13724,Symantec Network Utility—vnetd (formerly VERITAS),Official
+13782,Symantec NetBackup—bpcd (formerly VERITAS),Official
+13783,Symantec VOPIED protocol (formerly VERITAS),Official
+13785,Symantec NetBackup Database—nbdb (formerly VERITAS),Official
+13786,Symantec nomdb (formerly VERITAS),Official
+14439,APRS UI-View Amateur Radio[157] UI-WebServer,Unofficial
+14550,MAVLink,Unofficial
+14567,Battlefield 1942 and mods,Unofficial
+14900,K3 SYSPRO K3 Framework WCF Backbone[citation needed],Unofficial
+15000,psyBNC,Unofficial
+15000,Wesnoth,Unofficial
+15000,Kaspersky Network Agent[citation needed],Unofficial
+15000,hydap, Hypack Hydrographic Software Packages Data Acquisition,Official
+15556,Jeex.EU Artesia (direct client-to-db.service),Official
+15567,Battlefield Vietnam and mods,Unofficial
+15345,XPilot Contact,Official
+16000,Oracle WebCenter Content: Imaging (formerly known as Oracle Universal Content Management). Port though often changed during installation,Unofficial
+16000,shroudBNC,Unofficial
+16080,Mac OS X Server Web (HTTP) service with performance cache[158],Unofficial
+16200,Oracle WebCenter Content: Content Server (formerly known as Oracle Universal Content Management). Port though often changed during installation,Unofficial
+16225,Oracle WebCenter Content: Content Server Web UI. Port though often changed during installation,Unofficial
+16250,Oracle WebCenter Content: Inbound Refinery (formerly known as Oracle Universal Content Management). Port though often changed during installation,Unofficial
+16261,Project Zomboid Multiplayer Server: Additional sequential ports used for each player connecting to server,Unofficial
+16300,Oracle WebCenter Content: Records Management (formerly known as Oracle Universal Records Management). Port though often changed during installation,Unofficial
+16384,Hewlett Packard Connected Backup[159],Official
+16384,CISCO Default RTP MIN,Unofficial
+16400,Oracle WebCenter Content: Capture (formerly known as Oracle Document Capture). Port though often changed during installation,Unofficial
+16482,	CISCO Default RTP MAX,Official
+16567,Battlefield 2 and mods,Unofficial
+17011,Worms multiplayer,Unofficial
+17500,Dropbox LanSync Protocol (db-lsp); used to synchronize file catalogs between Dropbox clients on a local network.,Official
+18010,Super Dancer Online Extreme(SDO-X)—CiB Net Station Malaysia Server[citation needed],Unofficial
+18091,memcached Internal REST HTTPS for SSL,Unofficial
+18092,memcached Internal CAPI HTTPS for SSL,Unofficial
+18104,RAD PDF Service,Official
+18180,DART Reporting server[citation needed],Unofficial
+18200,Audition Online Dance Battle, AsiaSoft Thailand Server status/version check,Unofficial
+18201,Audition Online Dance Battle, AsiaSoft Thailand Server,Unofficial
+18206,Audition Online Dance Battle, AsiaSoft Thailand Server FAM database,Unofficial
+18300,Audition Online Dance Battle, AsiaSoft SEA Server status/version check,Unofficial
+18301,Audition Online Dance Battle, AsiaSoft SEA Server,Unofficial
+18306,Audition Online Dance Battle, AsiaSoft SEA Server FAM database,Unofficial
+18333,Bitcoin testnet[132],Unofficial
+18400,Audition Online Dance Battle, KAIZEN Brazil Server status/version check,Unofficial
+18401,Audition Online Dance Battle, KAIZEN Brazil Server,Unofficial
+18505,Audition Online Dance Battle R4p3 Server, Nexon Server status/version check,Unofficial
+18506,Audition Online Dance Battle, Nexon Server,Unofficial
+18605,X-BEAT status/version check,Unofficial
+18606,X-BEAT,Unofficial
+19000,Audition Online Dance Battle, G10/alaplaya Server status/version check,Unofficial
+19000,JACK sound server,Unofficial
+19001,Audition Online Dance Battle, G10/alaplaya Server,Unofficial
+19007,Veejansh Inc. Scintilla Device Service,Official
+19132,Standard Minecraft Pocket Edition Multiplayer Server Port,Unofficial
+19150,Gkrellm Server,Unofficial
+19226,Panda Software AdminSecure Communication Agent,Unofficial
+19283,K2—KeyAuditor & KeyServer, Sassafras Software Inc.[160] Software Asset Management tools,Official
+19294,Google Talk Voice and Video connections[161],Unofficial
+19295,Google Talk Voice and Video connections[161],Unofficial
+19302,Google Talk Voice and Video connections[161],Unofficial
+19315,KeyShadow for K2—KeyAuditor & KeyServer, Sassafras Software Inc.[160] Software Asset Management tools,Official
+19540,Gamecoin RCP[citation needed],Unofficial
+19540,Gamecoin Testnet[citation needed],Unofficial
+19540,Gamecoin P2P[citation needed],Unofficial
+19540,Belkin Network USB Hub[citation needed],Unofficial
+19638,Ensim Control Panel[citation needed],Unofficial
+19812,4D database SQL Communication[162],Official
+19813,4D database Client Server Communication[162],Official
+19814,4D database DB4D Communication[162],Official
+19999,	Distributed Network Protocol—Secure (DNP—Secure), a secure version of the protocol used in SCADA systems between communicating RTU's and IED's,Official
+20000,	Distributed Network Protocol (DNP), a protocol used in SCADA systems between communicating RTU's and IED's,Official
+20000,	Usermin, web-based user tool,Unofficial
+20202,OnNet (Net2E),Unofficial
+20014,DART Reporting server[citation needed],Unofficial
+20560,Killing Floor,Unofficial
+20595,0 A.D. Empires Ascendant,Unofficial
+20702,Precise TPM Listener Agent,Unofficial
+20720,Symantec i3 Web GUI server,Unofficial
+20790,Precise TPM Web GUI server,Unofficial
+21001,AMLFilter, AMLFilter Inc. amlf-admin default port,Unofficial
+21011,AMLFilter, AMLFilter Inc. amlf-engine-01 default http port,Unofficial
+21012,AMLFilter, AMLFilter Inc. amlf-engine-01 default https port,Unofficial
+21021,AMLFilter, AMLFilter Inc. amlf-engine-02 default http port,Unofficial
+21022,AMLFilter, AMLFilter Inc. amlf-engine-02 default https port,Unofficial
+21025,Starbound Server (default), Starbound,Unofficial
+22136,FLIR Systems Camera Resource Protocol,Unofficial
+22222,Davis Instruments, WeatherLink IP,Unofficial
+22347,WibuKey, WIBU-SYSTEMS AG Software protection system,Official
+22349,Wolfson Microelectronics WISCEBridge Debug Protocol[163],Unofficial
+22350,CodeMeter, WIBU-SYSTEMS AG Software protection system,Official
+23073,	Soldat Dedicated Server,Unofficial
+23284,	TimeTracker by Openhour,Official
+23399,	Skype default protocol,Unofficial
+23513,	Duke Nukem 3D#Source code Duke Nukem Ports,Unofficial
+24441,Pyzor spam detection network,Unofficial
+24444,	NetBeans integrated development environment,Unofficial
+24465,Tonido Directory Server for Tonido which is a Personal Web App and P2P platform,Official
+24554,BINKP, Fidonet mail transfers over TCP/IP,Official
+24800,	Synergy: keyboard/mouse sharing software,Unofficial
+24842,	StepMania: Online: Dance Dance Revolution Simulator,Unofficial
+25000,Teamware Office standard client connection,Official
+25001,Default port for Unity3D networking,Official
+25003,Teamware Office client notifier,Official
+25005,Teamware Office message transfer,Official
+25007,Teamware Office MIME Connector,Official
+25008,Jayson's Water Fun Connector,Unofficial
+25010,Teamware Office Agent server,Official
+25105,Default port for Insteon Hub,Unofficial
+25560,codeheart.js Relay Server,Unofficial
+25565,Standard Minecraft (Dedicated) Server,Unofficial
+25565,	MySQL database system,Unofficial
+25570,	Manic Digger default single player port,Unofficial
+25826,collectd default port[164],Unofficial
+25828–25840,DarknessBlade Network.,Unofficial
+25888,Xfire (Firewall Report, UDP_IN) IP Address (206.220.40.146) resolves to gameservertracking.xfire.com. Use unknown.,Unofficial
+25999,Xfire,Unofficial
+26000,id Software's Quake server,Official
+26000,CCP's EVE Online Online gaming MMORPG,Unofficial
+26000,Xonotic, an open source arena shooter,Unofficial
+26850,War of No Return Server Port[citation needed],Unofficial
+26900–26901,CCP's EVE Online Online gaming MMORPG,Unofficial
+26950,GIMA Productions,Unofficial
+27000–27030,Steam Client,Unofficial
+27000,(through 27006) id Software's QuakeWorld master server,Unofficial
+27000,PowerBuilder SySAM license server,Unofficial
+27000–27009,FlexNet Publisher's License server (from the range of default ports),Unofficial
+27010,	Source engine dedicated server port,Unofficial
+27014–27050,Steam Downloads,Unofficial
+27014,	Source engine dedicated server port (rare),Unofficial
+27015,	GoldSrc and Source engine dedicated server port, AppleMobileDeviceService[165],Unofficial
+27016,	Magicka server port,Unofficial
+27017,	mongoDB server port,Unofficial
+27036,	Steam In-Home Streaming (Only LAN),Unofficial
+27374,	Sub7 default.,Unofficial
+27500–27900,id Software's QuakeWorld,Unofficial
+27888,Kaillera server,Unofficial
+27900–27901,	Nintendo Wi-Fi Connection,Unofficial
+27901–27910,id Software's Quake II master server,Unofficial
+27950,OpenArena outgoing,Unofficial
+27960–27969,Activision's Enemy Territory and id Software's Quake III Arena, Quake III and Quake Live and some ioquake3 derived games, such as Urban Terror (OpenArena incoming),Unofficial
+28000,	Bitfighter Common/default Bitfighter Server,Unofficial
+28001,	Starsiege: Tribes Common/default Tribes v.1 Server,Unofficial
+28395,www.SmartSystemsLLC.com Used by Smart Sale 5.0[citation needed],Unofficial
+28785,Cube 2 Sauerbraten[166],Unofficial
+28786,Cube 2 Sauerbraten Port 2[166],Unofficial
+28801–28802,Red Eclipse (Cube 2 derivative) default ports[167],Unofficial
+28852,Killing Floor,Unofficial
+28910,	Nintendo Wi-Fi Connection[168],Unofficial
+28960,Call of Duty; Call of Duty: United Offensive; Call of Duty 2; Call of Duty 4: Modern Warfare; Call of Duty: World at War (PC Version),Unofficial
+29000,	Perfect World International Used by the Perfect World International Client,Unofficial
+29070,Game titled "Jedi Knight: Jedi Academy" by Ravensoft,Unofficial
+29292,TMO Integration Service Communications Port, Used by Transaction Manager SaaS (HighJump Software)[citation needed],Unofficial
+29900–29901,	Nintendo Wi-Fi Connection[168],Unofficial
+29920,	Nintendo Wi-Fi Connection[168],Unofficial
+30000,	Pokémon Netbattle,Unofficial
+30000,	MineTest Dedicated Server,Unofficial
+30301,	BitTorrent,Unofficial
+30564,Multiplicity: keyboard/mouse/clipboard sharing software,Unofficial
+30718,Lantronix Discovery for Lantronix serial-to-ethernet devices,Unofficial
+30777,ZangZing agent,Unofficial
+31314,electric imp node<>server communication (TLS),Unofficial
+31337,Back Orifice remote administration tool (often Trojan horse),Unofficial
+31415,	ThoughtSignal Server Communication Service (often Informational),Unofficial
+31416,	BOINC RPC[169],Unofficial
+31438,	Rocket Software U2 uvcs Server Communication Service,Unofficial
+31456,TetriNET IRC gateway on some servers,Unofficial
+31457,TetriNET,Official
+31458,TetriNET Used for game spectators,Unofficial
+31620,LM-MON (Standard Floating License Manager LM-MON),Official
+31820-31829,SyFlo SyFlo license manager,Unofficial
+32000,FlightGear multiplayer, experimental 2nd port (working code mod submitted to main fgms developer 2015-III-04 for evaluation)[77],Unofficial
+32123,x3Lobby Used by x3Lobby, an internet application.,Unofficial
+32137,Immunet Protect (UDP in version 2.0,[170] TCP since version 3.0[171]),Unofficial
+32245,MMTSG-mutualed over MMT (encrypted transmission),Unofficial
+32400,Used for Plex Media Server connections and media streams,Unofficial
+32769,FileNet RPC,Unofficial
+32887,Used by "Ace of Spades" game,Unofficial
+32976,LogMeIn Hamachi (VPN tunnel software; also port 12975)—used to connect to Mediation Server (bibi.hamachi.cc); will attempt to use SSL (TCP port 443) if both 12975 & 32976 fail to connect,Unofficial
+33330,FMAudit,Unofficial
+33333,TNTchat default server port,Unofficial
+33434–33534,traceroute,Official
+33848,Jenkins Remote access API and Auto-Discovery,Unofficial
+33982,Dezta software,Unofficial
+34000,	MasterPort—WarZ,Unofficial
+34001,	ClientPort—WarZ,Unofficial
+34010,	PortStart—WarZ,Unofficial
+34271,	Remuco remote control for media players[172],Unofficial
+34443,	Linksys PSUS4 print server[173],Unofficial
+34567,EDI service[174],Official
+35357,OpenStack ID Service,Official
+36330,Folding@home v7 default for client control interface,Unofficial
+36700,MapX communication port,Official
+36963,Unreal Software multiplayer games, such as Counter Strike 2D (2D clone of Counter Strike),Unofficial
+37601,Epipole File Transfer Protocol [175],Official
+37659,Axence nVision[citation needed],Unofficial
+37777,Digital Video Recorder hardware[citation needed],Unofficial
+40000,SafetyNET p Real-time Industrial Ethernet protocol,Official
+40123,Flatcast[176],Unofficial
+41794,Crestron Control Port,Official
+41795,Crestron Control Port,Official
+41823,Murealm Client[citation needed],Unofficial
+43034,LarmX.com™ database update mtr port[citation needed],Unofficial
+43047,TheòsMessenger second port for service TheòsMessenger[citation needed],Unofficial
+43048,TheòsMessenger third port for service TheòsMessenger[citation needed],Unofficial
+43594,RuneScape, FunOrb, Runescape Private Servers game servers,Unofficial
+43595,RuneScape JAGGRAB servers,Unofficial
+44405,Mu Online Connect Server[citation needed],Unofficial
+44444,LightClaw.TeamServer Asset synchronization[citation needed],Unofficial
+45824,Server for the DAI family of client-server products[citation needed],Official
+47001,Windows Remote Management Service (WinRM)[177],Official
+47808,BACnet Building Automation and Control Networks (4780810 = BAC016), commonly spills to 47809–47816,Official
+48653,Robot Raconteur transport[178],Official
+49151,Reserved[1],Official
+56130,Microsoft Azure port for RDP,Official
