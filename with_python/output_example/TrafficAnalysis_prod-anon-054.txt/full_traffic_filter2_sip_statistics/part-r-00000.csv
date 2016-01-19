@@ -1,0 +1,2 @@
+src_ip,total_packets,packets_fragment_marked,packets_non_fragment_marked,num_distinct_udp_sport,pkt_length_avg,pkt_length_median,pkt_length_min,pkt_length_max,pkt_length_std_dev,ttl_avg,ttl_min,ttl_max,ttl_std_dev
+87.95.171.182,10000,10000,0,1,1498.2675,1500.0,995,1500,22.487644246346463,61.0,61,61,0.0

@@ -19,39 +19,39 @@ DEFINE VARIANCE datafu.pig.stats.VAR();
 -- Loading the full_traffic
 -- =========================================================
 full_traffic = load '$pcap' using com.packetloop.packetpig.loaders.pcap.packet.PacketLoader() AS (
-    ts,
-    ip_version:int,
-    ip_header_length:int,
-    ip_tos:int,
-    ip_total_length:int,
-    ip_id:int,
-    ip_flags:int,
-    ip_frag_offset:int,
-    ip_ttl:int,
-    ip_proto:int,
-    ip_checksum:int,
-    ip_src:chararray,
-    ip_dst:chararray,
-    tcp_sport:int,
-    tcp_dport:int,
-    tcp_seq_id:long,
-    tcp_ack_id:long,
-    tcp_offset:int,
-    tcp_ns:int,
-    tcp_cwr:int,
-    tcp_ece:int,
-    tcp_urg:int,
-    tcp_ack:int,
-    tcp_psh:int,
-    tcp_rst:int,
-    tcp_syn:int,
-    tcp_fin:int,
-    tcp_window:int,
-    tcp_len:int,
-    udp_sport:int,
-    udp_dport:int,
-    udp_len:int,
-    udp_checksum:chararray
+    ts, --1
+    ip_version:int, --2
+    ip_header_length:int, --3
+    ip_tos:int, --4
+    ip_total_length:int, --5
+    ip_id:int, --6
+    ip_flags:int, --7
+    ip_frag_offset:int, --8
+    ip_ttl:int, --9
+    ip_proto:int, --10
+    ip_checksum:int, --11
+    ip_src:chararray,--12
+    ip_dst:chararray, --13
+    tcp_sport:int, --14
+    tcp_dport:int, --15
+    tcp_seq_id:long, --16
+    tcp_ack_id:long, --17
+    tcp_offset:int, --18
+    tcp_ns:int, --19
+    tcp_cwr:int, --20
+    tcp_ece:int, --21
+    tcp_urg:int, --22
+    tcp_ack:int, --23
+    tcp_psh:int, --24
+    tcp_rst:int, --25
+    tcp_syn:int, --26
+    tcp_fin:int, --27
+    tcp_window:int,--28
+    tcp_len:int, --29
+    udp_sport:int, --30
+    udp_dport:int, --31
+    udp_len:int, --32
+    udp_checksum:chararray --33
 );
 
 -- ##########################################################
