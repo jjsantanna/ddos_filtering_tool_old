@@ -36,7 +36,7 @@ pcap = LOAD '$inputfile' using PigStorage(' ') AS (
     tcp_seq_id:long, --16
     tcp_ack_id:long, --17
     tcp_offset:int, --18
-    tcp_ns:long,-- 19 Note: it was int in the packetpig
+    tcp_ns:int,-- 19 
     tcp_cwr:int, --20
     tcp_ece:int, --21
     tcp_urg:int, --22
@@ -231,118 +231,125 @@ pcap_filter2_stats = FOREACH (GROUP pcap_filter2_mbps_pps ALL) GENERATE
 -- STORE pcap_filter2_stats INTO '$outputFolder/pcap_filter2_stats' USING PigStorage(',', '-schema');
 
 -- ##########################################################
--- Generating the number of unique source IP address
--- Output columns: (1) number of unique source IP address
--- ##########################################################
-pcap_filter2_uniq_sips = FOREACH (GROUP pcap_filter2 ALL){ 
-        uniq_ips = DISTINCT pcap_filter2.ip_src; 
-        GENERATE COUNT(uniq_ips);
-};
-
--- ##########################################################
 -- Generating the statistics for each source IP address
--- Output columns: (1) source IP address, (2) the total number of packets, (3) packets marketed as more fragments
+-- Output columns: (1) source IP address, (2) the total number of packets, (3) packets marked as more fragments (4) packets NON marked as more fragments (5) num of distinct source ports (6) num of distinct destination ports (7,8,9,10,11) avg, min, max, median, and std of the packet lenght [bytes] (12,12,13,15) Avg, min, max, std of the TTL (16-23) number of occurrences of TCP flags
 -- ##########################################################
-pcap_filter2_sip_statistics = FOREACH (GROUP pcap_filter2 BY ip_src) {
+pcap_filter2_sip_stats = FOREACH (GROUP pcap_filter2 BY ip_src) {
     total_packets = COUNT(pcap_filter2);
     fragmented_packets = FILTER pcap_filter2 BY (ip_more_fragments > 0);
     packets_fragment_marked = COUNT(fragmented_packets);
     distinct_udp_sport = DISTINCT pcap_filter2.udp_sport;
     distinct_tcp_sport = DISTINCT pcap_filter2.tcp_sport;
+    distinct_udp_dport = DISTINCT pcap_filter2.udp_dport;
+    distinct_tcp_dport = DISTINCT pcap_filter2.tcp_dport;
 
     GENERATE 
-        group AS src_ip, 
+        group AS src_ip, --1
         --
-        total_packets as total_packets,
-        packets_fragment_marked as packets_fragment_marked,
+        total_packets as total_packets, --2
+        packets_fragment_marked as packets_fragment_marked, --3
+        (total_packets-packets_fragment_marked) as packets_frag_non_marked, --4
         --
         -- distinct_udp_sport AS distinct_udp_sport,
         -- distinct_tcp_sport AS distinct_tcp_sport,
-        COUNT(distinct_udp_sport) AS num_distinct_udp_sport,
-        COUNT(distinct_tcp_sport) AS num_distinct_tcp_sport,
+        (COUNT(distinct_udp_sport)+COUNT(distinct_tcp_sport)-1) AS num_distinct_sport, --5
+        (COUNT(distinct_udp_dport)+COUNT(distinct_tcp_dport)-1) AS num_distinct_dport, --6
         --
-        AVG(pcap_filter2.ip_total_length) AS pkt_length_avg,
-        FLATTEN(MEDIAN(pcap_filter2.ip_total_length)) AS pkt_length_median,
-        MIN(pcap_filter2.ip_total_length) AS pkt_length_min,
-        MAX(pcap_filter2.ip_total_length) AS pkt_length_max,
-        SQRT(VARIANCE(pcap_filter2.ip_total_length)) AS pkt_length_std_dev,
+        AVG(pcap_filter2.ip_total_length) AS pkt_length_avg, --7
+        MIN(pcap_filter2.ip_total_length) AS pkt_length_min, --8
+        MAX(pcap_filter2.ip_total_length) AS pkt_length_max, --8
+        FLATTEN(MEDIAN(pcap_filter2.ip_total_length)) AS pkt_length_median, --10
+        SQRT(VARIANCE(pcap_filter2.ip_total_length)) AS pkt_length_std_dev, --11
         --
-        AVG(pcap_filter2.ip_ttl) AS ttl_avg,
-        MIN(pcap_filter2.ip_ttl) AS ttl_min,
-        MAX(pcap_filter2.ip_ttl) AS ttl_max,
-        SQRT(VARIANCE(pcap_filter2.ip_ttl)) AS ttl_std_dev,
+        AVG(pcap_filter2.ip_ttl) AS ttl_avg, --12
+        MIN(pcap_filter2.ip_ttl) AS ttl_min, --13
+        MAX(pcap_filter2.ip_ttl) AS ttl_max, --14
+        SQRT(VARIANCE(pcap_filter2.ip_ttl)) AS ttl_std_dev,--15
         --
-        SUM(pcap_filter2.tcp_cwr) AS tcp_flag_cwr,
-        SUM(pcap_filter2.tcp_ece) AS tcp_flag_ece,
-        SUM(pcap_filter2.tcp_urg) AS tcp_flag_urg,
-        SUM(pcap_filter2.tcp_ack) AS tcp_flag_ack,
-        SUM(pcap_filter2.tcp_psh) AS tcp_flag_psh,
-        SUM(pcap_filter2.tcp_rst) AS tcp_flag_rst,
-        SUM(pcap_filter2.tcp_syn) AS tcp_flag_syn,
-        SUM(pcap_filter2.tcp_fin) AS tcp_flag_fin;
-
+        SUM(pcap_filter2.tcp_cwr) AS tcp_flag_cwr,--16
+        SUM(pcap_filter2.tcp_ece) AS tcp_flag_ece,--17
+        SUM(pcap_filter2.tcp_urg) AS tcp_flag_urg,--18
+        SUM(pcap_filter2.tcp_ack) AS tcp_flag_ack,--19
+        SUM(pcap_filter2.tcp_psh) AS tcp_flag_psh,--20
+        SUM(pcap_filter2.tcp_rst) AS tcp_flag_rst,--21
+        SUM(pcap_filter2.tcp_syn) AS tcp_flag_syn,--22
+        SUM(pcap_filter2.tcp_fin) AS tcp_flag_fin;--23
 };
-DUMP pcap_filter2_sip_statistics;
 
--- STORE (ORDER pcap_filter2_sip_statistics BY total_packets DESC) INTO '$outputFolder/pcap_filter2_sip_statistics' USING PigStorage(',', '-schema');
+-- ##########################################################
+-- Generating the timeseries (data and packet rate) of each source IP address (all together)
+-- Output columns: (1) source IP address (2) timestamp (3) data rate [Mb/s] (4) packet rate [pckt/s]
+-- ##########################################################
+pcap_filter2_sip_mbps_pps = FOREACH (GROUP pcap_filter2 BY (ip_src, (ts / $binsize * $binsize))) GENERATE 
+        FLATTEN(group) AS (src_ip,bin),
+        (float)(SUM(pcap_filter2.ip_total_length))*8/1000000 AS mbits_per_bin,
+        COUNT(pcap_filter2) AS pkts_per_bin;
 
--- -- =========================================================
--- -- GENERATE (1) SOURCE IP (2) MBPS AVG (3) PPS AVG
--- -- =========================================================
--- pcap_filter2_sip_group = FOREACH (GROUP pcap_filter2 BY (ip_src, (ts / $binsize * $binsize))) GENERATE 
---         FLATTEN(group) AS (src_ip,bin),
---         (float)(SUM(pcap_filter2.ip_total_length))*8/1000000 AS mbits_per_bin,
---         COUNT(pcap_filter2) AS pkts_per_bin;
+-- STORE (ORDER pcap_filter2_sip_mbps_pps BY bin) INTO '$outputFolder/pcap_filter2_sip_mbps_pps' USING PigStorage(',', '-schema');
 
--- pcap_filter2_sip_bps_pps_avg = FOREACH (GROUP pcap_filter2_sip_group BY src_ip) GENERATE 
---         group AS src_ip,
---         AVG(pcap_filter2_sip_group.mbits_per_bin) AS mbits_per_bin_avg,
---         AVG(pcap_filter2_sip_group.pkts_per_bin) AS pkts_per_bin_avg;
+-- ##########################################################
+-- Generating the timeseries (data and packet rate) of each source IP address (all together)
+-- Output columns: (1) source IP address (2) timestamp (3) data rate [Mb/s] (4) packet rate [pckt/s]
+-- ##########################################################
+pcap_filter2_sip_mbps_pps_statistics = FOREACH (GROUP pcap_filter2_sip_mbps_pps BY src_ip) GENERATE 
+        group AS src_ip,
+        AVG(pcap_filter2_sip_mbps_pps.mbits_per_bin) AS mbits_per_bin_avg,
+        AVG(pcap_filter2_sip_mbps_pps.pkts_per_bin) AS pkts_per_bin_avg;
 
--- STORE (ORDER pcap_filter2_sip_bps_pps_avg BY pkts_per_bin_avg DESC) INTO '$outputFolder/pcap_filter2_sip_bps_pps_avg' USING PigStorage(',', '-schema');
+-- ##########################################################
+-- Join the general statistics of source IPs with their data and packet rate statistics
+-- Output columns: 
+-- ##########################################################
+pcap_filter2_sip_stats_joined = FOREACH (JOIN pcap_filter2_sip_stats BY src_ip LEFT, pcap_filter2_sip_mbps_pps_statistics BY src_ip) GENERATE 
+        pcap_filter2_sip_stats::src_ip AS src_ip,
+        total_packets AS total_packets, --2
+        packets_fragment_marked AS packets_fragment_marked, --3
+        packets_frag_non_marked AS packets_frag_non_marked, --4
+        num_distinct_sport AS num_distinct_sport, --5
+        num_distinct_dport AS num_distinct_dport, --6
+        pkt_length_avg AS pkt_length_avg, --7
+        pkt_length_min AS pkt_length_min, --8
+        pkt_length_max AS pkt_length_max, --9
+        pkt_length_median AS pkt_length_median, --10
+        pkt_length_std_dev AS pkt_length_std_dev, --11
+        ttl_avg AS ttl_avg, --12
+        ttl_min AS ttl_min, --13
+        ttl_max AS ttl_max, --14
+        ttl_std_dev AS ttl_std_dev,--15
+        tcp_flag_cwr AS tcp_flag_cwr,--16
+        tcp_flag_ece AS tcp_flag_ece,--17
+        tcp_flag_urg AS tcp_flag_urg,--18
+        tcp_flag_ack AS tcp_flag_ack,--19
+        tcp_flag_psh AS tcp_flag_psh,--20
+        tcp_flag_rst AS tcp_flag_rst,--21
+        tcp_flag_syn AS tcp_flag_syn,--22
+        tcp_flag_fin AS tcp_flag_fin,--23
+        mbits_per_bin_avg AS mbits_per_bin_avg, --24
+        pkts_per_bin_avg AS pkts_per_bin_avg; --25
 
+STORE (ORDER pcap_filter2_sip_stats_joined BY total_packets DESC) INTO '$outputFolder/pcap_filter2_sip_stats' USING PigStorage(',', '-schema');
 
--- -- -- ##########################################################
--- -- -- IF REFLECTION ATTACK
--- -- -- ##########################################################
--- -- -- =========================================================
--- -- -- Calculate the spoofers_total_pps
--- -- -- =========================================================
--- -- -- =========================================================
--- -- -- spoofer_total_pps = amplifiers_total_resps
--- -- -- =========================================================
--- -- -- =========================================================
--- -- -- Calculate the spoofer_total_bps
--- -- -- =========================================================
--- -- -- =========================================================
--- -- -- spoofer_total_bps = amplifiers_total_resps * K
--- -- -- =========================================================
+-- ##########################################################
+-- Generating CSV files of the outputs. By default PIG outputs 2 files in a folder: "_SUCESS" and "part-r-00000" (results) AND among others HIDDEN files ".pig_header" and ".pig_schema". Then we wrote a code "preparing_csv.sh" to make a csv file based on the results including the header.
+-- ##########################################################
+sh lib_and_extras/preparing_csv.sh;
 
--- -- -- ##########################################################
--- -- -- NOTES:
--- -- -- ##########################################################
--- -- -- In the end of everything -- STORE 1 attack_summary and 1 attack_sip_summary (table) and move the pcap file out of hdfs
+-- ##########################################################
+-- Copying the html that plots all the results with Google Charts
+-- ##########################################################
+-- sh cp lib_and_extras/DataAnalysis.html $outputFolder/index.html
+-- sh cp lib_and_extras/jquery.csv-0.71.js $outputFolder/
 
--- -- -- ##########################################################
--- -- -- CHALLENGE:
--- -- -- ##########################################################
--- -- -- -- STORE in AVRO!!!! AND PARQET
-
-
-
--- -- =========================================================
--- -- GENERATING CSVs FROM THE PIG OUTPUT
--- -- =========================================================
--- sh additional_data/preparing_csv.sh;
--- sh cp additional_data/DataAnalysis.html $outputFolder/index.html
--- sh cp additional_data/jquery.csv-0.71.js $outputFolder/
-
--- -- -- -- =========================================================
--- -- -- -- TRANSFERING THE RESULTS TO A APACHE SERVER
--- -- -- -- =========================================================
--- -- sh mv $outputFolder /Applications/MAMP/htdocs/
--- -- sh open http://localhost:8887/TrafficAnalysis_$filePcap
-
--- sh cd $outputFolder
--- sh python -m SimpleHTTPServer 
--- sh open http://localhost:8000/output/TrafficAnalysis_$filePcap
+-- ##########################################################
+-- TIP: after you finish all the steps you can see the results doing the following steps
+-- ##########################################################
+-- 1) In a command line, go to the folder that you placed all the output folders (e.g., TrafficAnalysis_prod-anon-001.txt/) 
+--      $ cd TrafficAnalysis_prod-anon-001.txt/
+-- 2) Considering you are inside the output_folder, start a simple HTTP server in a generic port (e.g., 12345)
+--      $ python -m SimpleHTTPServer 12345
+-- 3) Open a browser and access the localhost and the port that you setup in the previous step. OR simply type on command line
+--      $ open http://localhost:12345
+--
+-- ANOTHER OPTION is to copy the results to your apache server and run directly from there
+-- sh mv $outputFolder /Applications/MAMP/htdocs/
+-- sh open http://localhost:8887/TrafficAnalysis_$filePcap
