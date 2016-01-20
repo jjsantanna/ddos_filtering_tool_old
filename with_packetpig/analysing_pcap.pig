@@ -250,7 +250,7 @@ full_traffic_filter2_sip_statistics = FOREACH (GROUP full_traffic_filter2 BY ip_
         SQRT(VARIANCE(full_traffic_filter2.ip_ttl)) AS ttl_std_dev;
 }
 
-STORE (ORDER full_traffic_filter2_sip_statistics BY total_packets DESC) INTO '$outputFolder/output_pig/full_traffic_filter2_sip_statistics' USING PigStorage(',', '-schema');
+STORE (ORDER full_traffic_filter2_sip_statistics BY total_packets DESC) INTO '$outputFolder/full_traffic_filter2_sip_statistics' USING PigStorage(',', '-schema');
 
 -- =========================================================
 -- GENERATE (1) SOURCE IP (2) MBPS AVG (3) PPS AVG
@@ -265,7 +265,7 @@ full_traffic_filter2_sip_bps_pps_avg = FOREACH (GROUP full_traffic_filter2_sip_g
         AVG(full_traffic_filter2_sip_group.mbits_per_bin) AS mbits_per_bin_avg,
         AVG(full_traffic_filter2_sip_group.pkts_per_bin) AS pkts_per_bin_avg;
 
-STORE (ORDER full_traffic_filter2_sip_bps_pps_avg BY pkts_per_bin_avg DESC) INTO '$outputFolder/output_pig/full_traffic_filter2_sip_bps_pps_avg' USING PigStorage(',', '-schema');
+STORE (ORDER full_traffic_filter2_sip_bps_pps_avg BY pkts_per_bin_avg DESC) INTO '$outputFolder/full_traffic_filter2_sip_bps_pps_avg' USING PigStorage(',', '-schema');
 
 
 -- -- ##########################################################

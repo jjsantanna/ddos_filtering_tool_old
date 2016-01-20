@@ -3,7 +3,7 @@
 
 # ###### Importing the needed libraries
 
-# In[2]:
+# In[1]:
 
 import argparse
 import dpkt
@@ -13,7 +13,7 @@ import os
 
 # ###### Defining the arguments to run the python script. Note that the while the 'inputfile' is required, the 'output' argument isn't.
 
-# In[3]:
+# In[2]:
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-i', '--inputfile',
@@ -27,10 +27,10 @@ parser.add_argument('-o', '--outputfile',
 
 # ###### Reading the arguments and dealing with the 'outputfile'
 
-# In[8]:
+# In[3]:
 
 args = parser.parse_args()
-#args = parser.parse_args(['-i', 'pcap_example/prod-anon-001.pcap']) #example to test
+#args = parser.parse_args(['-i', 'prod-anon-001.pcap']) #example to test
 inputfile = args.inputfile
 
 if args.outputfile is not None:
@@ -41,14 +41,14 @@ else:
 
 # ###### Loading the 'inputfile' as a pcap file, via dpkt library.
 
-# In[9]:
+# In[4]:
 
 pcapfile = dpkt.pcap.Reader(inputfile)
 
 
 # ###### Reading and Printing in the 'outputfile' the 33 information about the pcap file (in the same order as the output of packetpig)
 
-# In[10]:
+# In[5]:
 
 for ts, buf in pcapfile:
     eth = dpkt.ethernet.Ethernet(buf)
@@ -64,7 +64,8 @@ for ts, buf in pcapfile:
         ip_total_length = ip.len #5
         ip_id = ip.id #6
         ip_flags = ip.opts #7
-        ip_frag_offset = ip.off #8
+        #ip_frag_offset = ip.off & dpkt.ip.IP_OFFMASK #8 this field was removed because the more_fragments are more meaningful
+        more_fragments = 1 if (int(ip.off & dpkt.ip.IP_MF)!= 0) else 0  #8 This flag is set to a 1 for all fragments except the last one
         ip_ttl = ip.ttl #9
         ip_proto = ip.p #10
         ip_checksum = ip.sum #11
@@ -90,13 +91,13 @@ for ts, buf in pcapfile:
         udp_dport = (proto.dport if ip.p == 17 else 0) #31
         udp_len = (proto.ulen if ip.p == 17 else 0) #32
         udp_checksum = (proto.sum if ip.p == 17 else 0) #33
-        
-        print >> outputfile, ts,ip_version,ip_header_length,ip_tos,ip_total_length,ip_id,ip_flags,ip_frag_offset,ip_ttl,ip_proto,ip_checksum,ip_src,ip_dst,tcp_sport,tcp_dport,tcp_seq_id,tcp_ack_id,tcp_offset,tcp_ns,tcp_cwr,tcp_ece,tcp_urg,tcp_ack,tcp_psh,tcp_rst,tcp_syn,tcp_fin,tcp_window,tcp_len,udp_sport,udp_dport,udp_len,udp_checksum
+ 
+        print >> outputfile, ts,ip_version,ip_header_length,ip_tos,ip_total_length,ip_id,ip_flags,more_fragments,ip_ttl,ip_proto,ip_checksum,ip_src,ip_dst,tcp_sport,tcp_dport,tcp_seq_id,tcp_ack_id,tcp_offset,tcp_ns,tcp_cwr,tcp_ece,tcp_urg,tcp_ack,tcp_psh,tcp_rst,tcp_syn,tcp_fin,tcp_window,tcp_len,udp_sport,udp_dport,udp_len,udp_checksum
 
 
 # ###### TO-DO: before print the informations above, it will be interesting to add a few more information about the payload of the application =P
 
-# In[ ]:
+# In[6]:
 
 # if proto.dport == 80 and len(proto.data) > 0:
 #    http = dpkt.http.Request(proto.data)
