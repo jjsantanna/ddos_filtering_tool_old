@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#folder=$1
-folder='/Users/santannajj/Desktop/b/pcap_nbip_copy/pcap_ddos_analysis/with_python/output_example/TrafficAnalysis_prod-anon-001.txt/pcap_filter2_sip'
+folder=$1
+#folder='/Users/santannajj/Desktop/b/pcap_nbip_copy/pcap_ddos_analysis/with_python/output_example/TrafficAnalysis_prod-anon-001.txt/pcap_filter2_sip'
 
 echo -e 'begin\ncountrycode\nprefix\nnoheader' > $folder/tmp
 cat $folder/part-r-00000 >> $folder/tmp

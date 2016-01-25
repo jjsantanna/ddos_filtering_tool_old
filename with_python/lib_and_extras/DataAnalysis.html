@@ -228,7 +228,7 @@
 // ################################################################
 // Ploting the Statistics of Source IP addresses:
 // ################################################################
-		var file_pcap_filter2_sip_stats = "pcap_filter2_sip_stats/part-r-00000.csv"; //Columns: 0)src_ip, 1)total_packets, 2)packets_fragment_marked, 3)packets_fragment_NONmarked 4)num_distinct_sport, 5)num_distinct_dport, 6)pkt_length_avg, 7)pkt_length_min, 8)pkt_length_max, 9)pkt_length_median, 10)pkt_length_std_dev, 11)ttl_avg, 12)ttl_min, 13)ttl_max, 14)ttl_std_dev, 15)tcp_flag_cwr, 16)tcp_flag_ece, 17)tcp_flag_urg, 18)tcp_flag_ack, 19)tcp_flag_psh, 20)tcp_flag_rst, 21)tcp_flag_syn, 22)tcp_flag_fin, 23)mbits_per_bin_avg, 24)pkts_per_bin_avg
+		var file_pcap_filter2_sip_stats = "pcap_filter2_sip_stats/part-r-00000.csv"; //Columns: 0)src_ip, 1)total_packets, 2)packets_fragment_marked, 3)packets_fragment_NONmarked 4)num_distinct_sport, 5)num_distinct_dport, 6)pkt_length_avg, 7)pkt_length_min, 8)pkt_length_max, 9)pkt_length_median, 10)pkt_length_std_dev, 11)ttl_avg, 12)ttl_min, 13)ttl_max, 14)ttl_std_dev, 15)tcp_flag_cwr, 16)tcp_flag_ece, 17)tcp_flag_urg, 18)tcp_flag_ack, 19)tcp_flag_psh, 20)tcp_flag_rst, 21)tcp_flag_syn, 22)tcp_flag_fin, 23)mbits_per_bin_avg, 24)pkts_per_bin_avg, 25)asn, 26)bgp_prefix, 27)country, 28)as_info
 
 		google.load("visualization", "1", {packages:["corechart"]}); 
 		google.setOnLoadCallback(pcap_filter2_sip_stats_packets_and_fragments);
@@ -245,7 +245,7 @@
 
 				view.setColumns([0,1,{sourceColumn:24, role:'annotationText',type:'number'}]); //Default Graph showing the total number of packets per src IP
 
-				var options = {seriesType: 'bars',legend: { position: 'top', maxLines: 3 },isStacked: true,};
+				var options = {seriesType: 'bars',legend: { position: 'top', maxLines: 3 },isStacked: true,  hAxis:{ textStyle : {fontSize: 7},slantedText:true, slantedTextAngle:90 }};
 
 				var chart = new google.visualization.ComboChart(document.getElementById('pcap_filter2_sip_stats_packets_and_fragments')); 
 				chart.draw(view, options);
@@ -289,12 +289,102 @@
 			   {
 			      view = new google.visualization.DataView(data);
 			      view.setColumns([0,15,16,17,18,19,20,21,22]); 
+			      options
 			      chart.draw(view, options);
 			   }
+
+			   var show_sip_tcpflags = document.getElementById("show_sip_tcpflags");
+			  	show_sip_tcpflags.onclick = function()
+			   {
+			      view = new google.visualization.DataView(data);
+			      view.setColumns([0,15,16,17,18,19,20,21,22]); 
+			      chart.draw(view, options);
+			   }
+
+			  	// ################################################################
+				// SHOW ASN
+				// ################################################################
+				var show_asn = document.getElementById("show_asn_div");
+			   	show_asn.onclick = function()
+			   	{
+			   		var pcap_filter2_asn_stats = "pcap_filter2_asn_stats/part-r-00000.csv";
+			      	view = new google.visualization.DataView(data);
+			      	$.get(pcap_filter2_asn_stats, function(csvString) {
+						var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
+						var data = new google.visualization.arrayToDataTable(arrayData);
+						var view = new google.visualization.DataView(data); 
+
+						view.setColumns([0,1]); //Default Graph showing the total number of packets per src IP
+
+						var options = {seriesType: 'bars',legend: { position: 'top', maxLines: 3 },isStacked: true,  hAxis:{ textStyle : {fontSize: 7},slantedText:true, slantedTextAngle:90 }};
+		    			chart.draw(view, options);
+			   		})
+			   	} 
+
+			   	// ################################################################
+				// SHOW BGP prefix
+				// ################################################################
+				var show_bgp = document.getElementById("show_bgp_div");
+			   	show_bgp.onclick = function()
+			   	{
+			   		var pcap_filter2_bgp_stats = "pcap_filter2_bgp_stats/part-r-00000.csv";
+			      	view = new google.visualization.DataView(data);
+			      	$.get(pcap_filter2_bgp_stats, function(csvString) {
+						var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
+						var data = new google.visualization.arrayToDataTable(arrayData);
+						var view = new google.visualization.DataView(data); 
+
+						view.setColumns([0,1]); //Default Graph showing the total number of packets per src IP
+
+						var options = {seriesType: 'bars',legend: { position: 'top', maxLines: 3 },isStacked: true,  hAxis:{ textStyle : {fontSize: 7},slantedText:true, slantedTextAngle:90 }};
+		    			chart.draw(view, options);
+			   		})
+			   	} 
 
 			});
 
 		}
+
+		// ################################################################
+		// Ploting the Geo-distribution of IPs (countries)
+		// ################################################################
+		var pcap_filter2_country_stats = "pcap_filter2_country_stats/part-r-00000.csv";
+
+		google.load("visualization", "1", {packages:["geochart"]}); 
+		google.setOnLoadCallback(drawRegionsMap);
+        function drawRegionsMap() { 
+			$.get(pcap_filter2_country_stats, function(csvString) {
+				var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
+				var data = new google.visualization.arrayToDataTable(arrayData);
+				var view = new google.visualization.DataView(data); 
+
+				view.setColumns([0,1]); //Default Graph showing the total number of packets per src IP
+
+        		var options = {};
+        		var chart = new google.visualization.GeoChart(document.getElementById('pcap_filter2_country_stats'));
+        		chart.draw(view, options);
+				// ################################################################
+				// Making dynamicly:
+				// ################################################################
+				var show_country_pie = document.getElementById("show_country_pie");
+			   	show_country_pie.onclick = function()
+			   	{
+			      view = new google.visualization.DataView(data);
+			      var options = {};
+			      var chart = new google.visualization.PieChart(document.getElementById('pcap_filter2_country_stats'));
+        			chart.draw(view, options);
+			   	}   
+
+			   	var show_country_map = document.getElementById("show_country_map");
+			   	show_country_map.onclick = function()
+			   	{
+			      view = new google.visualization.DataView(data);
+			      var options = {};
+			      var chart = new google.visualization.GeoChart(document.getElementById('pcap_filter2_country_stats'));
+        			chart.draw(view, options);
+			   	}  
+     		});
+		}		
 
 
 	</script> 
@@ -327,13 +417,14 @@
 		  <tr>
 		    <td align="center" colspan="2"><div id="full_traffic_ip_proto"  style="display:inline-block; width: 165px; height: 150px;"> </div></td>
 		  </tr>
-		  <tr>
-		    <td align="left" colspan="2">4) After a second filter based on the IP protocol that had more traffic (TOP 1 IP protocol), we performed an analysis of distribution of ports. </td>
+		 <tr>
+		    <td align="left" colspan="2">4) After a second filter based on the IP protocol that had more traffic (TOP 1 IP protocol), we performed an analysis of distribution of ports. 
+		    </td>
 		  </tr>
 		  <tr>
 		    <th align="right"><div id="pcap_filter2_sport"  style="display:inline-block; width: 165px; height: 150px;"> </div></th>
 		    <th align="left"><div id="pcap_filter2_dport"  style="display:inline-block; width: 165px; height: 150px;"> </div> </th>
-		  </tr>	
+		  </tr>	 
 		  <tr>
 		    <td align="left" colspan="2">5) Our investigation follows analysing the characteristics of source IP addresses (source of attack)</td>
 		  </tr>	
@@ -346,11 +437,23 @@
 	  		<button type="button" id="show_sip_fragments">Fragmentation?</button> 
 	  		<button type="button" id="show_sip_ttl">TTL</button> 
 	  		<button type="button" id="show_sip_tcpflags">TCP flags?</button> 
+	  		<button type="button" id="show_bgp_div">BGP prefix</button> 
+	  		<button type="button" id="show_asn_div">ASN</button>  
 		  </td>
-		</table>
-	    
+		  <tr>
+		    <td align="center" colspan="2" ><div id="pcap_filter2_country_stats"  style="display:inline-block; width: 400px; height: 300px;"></div>
+		    </td>
+		  </tr>
+		    <td align="center" colspan="2">
+		  	<button type="button" id="show_country_map">Map</button>  
+		  	<button type="button" id="show_country_pie">Pie Chart</button>
+		  	</td>
+
+		  
+		  </table>
+		 
 	</div>
-   	    
+
 </body> 
 
 <footer>

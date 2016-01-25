@@ -62,7 +62,7 @@ pcap_mbps_pps = FOREACH (GROUP pcap BY (ts / $binsize * $binsize)) GENERATE
         (float)(SUM(pcap.ip_total_length))*8/1000000 as mbits_per_bin,
         COUNT(pcap) as pkts_per_bin;
 
--- STORE pcap_mbps_pps INTO '$outputFolder/pcap_mbps_pps' USING PigStorage(',', '-schema');
+STORE pcap_mbps_pps INTO '$outputFolder/pcap_mbps_pps' USING PigStorage(',', '-schema');
 
 -- ##########################################################
 -- Generating the statistics of destination IP addresses (to find the target(s))
@@ -72,7 +72,7 @@ pkts_per_ip_dst = FOREACH (GROUP pcap BY ip_dst) GENERATE
         group as ip_dst, 
         COUNT(pcap) as packets; -- considering that each line is a packet 
 
--- STORE (ORDER pkts_per_ip_dst BY packets DESC) INTO '$outputFolder/pcap_pkts_per_ip_dst' USING PigStorage(',', '-schema');
+STORE (ORDER pkts_per_ip_dst BY packets DESC) INTO '$outputFolder/pcap_pkts_per_ip_dst' USING PigStorage(',', '-schema');
 
 -- ##########################################################
 -- Filtering the entire pcap file based on the destination IP address that most received packets (top1)
@@ -105,7 +105,7 @@ pcap_filter1_ipproto_with_desc = FOREACH( JOIN pcap_filter1_ipproto BY ip_proto 
         CONCAT((chararray)ip_proto,CONCAT(':',(chararray)ip_proto_desc)) as ip_proto, 
         occurrences as occurrences; 
 
--- STORE (ORDER pcap_filter1_ipproto_with_desc BY occurrences DESC) INTO '$outputFolder/pcap_ip_proto' USING PigStorage(',', '-schema');
+STORE (ORDER pcap_filter1_ipproto_with_desc BY occurrences DESC) INTO '$outputFolder/pcap_ip_proto' USING PigStorage(',', '-schema');
 
 -- ##########################################################
 -- Filtering the pcap_filter1 based on the IP protocol that had most of the traffic (top 1)
@@ -113,6 +113,27 @@ pcap_filter1_ipproto_with_desc = FOREACH( JOIN pcap_filter1_ipproto BY ip_proto 
 -- ##########################################################
 top1_ip_proto = LIMIT (ORDER pcap_filter1_ipproto BY occurrences DESC) 1;
 pcap_filter2 = FILTER pcap_filter1 BY (ip_proto == top1_ip_proto.ip_proto);
+
+
+-- ##########################################################
+-- Generating list of src IP addresses involved in the attack
+-- Output columns: 1) source IP
+-- ##########################################################
+pcap_filter2_sip = FOREACH (GROUP pcap_filter2 BY ip_src) GENERATE group;
+STORE pcap_filter2_sip INTO '$outputFolder/pcap_filter2_sip' USING PigStorage(',');
+
+-- ##########################################################
+-- Getting the ASN for each source IP
+-- ##########################################################
+sh lib_and_extras/get_ans.sh '$outputFolder/pcap_filter2_sip';
+
+pcap_filter2_sip_ans = LOAD '$outputFolder/pcap_filter2_sip/pcap_filter2_sip_ans.txt' USING PigStorage(';') AS (
+        asn:chararray,
+        ip:chararray, 
+        bgp_prefix:chararray, 
+        country:chararray, 
+        as_info:chararray
+    );
 
 -- ##########################################################
 -- Generating the source port number analysis over UDP
@@ -137,7 +158,7 @@ pcap_filter2_total_pkt_tcp_sport = FOREACH (GROUP pcap_filter2_pkt_tcp_sport BY 
 -- Output columns: (1) source port number, (2) occurrences over udp, (3) occurrences over tcp, (4) total number of packets 
 -- ##########################################################
 pcap_filter2_sport= FOREACH (JOIN pcap_filter2_total_pkt_udp_sport by udp_src_port FULL, pcap_filter2_total_pkt_tcp_sport BY tcp_src_port) GENERATE 
-    udp_src_port as src_port,
+    (udp_src_port is null? tcp_src_port : udp_src_port) as src_port,
     (udp_packets is null ? 0 : udp_packets) as udp_packets,
     (tcp_packets is null ? 0 : tcp_packets) as tcp_packets,
     ((udp_packets is null ? 0 : udp_packets) + (tcp_packets is null ? 0 : tcp_packets)) as packets;
@@ -160,7 +181,7 @@ pcap_filter2_sport_with_desc = FOREACH( JOIN pcap_filter2_sport BY src_port LEFT
         tcp_packets as tcp_packets,
         packets as packets;
 
--- STORE (ORDER pcap_filter2_sport_with_desc BY packets DESC) INTO '$outputFolder/pcap_filter2_sport' USING PigStorage(',', '-schema');
+STORE (ORDER pcap_filter2_sport_with_desc BY packets DESC) INTO '$outputFolder/pcap_filter2_sport' USING PigStorage(',', '-schema');
 
 -- ##########################################################
 -- Generating the destination port number analysis over UDP
@@ -185,7 +206,7 @@ pcap_filter2_total_pkt_tcp_dport = FOREACH (GROUP pcap_filter2_pkt_tcp_sport BY 
 -- Output columns: (1) source port number, (2) occurrences over udp, (3) occurrences over tcp, (4) total number of packets 
 -- ##########################################################
 pcap_filter2_dport= FOREACH (JOIN pcap_filter2_total_pkt_udp_dport by udp_dst_port FULL, pcap_filter2_total_pkt_tcp_dport BY tcp_dst_port) GENERATE 
-    udp_dst_port as dst_port,
+    (udp_dst_port is null ? tcp_dst_port : udp_dst_port) as dst_port,
     (udp_packets is null ? 0 : udp_packets) as udp_packets,
     (tcp_packets is null ? 0 : tcp_packets) as tcp_packets,
     ((udp_packets is null ? 0 : udp_packets) + (tcp_packets is null ? 0 : tcp_packets)) as packets;
@@ -200,7 +221,7 @@ pcap_filter2_dport_with_desc = FOREACH( JOIN pcap_filter2_dport BY dst_port LEFT
         tcp_packets as tcp_packets,
         packets as packets;
 
--- STORE (ORDER pcap_filter2_dport_with_desc BY packets DESC) INTO '$outputFolder/pcap_filter2_dport' USING PigStorage(',', '-schema');
+STORE (ORDER pcap_filter2_dport_with_desc BY packets DESC) INTO '$outputFolder/pcap_filter2_dport' USING PigStorage(',', '-schema');
 
 -- ##########################################################
 -- Generating the time series of the filtered pcap file.
@@ -211,7 +232,7 @@ pcap_filter2_mbps_pps = FOREACH (GROUP pcap_filter2 BY (ts / $binsize * $binsize
         (float)(SUM(pcap_filter2.ip_total_length))*8/1000000 AS mbits_per_bin,
         COUNT(pcap_filter2) AS pkts_per_bin;
 
--- STORE pcap_filter2_mbps_pps INTO '$outputFolder/pcap_filter2_mbps_pps' USING PigStorage(',', '-schema');
+STORE pcap_filter2_mbps_pps INTO '$outputFolder/pcap_filter2_mbps_pps' USING PigStorage(',', '-schema');
 
 -- ##########################################################
 -- Generating the overall statistics of the filtered pcap file.
@@ -228,7 +249,7 @@ pcap_filter2_stats = FOREACH (GROUP pcap_filter2_mbps_pps ALL) GENERATE
         FLATTEN(MEDIAN(pcap_filter2_mbps_pps.pkts_per_bin)) AS median_pps_pcap_filter2,
         SQRT(VARIANCE(pcap_filter2_mbps_pps.pkts_per_bin)) AS std_pps_dev_pcap_filter2;
 
--- STORE pcap_filter2_stats INTO '$outputFolder/pcap_filter2_stats' USING PigStorage(',', '-schema');
+STORE pcap_filter2_stats INTO '$outputFolder/pcap_filter2_stats' USING PigStorage(',', '-schema');
 
 -- ##########################################################
 -- Generating the statistics for each source IP address
@@ -266,14 +287,14 @@ pcap_filter2_sip_stats = FOREACH (GROUP pcap_filter2 BY ip_src) {
         MAX(pcap_filter2.ip_ttl) AS ttl_max, --14
         SQRT(VARIANCE(pcap_filter2.ip_ttl)) AS ttl_std_dev,--15
         --
-        SUM(pcap_filter2.tcp_cwr) AS tcp_flag_cwr,--16
-        SUM(pcap_filter2.tcp_ece) AS tcp_flag_ece,--17
-        SUM(pcap_filter2.tcp_urg) AS tcp_flag_urg,--18
-        SUM(pcap_filter2.tcp_ack) AS tcp_flag_ack,--19
-        SUM(pcap_filter2.tcp_psh) AS tcp_flag_psh,--20
-        SUM(pcap_filter2.tcp_rst) AS tcp_flag_rst,--21
-        SUM(pcap_filter2.tcp_syn) AS tcp_flag_syn,--22
-        SUM(pcap_filter2.tcp_fin) AS tcp_flag_fin;--23
+        SUM(pcap_filter2.tcp_cwr) AS CWR,--16
+        SUM(pcap_filter2.tcp_ece) AS ECE,--17
+        SUM(pcap_filter2.tcp_urg) AS URG,--18
+        SUM(pcap_filter2.tcp_ack) AS ACK,--19
+        SUM(pcap_filter2.tcp_psh) AS PSH,--20
+        SUM(pcap_filter2.tcp_rst) AS RST,--21
+        SUM(pcap_filter2.tcp_syn) AS SYN,--22
+        SUM(pcap_filter2.tcp_fin) AS FIN;--23
 };
 
 -- ##########################################################
@@ -285,10 +306,10 @@ pcap_filter2_sip_mbps_pps = FOREACH (GROUP pcap_filter2 BY (ip_src, (ts / $binsi
         (float)(SUM(pcap_filter2.ip_total_length))*8/1000000 AS mbits_per_bin,
         COUNT(pcap_filter2) AS pkts_per_bin;
 
--- STORE (ORDER pcap_filter2_sip_mbps_pps BY bin) INTO '$outputFolder/pcap_filter2_sip_mbps_pps' USING PigStorage(',', '-schema');
+STORE (ORDER pcap_filter2_sip_mbps_pps BY bin) INTO '$outputFolder/pcap_filter2_sip_mbps_pps' USING PigStorage(',', '-schema');
 
 -- ##########################################################
--- Generating the timeseries (data and packet rate) of each source IP address (all together)
+-- Generating the statistics of each source IP address (all together)
 -- Output columns: (1) source IP address (2) timestamp (3) data rate [Mb/s] (4) packet rate [pckt/s]
 -- ##########################################################
 pcap_filter2_sip_mbps_pps_statistics = FOREACH (GROUP pcap_filter2_sip_mbps_pps BY src_ip) GENERATE 
@@ -316,29 +337,87 @@ pcap_filter2_sip_stats_joined = FOREACH (JOIN pcap_filter2_sip_stats BY src_ip L
         ttl_min AS ttl_min, --13
         ttl_max AS ttl_max, --14
         ttl_std_dev AS ttl_std_dev,--15
-        tcp_flag_cwr AS tcp_flag_cwr,--16
-        tcp_flag_ece AS tcp_flag_ece,--17
-        tcp_flag_urg AS tcp_flag_urg,--18
-        tcp_flag_ack AS tcp_flag_ack,--19
-        tcp_flag_psh AS tcp_flag_psh,--20
-        tcp_flag_rst AS tcp_flag_rst,--21
-        tcp_flag_syn AS tcp_flag_syn,--22
-        tcp_flag_fin AS tcp_flag_fin,--23
+        CWR AS CWR,--16
+        ECE AS ECE,--17
+        URG AS URG,--18
+        ACK AS ACK,--19
+        PSH AS PSH,--20
+        RST AS RST,--21
+        SYN AS SYN,--22
+        FIN AS FIN,--23
         mbits_per_bin_avg AS mbits_per_bin_avg, --24
         pkts_per_bin_avg AS pkts_per_bin_avg; --25
 
-STORE (ORDER pcap_filter2_sip_stats_joined BY total_packets DESC) INTO '$outputFolder/pcap_filter2_sip_stats' USING PigStorage(',', '-schema');
+
+-- ##########################################################
+-- Joining the statistics of source IPs with their ASN
+-- ##########################################################
+pcap_filter2_sip_stats_asn = FOREACH (JOIN pcap_filter2_sip_stats_joined BY src_ip LEFT, pcap_filter2_sip_ans BY ip) GENERATE 
+        src_ip AS src_ip,
+        total_packets AS total_packets, --2
+        packets_fragment_marked AS packets_fragment_marked, --3
+        packets_frag_non_marked AS packets_frag_non_marked, --4
+        num_distinct_sport AS num_distinct_sport, --5
+        num_distinct_dport AS num_distinct_dport, --6
+        pkt_length_avg AS pkt_length_avg, --7
+        pkt_length_min AS pkt_length_min, --8
+        pkt_length_max AS pkt_length_max, --9
+        pkt_length_median AS pkt_length_median, --10
+        pkt_length_std_dev AS pkt_length_std_dev, --11
+        ttl_avg AS ttl_avg, --12
+        ttl_min AS ttl_min, --13
+        ttl_max AS ttl_max, --14
+        ttl_std_dev AS ttl_std_dev,--15
+        CWR AS CWR,--16
+        ECE AS ECE,--17
+        URG AS URG,--18
+        ACK AS ACK,--19
+        PSH AS PSH,--20
+        RST AS RST,--21
+        SYN AS SYN,--22
+        FIN AS FIN,--23
+        mbits_per_bin_avg AS mbits_per_bin_avg, --24
+        pkts_per_bin_avg AS pkts_per_bin_avg, --25
+        asn AS asn, --26
+        bgp_prefix AS bgp_prefix, --27
+        country AS country, --28 
+        as_info AS as_info; --29
+STORE (ORDER pcap_filter2_sip_stats_asn BY total_packets DESC) INTO '$outputFolder/pcap_filter2_sip_stats' USING PigStorage(',', '-schema');
+
+-- ##########################################################
+-- Generating statistics about the ASes
+-- ##########################################################
+pcap_filter2_country_stats = FOREACH (GROUP pcap_filter2_sip_stats_asn BY country) GENERATE 
+    (group is null ? 'NONE' : group) AS country,
+    COUNT(pcap_filter2_sip_stats_asn.src_ip) AS sips;
+STORE (ORDER pcap_filter2_country_stats BY sips DESC) INTO '$outputFolder/pcap_filter2_country_stats' USING PigStorage(',', '-schema');;
+
+-- ##########################################################
+-- Generating statistics about BGP prefixes
+-- ##########################################################
+pcap_filter2_bgp_stats = FOREACH (GROUP pcap_filter2_sip_stats_asn BY bgp_prefix) GENERATE 
+    (group is null ? 'NONE' : group) AS bgp_prefix,
+    COUNT(pcap_filter2_sip_stats_asn.src_ip) AS sips;
+STORE (ORDER pcap_filter2_bgp_stats BY sips DESC) INTO '$outputFolder/pcap_filter2_bgp_stats' USING PigStorage(',', '-schema');;
+
+-- ##########################################################
+-- Generating statistics about BGP prefixes
+-- ##########################################################
+pcap_filter2_asn_stats = FOREACH (GROUP pcap_filter2_sip_stats_asn BY asn) GENERATE 
+    (group is null ? 'NONE' : group) AS asn,
+    COUNT(pcap_filter2_sip_stats_asn.src_ip) AS sips;
+STORE (ORDER pcap_filter2_asn_stats BY sips DESC) INTO '$outputFolder/pcap_filter2_asn_stats' USING PigStorage(',', '-schema');;
 
 -- ##########################################################
 -- Generating CSV files of the outputs. By default PIG outputs 2 files in a folder: "_SUCESS" and "part-r-00000" (results) AND among others HIDDEN files ".pig_header" and ".pig_schema". Then we wrote a code "preparing_csv.sh" to make a csv file based on the results including the header.
 -- ##########################################################
-sh lib_and_extras/preparing_csv.sh;
+sh lib_and_extras/preparing_csv.sh '$outputFolder'
 
 -- ##########################################################
 -- Copying the html that plots all the results with Google Charts
 -- ##########################################################
--- sh cp lib_and_extras/DataAnalysis.html $outputFolder/index.html
--- sh cp lib_and_extras/jquery.csv-0.71.js $outputFolder/
+sh cp lib_and_extras/DataAnalysis.html $outputFolder/index.html
+sh cp lib_and_extras/jquery.csv-0.71.js $outputFolder/
 
 -- ##########################################################
 -- TIP: after you finish all the steps you can see the results doing the following steps
