@@ -17,6 +17,7 @@
 16,Unassigned
 17,Quote
 18,Messagel
+19,CharGen
 20,FTP
 21,FTP
 22,SSH
