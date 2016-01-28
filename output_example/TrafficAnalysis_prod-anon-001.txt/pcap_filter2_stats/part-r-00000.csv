@@ -1,0 +1,2 @@
+first_ts,last_ts,duration,avg_mbps_pcap_filter2,median_mbps_pcap_filter2,std_dev_mbps_pcap_filter2,avg_pps_pcap_filter2,median_pps_pcap_filter2,std_pps_dev_pcap_filter2
+1428745323,1428745343,20,5.349120003836496,5.655807971954346,2.3879781413792323,475.8095238095238,508.0,212.19883286955618

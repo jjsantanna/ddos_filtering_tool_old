@@ -1,0 +1,1 @@
+src_ip,total_packets,packets_fragment_marked,packets_frag_non_marked,num_distinct_sport,num_distinct_dport,pkt_length_avg,pkt_length_min,pkt_length_max,pkt_length_median,pkt_length_std_dev,ttl_avg,ttl_min,ttl_max,ttl_std_dev,CWR,ECE,URG,ACK,PSH,RST,SYN,FIN,mbits_per_bin_avg,pkts_per_bin_avg,asn,bgp_prefix,country,as_info
