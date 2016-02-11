@@ -1,3 +1,3 @@
 # (D)DoS Attack Analysis
 
-<Sorry! More details soon!>
+Sorry! More details soon!
